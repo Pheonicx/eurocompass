@@ -1,11 +1,14 @@
-import requests
 from bs4 import BeautifulSoup
+from utils import http_client
 
 
 def get_rate():
     url = "https://www.ebl.com.bd/forexrate"
 
-    response = requests.get(url)
+    response = http_client.get(url)
+
+    if response is None:
+        return None
 
     soup = BeautifulSoup(response.text, "html.parser")
 

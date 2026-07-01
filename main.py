@@ -1,26 +1,133 @@
-"""
-Germany Finance Intelligence System (GFIS)
+from statistics import mean
 
-Version: 0.1.0
-Author: Hussain Abdullah
-Started: 01 July 2026
-"""
+from rich.console import Console
+from rich.table import Table
+from rich.panel import Panel
 
 from config.banks import BANKS
 from utils.csv_handler import save_rate
+from utils.exporter import export_csv, export_json
 
-for bank in BANKS:
+console = Console()
 
-    rate = bank.get_rate()
 
-    if rate:
+def main():
+    console.print(
+        Panel.fit(
+            "[bold cyan]GFIS[/bold cyan]\nGermany Finance Intelligence System",
+            border_style="cyan",
+        )
+    )
 
-        print(rate)
+    table = Table(show_header=True, header_style="bold green")
 
-        save_rate(rate)
+    table.add_column("Bank", style="cyan", justify="center")
+    table.add_column("Currency", justify="center")
+    table.add_column("Buy", justify="right")
+    table.add_column("Sell", justify="right")
+    table.add_column("Status", justify="center")
 
-        print(f"{rate['bank']} saved successfully!")
+    results = []
 
-    else:
+    for collector in BANKS:
 
-        print("Failed.")
+        try:
+            rate = collector.get_rate()
+
+            if rate:
+
+                save_rate(rate)
+
+                results.append(rate)
+
+                table.add_row(
+                    rate["bank"],
+                    rate["currency"],
+                    f'{rate["buy"]:.4f}',
+                    f'{rate["sell"]:.4f}',
+                    "[green]OK[/green]",
+                )
+
+            else:
+
+                table.add_row(
+                    collector.__name__.split(".")[-1].upper(),
+                    "-",
+                    "-",
+                    "-",
+                    "[red]FAILED[/red]",
+                )
+
+        except Exception as e:
+
+            table.add_row(
+                collector.__name__.split(".")[-1].upper(),
+                "-",
+                "-",
+                "-",
+                "[red]ERROR[/red]",
+            )
+
+            console.print(f"[red]{e}[/red]")
+
+    console.print(table)
+
+    if not results:
+        console.print("\n[bold red]No bank data collected.[/bold red]")
+        return
+    # Export latest market snapshot
+    export_json(results)
+    export_csv(results)
+
+    best_buy = min(results, key=lambda x: x["buy"])
+    highest_buy = max(results, key=lambda x: x["buy"])
+
+    best_sell = min(results, key=lambda x: x["sell"])
+    highest_sell = max(results, key=lambda x: x["sell"])
+
+    avg_buy = mean(r["buy"] for r in results)
+    avg_sell = mean(r["sell"] for r in results)
+
+    stats = Table(show_header=False)
+
+    stats.add_column(style="bold cyan")
+    stats.add_column()
+
+    stats.add_row("Banks Processed", str(len(results)))
+    stats.add_row(
+        "Lowest Buy",
+        f'{best_buy["bank"]} ({best_buy["buy"]:.4f})',
+    )
+    stats.add_row(
+        "Highest Buy",
+        f'{highest_buy["bank"]} ({highest_buy["buy"]:.4f})',
+    )
+    stats.add_row(
+        "Lowest Sell",
+        f'{best_sell["bank"]} ({best_sell["sell"]:.4f})',
+    )
+    stats.add_row(
+        "Highest Sell",
+        f'{highest_sell["bank"]} ({highest_sell["sell"]:.4f})',
+    )
+    stats.add_row(
+        "Average Buy",
+        f"{avg_buy:.4f}",
+    )
+    stats.add_row(
+        "Average Sell",
+        f"{avg_sell:.4f}",
+    )
+
+    console.print()
+    console.print(
+        Panel.fit(
+            stats,
+            title="Market Statistics",
+            border_style="green",
+        )
+    )
+
+
+if __name__ == "__main__":
+    main()
