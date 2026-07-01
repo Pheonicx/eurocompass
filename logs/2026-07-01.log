@@ -1,0 +1,8 @@
+20:53:22 | INFO     | ============================================================
+20:53:22 | INFO     | GFIS started
+20:53:22 | INFO     | EBL collected successfully | BUY=137.8400 SELL=142.7000
+20:53:22 | INFO     | CITY collected successfully | BUY=137.7900 SELL=142.6200
+20:53:22 | WARNING  | BRAC collector returned no data
+20:53:22 | INFO     | Exported latest.json
+20:53:22 | INFO     | Exported latest.csv
+20:53:22 | INFO     | GFIS finished successfully
