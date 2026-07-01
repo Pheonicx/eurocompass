@@ -6,21 +6,21 @@ Author: Hussain Abdullah
 Started: 01 July 2026
 """
 
-from collectors import ebl
+from config.banks import BANKS
 from utils.csv_handler import save_rate
 
-rate = ebl.get_rate()
+for bank in BANKS:
 
-if rate:
+    rate = bank.get_rate()
 
-    print(rate)
+    if rate:
 
-    save_rate(rate)
+        print(rate)
 
-    print()
+        save_rate(rate)
 
-    print("Rate saved successfully!")
+        print(f"{rate['bank']} saved successfully!")
 
-else:
+    else:
 
-    print("Failed to collect EBL rate.")
+        print("Failed.")
