@@ -6,31 +6,21 @@ Author: Hussain Abdullah
 Started: 01 July 2026
 """
 
-import requests
-from bs4 import BeautifulSoup
+from collectors import ebl
+from utils.csv_handler import save_rate
 
-url = "https://www.ebl.com.bd/forexrate"
+rate = ebl.get_rate()
 
-response = requests.get(url)
+if rate:
 
-print("Website Status:", response.status_code)
+    print(rate)
 
-soup = BeautifulSoup(response.text, "html.parser")
-# Find all table rows
-rows = soup.find_all("tr")
+    save_rate(rate)
 
-for row in rows:
-    cells = row.find_all("td")
+    print()
 
-    if len(cells) >= 3:
-        currency = cells[0].text.strip()
+    print("Rate saved successfully!")
 
-        if currency == "EUR":
-            buying = cells[1].text.strip()
-            selling = cells[2].text.strip()
+else:
 
-            print()
-            print("===== EUR FOUND =====")
-            print("Buying :", buying)
-            print("Selling:", selling)
-            break
+    print("Failed to collect EBL rate.")
