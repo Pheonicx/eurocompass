@@ -60,11 +60,30 @@ def load_market_data():
      return None
 
     summary = {
-     "banks_processed": len(banks),
-     "lowest_buy": min(banks, key=lambda x: x["buy"]),
-     "highest_buy": max(banks, key=lambda x: x["buy"]),
-     "lowest_sell": min(banks, key=lambda x: x["sell"]),
-     "highest_sell": max(banks, key=lambda x: x["sell"]),
+    "banks_processed": len(banks),
+
+    "lowest_buy": {
+        "bank": min(banks, key=lambda x: x["buy"])["bank"],
+        "value": min(banks, key=lambda x: x["buy"])["buy"],
+    },
+
+    "highest_buy": {
+        "bank": max(banks, key=lambda x: x["buy"])["bank"],
+        "value": max(banks, key=lambda x: x["buy"])["buy"],
+    },
+
+    "lowest_sell": {
+        "bank": min(banks, key=lambda x: x["sell"])["bank"],
+        "value": min(banks, key=lambda x: x["sell"])["sell"],
+    },
+
+    "highest_sell": {
+        "bank": max(banks, key=lambda x: x["sell"])["bank"],
+        "value": max(banks, key=lambda x: x["sell"])["sell"],
+    },
+
+    "average_buy": sum(b["buy"] for b in banks) / len(banks),
+    "average_sell": sum(b["sell"] for b in banks) / len(banks),
     }
 
     return {
