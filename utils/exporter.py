@@ -8,7 +8,7 @@ EXPORT_DIR = Path("exports")
 EXPORT_DIR.mkdir(exist_ok=True)
 
 
-def export_json(results):
+def export_json(results, summary):
     """
     Export the latest market snapshot to JSON.
     """
@@ -16,6 +16,7 @@ def export_json(results):
     output = {
         "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "currency": "EUR",
+        "summary": summary,
         "banks": results,
     }
 

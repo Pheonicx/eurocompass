@@ -75,9 +75,6 @@ def main():
     if not results:
         console.print("\n[bold red]No bank data collected.[/bold red]")
         return
-    # Export latest market snapshot
-    export_json(results)
-    export_csv(results)
 
     best_buy = min(results, key=lambda x: x["buy"])
     highest_buy = max(results, key=lambda x: x["buy"])
@@ -87,6 +84,31 @@ def main():
 
     avg_buy = mean(r["buy"] for r in results)
     avg_sell = mean(r["sell"] for r in results)
+
+    summary = {
+    "banks_processed": len(results),
+    "lowest_buy": {
+        "bank": best_buy["bank"],
+        "value": best_buy["buy"],
+    },
+    "highest_buy": {
+        "bank": highest_buy["bank"],
+        "value": highest_buy["buy"],
+    },
+    "lowest_sell": {
+        "bank": best_sell["bank"],
+        "value": best_sell["sell"],
+    },
+    "highest_sell": {
+        "bank": highest_sell["bank"],
+        "value": highest_sell["sell"],
+    },
+    "average_buy": avg_buy,
+    "average_sell": avg_sell,
+}
+    # Export latest market snapshot
+    export_json(results, summary)
+    export_csv(results)
 
     stats = Table(show_header=False)
 
