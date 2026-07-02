@@ -17,12 +17,12 @@ logging.basicConfig(
 )
 
 
-logger = logging.getLogger("GFIS")
+logger = logging.getLogger("EuroCompass")
 
 
 def log_start():
     logger.info("=" * 60)
-    logger.info("GFIS started")
+    logger.info("EuroCompass started")
 
 
 def log_success(bank, buy, sell):
@@ -47,4 +47,4 @@ def log_export(filename):
 
 
 def log_finish():
-    logger.info("GFIS finished successfully")
+    logger.info("EuroCompass finished successfully")

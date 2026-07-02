@@ -1,7 +1,7 @@
 """
 Collector Template
 
-Every collector in GFIS should follow this structure.
+Every EuroCompass collector should follow this structure.
 """
 
 

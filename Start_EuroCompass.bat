@@ -1,5 +1,5 @@
 @echo off
-title Germany Finance Intelligence System
+title EuroCompass
 
 cd /d "E:\Projects\Germany-Finance-Intelligence-System"
 

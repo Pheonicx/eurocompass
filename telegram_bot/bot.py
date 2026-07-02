@@ -42,7 +42,8 @@ def format_rate(value):
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         await update.message.reply_text(
-            "Germany Finance Intelligence System\n\n"
+            "🧭 EuroCompass\n\n"
+            "Cloud-powered EUR Exchange Rate Intelligence\n\n"
             "Available commands\n\n"
             "/rates\n"
             "/recommend <EUR amount>\n"
@@ -190,7 +191,7 @@ def main():
     application.add_handler(CommandHandler("refresh", refresh))
     application.add_error_handler(error_handler)
 
-    logger.info("GFIS Telegram bot started")
+    logger.info("EuroCompass Telegram bot started")
     application.run_polling()
 
 
