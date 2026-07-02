@@ -18,7 +18,8 @@ console = Console()
 def main():
     console.print(
         Panel.fit(
-            "[bold cyan]GFIS[/bold cyan]\nGermany Finance Intelligence System",
+                 "[bold cyan]🧭 EuroCompass[/bold cyan]\n"
+                 "EUR Exchange Rate Intelligence for Bangladesh",
             border_style="cyan",
         )
     )

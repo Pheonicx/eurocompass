@@ -13,8 +13,8 @@ from calculator import calculate_transfer_cost, get_best_bank
 
 
 st.set_page_config(
-    page_title="GFIS Dashboard",
-    page_icon="💶",
+    page_title="EuroCompass",
+    page_icon="🧭",
     layout="wide",
 )
 
@@ -62,7 +62,9 @@ df["Spread"] = df["Spread"].map(lambda x: f"{x:.4f}")
 
 stats = calculate_metrics(banks)
 
-st.title("💶 Germany Finance Intelligence System")
+st.logo("https://img.icons8.com/fluency/96/compass.png")
+st.title("🧭 EuroCompass")
+st.caption("Compare EUR exchange rates across leading Bangladeshi banks.")
 st.caption(f"Last Updated: {data['generated_at']}")
 st.divider()
 
@@ -255,7 +257,7 @@ with right:
 st.divider()
 
 st.success(
-    f"{summary['banks_processed']} banks processed successfully."
+    f"Live market data collected from {summary['banks_processed']} banks."
 )
 st.divider()
 
