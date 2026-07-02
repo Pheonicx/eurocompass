@@ -1,23 +1,29 @@
+import io
+
 import pandas as pd
-from pathlib import Path
-
-
-DATA_DIR = Path("data")
+import requests
+import streamlit as st
 
 
 def load_history(bank: str):
     """
-    Load historical data for a bank.
-
-    Returns a pandas DataFrame sorted by Date and Time.
+    Load historical data from GitHub.
     """
 
-    csv_file = DATA_DIR / f"{bank}.csv"
+    owner = st.secrets["GITHUB_USERNAME"]
+    repo = st.secrets["GITHUB_REPO"]
 
-    if not csv_file.exists():
+    url = (
+        f"https://raw.githubusercontent.com/"
+        f"{owner}/{repo}/main/history/{bank}.csv"
+    )
+
+    response = requests.get(url, timeout=20)
+
+    if response.status_code != 200:
         return None
 
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(io.StringIO(response.text))
 
     if df.empty:
         return None

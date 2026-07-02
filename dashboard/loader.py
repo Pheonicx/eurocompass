@@ -84,7 +84,7 @@ def load_market_data():
 
     "average_buy": sum(b["buy"] for b in banks) / len(banks),
     "average_sell": sum(b["sell"] for b in banks) / len(banks),
-    }
+}
 
     return {
      "banks": banks,
