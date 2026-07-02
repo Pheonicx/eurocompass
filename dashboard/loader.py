@@ -2,6 +2,8 @@ import sys
 import json
 from pathlib import Path
 
+import streamlit as st
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 if str(PROJECT_ROOT) not in sys.path:
@@ -33,7 +35,10 @@ def collect_live_data():
                 banks.append(result)
 
         except Exception as error:
-            print(error)
+
+            st.error(
+                f"Collector '{collector.__name__}' failed:\n{type(error).__name__}: {error}"
+            )
 
     return banks
 
