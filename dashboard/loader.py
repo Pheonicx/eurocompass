@@ -29,7 +29,7 @@ def collect_live_data():
 
         try:
 
-            result = collector.collect()
+            result = collector.get_rate()
 
             if result:
                 banks.append(result)
