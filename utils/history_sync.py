@@ -23,3 +23,23 @@ def sync_history():
             content,
             f"Update {csv_file.name}",
         )
+
+
+EXPORT_FILE = Path("exports/latest.json")
+
+
+def sync_latest():
+    """
+    Upload latest.json to GitHub.
+    """
+
+    if not EXPORT_FILE.exists():
+        return
+
+    content = EXPORT_FILE.read_text(encoding="utf-8")
+
+    upload_file(
+        "exports/latest.json",
+        content,
+        "Update latest.json",
+    )        

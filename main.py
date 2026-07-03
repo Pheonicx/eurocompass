@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from config.banks import BANKS
 from utils.csv_handler import save_rate
 from utils.exporter import export_csv, export_json
-from utils.history_sync import sync_history
+from utils.history_sync import sync_history, sync_latest
 
 load_dotenv()
 
@@ -114,6 +114,8 @@ def main():
     # Export latest market snapshot
     export_json(results, summary)
     export_csv(results)
+
+    sync_latest()
     sync_history()
 
     stats = Table(show_header=False)
