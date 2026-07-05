@@ -1,10 +1,12 @@
 import csv
 import os
+from pathlib import Path
 from datetime import datetime
 
 
 def save_rate(rate):
 
+    Path("data").mkdir(parents=True, exist_ok=True)
     filename = f"data/{rate['bank']}.csv"
 
     file_exists = os.path.isfile(filename)
