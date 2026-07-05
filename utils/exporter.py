@@ -1,6 +1,6 @@
 import csv
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -14,7 +14,7 @@ def export_json(results, summary):
     """
 
     output = {
-        "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "generated_at": datetime.now(timezone.utc).isoformat(),
         "currency": "EUR",
         "summary": summary,
         "banks": results,
