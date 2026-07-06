@@ -1,11 +1,11 @@
 {
-    "generated_at": "2026-07-05T23:52:07.531784+00:00",
+    "generated_at": "2026-07-06T01:30:38.555876+00:00",
     "currency": "EUR",
     "summary": {
-        "banks_processed": 3,
+        "banks_processed": 4,
         "lowest_buy": {
-            "bank": "EBL",
-            "value": 138.46
+            "bank": "CITY",
+            "value": 138.3541
         },
         "highest_buy": {
             "bank": "BRAC",
@@ -19,8 +19,8 @@
             "bank": "EBL",
             "value": 143.34
         },
-        "average_buy": 139.30453333333332,
-        "average_sell": 142.83883333333333
+        "average_buy": 139.066925,
+        "average_sell": 142.926775
     },
     "banks": [
         {
@@ -28,6 +28,12 @@
             "currency": "EUR",
             "buy": 138.46,
             "sell": 143.34
+        },
+        {
+            "bank": "CITY",
+            "currency": "EUR",
+            "buy": 138.3541,
+            "sell": 143.1906
         },
         {
             "bank": "BRAC",
