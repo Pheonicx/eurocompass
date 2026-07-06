@@ -1,0 +1,479 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ---------- Global ---------- */
+
+html,
+body,
+[class*="css"]{
+
+    font-family:'Inter',sans-serif;
+
+}
+
+.stApp{
+
+    background:#F4F7FC;
+
+}
+
+/* Remove default spacing */
+
+.block-container{
+
+    max-width:1450px;
+
+    padding-top:1rem;
+
+    padding-bottom:2rem;
+
+}
+
+/* Hide Streamlit decoration */
+
+header{
+
+    visibility:hidden;
+
+}
+
+footer{
+
+    visibility:hidden;
+
+}
+
+/* ---------- Hero ---------- */
+
+.hero{
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563EB,
+            #1D4ED8);
+
+    color:white;
+
+    border-radius:28px;
+
+    padding:45px;
+
+    box-shadow:
+        0 20px 45px rgba(37,99,235,.28);
+
+}
+
+/* ---------- */
+
+.hero-title{
+
+    font-size:56px;
+
+    font-weight:800;
+
+    margin:0;
+
+}
+
+.hero-subtitle{
+
+    font-size:22px;
+
+    opacity:.95;
+
+    margin-top:10px;
+
+}
+
+.hero-description{
+
+    margin-top:15px;
+
+    font-size:18px;
+
+    opacity:.92;
+
+    max-width:650px;
+
+    line-height:1.6;
+
+}
+
+.hero-info{
+
+    margin-top:25px;
+
+    font-size:15px;
+
+    opacity:.85;
+
+}
+
+/* ---------- */
+
+.card{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:24px;
+
+    box-shadow:
+
+        0 8px 20px rgba(0,0,0,.06);
+
+    border:1px solid #EEF2F7;
+
+}
+
+/* ---------- */
+
+.section-title{
+
+    font-size:30px;
+
+    font-weight:700;
+
+    color:#0F172A;
+
+    margin-top:10px;
+
+    margin-bottom:20px;
+
+}
+
+/* ==========================================================
+   EUROCOMPASS V2
+========================================================== */
+
+/* Hero Layout */
+
+.hero-wrapper{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:50px;
+
+}
+
+/* Left */
+
+.hero-left{
+
+    flex:2;
+
+}
+
+/* Right */
+
+.hero-right{
+
+    flex:1;
+
+}
+
+/* Today's Best Card */
+
+.best-card{
+
+    background:white;
+
+    color:#0F172A;
+
+    border-radius:22px;
+
+    padding:28px;
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.18);
+
+    transition:.30s;
+
+}
+
+.best-card:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.best-title{
+
+    color:#64748B;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    letter-spacing:.5px;
+
+}
+
+.best-bank{
+
+    font-size:34px;
+
+    font-weight:800;
+
+    margin-top:15px;
+
+}
+
+.best-rate{
+
+    font-size:42px;
+
+    font-weight:800;
+
+    color:#2563EB;
+
+    margin-top:10px;
+
+}
+
+.best-save{
+
+    margin-top:18px;
+
+    color:#10B981;
+
+    font-weight:700;
+
+}
+
+/* Status Pills */
+
+.status-row{
+
+    display:flex;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+
+    margin-top:28px;
+
+}
+
+.pill{
+
+    background:rgba(255,255,255,.18);
+
+    border:1px solid rgba(255,255,255,.20);
+
+    border-radius:999px;
+
+    padding:8px 16px;
+
+    font-size:14px;
+
+    backdrop-filter:blur(10px);
+
+}
+
+/* Divider */
+
+.hero-divider{
+
+    height:1px;
+
+    background:rgba(255,255,255,.15);
+
+    margin-top:28px;
+
+    margin-bottom:28px;
+
+}
+
+/* ==========================================================
+   METRIC CARDS
+========================================================== */
+
+.metric-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:22px;
+
+    margin-top:30px;
+
+    margin-bottom:35px;
+
+}
+
+.metric-card{
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:24px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+    transition:all .25s ease;
+
+    border:1px solid #EEF2F7;
+
+}
+
+.metric-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 18px 35px rgba(37,99,235,.18);
+
+}
+
+.metric-icon{
+
+    font-size:28px;
+
+}
+
+.metric-title{
+
+    color:#64748B;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    margin-top:14px;
+
+}
+
+.metric-value{
+
+    font-size:34px;
+
+    font-weight:800;
+
+    color:#0F172A;
+
+    margin-top:10px;
+
+}
+
+.metric-bank{
+
+    color:#2563EB;
+
+    font-weight:700;
+
+    margin-top:10px;
+
+}
+
+.metric-description{
+
+    margin-top:18px;
+
+    color:#94A3B8;
+
+    font-size:14px;
+
+}
+
+/* ==========================================================
+GERMANY PLANNER
+========================================================== */
+
+.planner{
+
+    background:white;
+
+    border-radius:26px;
+
+    padding:34px;
+
+    margin-top:30px;
+
+    box-shadow:0 12px 35px rgba(0,0,0,.08);
+
+}
+
+.planner-title{
+
+    font-size:34px;
+
+    font-weight:800;
+
+    color:#0F172A;
+
+}
+
+.planner-sub{
+
+    color:#64748B;
+
+    margin-top:6px;
+
+    margin-bottom:28px;
+
+}
+
+.result-card{
+
+    background:linear-gradient(
+        135deg,
+        #2563EB,
+        #3B82F6
+    );
+
+    color:white;
+
+    border-radius:20px;
+
+    padding:26px;
+
+    margin-top:22px;
+
+}
+
+.result-label{
+
+    opacity:.85;
+
+    font-size:14px;
+
+}
+
+.result-value{
+
+    font-size:34px;
+
+    font-weight:800;
+
+    margin-top:6px;
+
+}
+
+.result-bank{
+
+    margin-top:18px;
+
+    font-size:20px;
+
+    font-weight:700;
+
+}
+
+.result-saving{
+
+    margin-top:20px;
+
+    color:#C7FFD8;
+
+    font-size:17px;
+
+    font-weight:700;
+
+}
