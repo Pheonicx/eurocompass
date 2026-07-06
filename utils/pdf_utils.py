@@ -54,3 +54,27 @@ def find_currency_row(tables, currency):
                     return row
 
     return None
+
+import re
+
+
+def extract_text_from_pdf(pdf_bytes):
+    """
+    Extract all text from a PDF.
+
+    Returns:
+        str
+    """
+
+    text = ""
+
+    with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
+
+        for page in pdf.pages:
+
+            page_text = page.extract_text()
+
+            if page_text:
+                text += page_text + "\n"
+
+    return text

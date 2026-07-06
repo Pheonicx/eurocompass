@@ -10,13 +10,15 @@ from charts import create_bar_chart
 from history import load_history
 from history_chart import create_history_chart
 from calculator import calculate_transfer_cost, get_best_bank
-
+from config.banks import BANKS
 
 st.set_page_config(
     page_title="EuroCompass",
     page_icon="🧭",
     layout="wide",
 )
+
+
 
 data = load_market_data()
 
@@ -263,14 +265,14 @@ st.divider()
 
 st.header("📈 Historical Exchange Rate Analysis")
 
+bank_names = [
+    collector.__name__.split(".")[-1].upper()
+    for collector in BANKS
+]
+
 selected_bank = st.selectbox(
     "Select Bank",
-    [
-        "EBL",
-        "CITY",
-        "BRAC",
-        "PRIME",
-    ],
+    sorted(bank_names),
 )
 
 history_df = load_history(selected_bank)
