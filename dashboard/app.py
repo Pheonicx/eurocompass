@@ -42,8 +42,10 @@ df = df.rename(
     }
 )
 
-# Rank by lowest buy price
-df = df.sort_values("Buy").reset_index(drop=True)
+# Rank by lowest sell price (TT Selling rate) - this matches the Germany
+# Transfer Calculator above, which also picks the "best" bank by lowest
+# sell rate. Ranking by "Buy" here caused the two sections to disagree.
+df = df.sort_values("Sell").reset_index(drop=True)
 
 medals = ["🥇", "🥈", "🥉"]
 

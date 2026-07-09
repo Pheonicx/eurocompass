@@ -1,57 +1,113 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+/* =====================================================
+   Global Typography
+===================================================== */
 
 html,
 body,
-[class*="css"]{
-
-font-family:'Inter',sans-serif;
-
+[class*="css"],
+.stApp {
+    font-family: "Inter", sans-serif;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* Typography Scale */
+/* =====================================================
+   Headings
+===================================================== */
 
-.display{
-
-font-size:56px;
-
-font-weight:800;
-
+h1 {
+    font-size: 2.75rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: .75rem;
 }
 
-.h1{
-
-font-size:40px;
-
-font-weight:800;
-
+h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
 }
 
-.h2{
-
-font-size:32px;
-
-font-weight:700;
-
+h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: .75rem;
 }
 
-.h3{
-
-font-size:24px;
-
-font-weight:700;
-
+h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
 }
 
-.body{
-
-font-size:16px;
-
+h5 {
+    font-size: 1rem;
+    font-weight: 600;
 }
 
-.caption{
+/* =====================================================
+   Paragraph
+===================================================== */
 
-font-size:14px;
+p,
+li,
+label {
+    font-size: .98rem;
+    line-height: 1.7;
+    color: var(--text-light);
+}
 
-color:var(--text-light);
+/* =====================================================
+   Caption
+===================================================== */
 
+small,
+caption {
+    color: var(--muted);
+    font-size: .82rem;
+}
+
+/* =====================================================
+   Streamlit Caption
+===================================================== */
+
+.stCaption {
+    color: var(--muted);
+    font-size: .82rem;
+    letter-spacing: .02em;
+}
+
+/* =====================================================
+   Metric Cards
+===================================================== */
+
+[data-testid="stMetricLabel"] {
+    font-size: .90rem;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+[data-testid="stMetricValue"] {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.1;
+}
+
+[data-testid="stMetricDelta"] {
+    font-size: .82rem;
+    font-weight: 600;
+}
+
+/* =====================================================
+   Sidebar
+===================================================== */
+
+section[data-testid="stSidebar"] * {
+    font-family: "Inter", sans-serif;
 }

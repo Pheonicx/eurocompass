@@ -1,109 +1,225 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+/* =====================================================
+   Global Layout
+===================================================== */
 
-/* ==========================================================
-   GLOBAL
-========================================================== */
-
-html,
-body,
-[class*="css"]{
-    font-family:'Inter',sans-serif;
+.stApp {
+    background: var(--background);
 }
 
-.stApp{
-    background:#F5F7FB;
+.block-container {
+    max-width: var(--content-width);
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 
-/* ==========================================================
-   PAGE LAYOUT
-========================================================== */
+/* =====================================================
+   Main Cards
+===================================================== */
 
-.block-container{
-    max-width:1320px;
-    padding-top:2rem;
-    padding-bottom:3rem;
-    padding-left:2rem;
-    padding-right:2rem;
+div[data-testid="stVerticalBlock"] > div:has(div[data-testid="stMetric"]) {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    box-shadow: var(--shadow-sm);
 }
 
-/* ==========================================================
-   STREAMLIT
-========================================================== */
-
-header{
-    visibility:hidden;
+div[data-testid="stMetric"] {
+    background: white;
+    border-radius: var(--radius-md);
 }
 
-footer{
-    visibility:hidden;
+/* =====================================================
+   Generic Containers
+===================================================== */
+
+div[data-testid="stVerticalBlock"] {
+    gap: 1rem;
 }
 
-#MainMenu{
-    visibility:hidden;
+/* =====================================================
+   Horizontal Rule
+===================================================== */
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
 }
 
-/* ==========================================================
-   SPACING
-========================================================== */
+/* =====================================================
+   Selectbox
+===================================================== */
 
-div[data-testid="stVerticalBlock"]{
-    gap:1.4rem;
+.stSelectbox > div > div {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    background: white;
 }
 
-div[data-testid="stHorizontalBlock"]{
-    gap:1.4rem;
+.stSelectbox label {
+    font-weight: 600;
 }
 
-/* ==========================================================
-   METRICS
-========================================================== */
+/* =====================================================
+   Number Input
+===================================================== */
 
-div[data-testid="stMetric"]{
-    background:#FFFFFF;
-    border:1px solid #E7ECF3;
-    border-radius:18px;
-    padding:20px;
-    box-shadow:0 6px 20px rgba(15,23,42,.05);
-    transition:all .25s ease;
+.stNumberInput input {
+    border-radius: var(--radius-md);
 }
 
-div[data-testid="stMetric"]:hover{
-    transform:translateY(-4px);
-    box-shadow:0 12px 28px rgba(37,99,235,.12);
+/* =====================================================
+   Buttons
+===================================================== */
+
+.stButton button {
+
+    background: var(--primary);
+
+    color: white;
+
+    border: none;
+
+    border-radius: 14px;
+
+    font-weight: 600;
+
+    transition: .2s;
+
+    padding: .55rem 1.2rem;
 }
 
-/* ==========================================================
-   INPUTS
-========================================================== */
+.stButton button:hover {
 
-div[data-baseweb="input"]{
-    border-radius:14px;
+    transform: translateY(-1px);
+
+    box-shadow: var(--shadow-md);
+
 }
 
-/* ==========================================================
-   TABLE
-========================================================== */
+/* =====================================================
+   Metric Card
+===================================================== */
 
-div[data-testid="stDataFrame"]{
-    border-radius:18px;
-    overflow:hidden;
-    border:1px solid #E7ECF3;
+[data-testid="metric-container"] {
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-md);
+
+    padding: 18px;
+
+    box-shadow: var(--shadow-sm);
+
 }
 
-/* ==========================================================
-   BUTTONS
-========================================================== */
+/* =====================================================
+   Info / Success / Warning
+===================================================== */
 
-.stButton>button{
-    border-radius:12px;
-    font-weight:600;
+.stAlert {
+
+    border-radius: var(--radius-md);
+
+    border: none;
+
 }
 
-/* ==========================================================
-   DIVIDER
-========================================================== */
+/* =====================================================
+   Plotly Charts
+===================================================== */
 
-hr{
-    border:none;
-    border-top:1px solid #E7ECF3;
+.js-plotly-plot {
+
+    border-radius: var(--radius-lg);
+
+    overflow: hidden;
+
+    box-shadow: var(--shadow-sm);
+
+    background: white;
+
+    padding: .5rem;
+
+}
+
+/* =====================================================
+   Tables
+===================================================== */
+
+[data-testid="stDataFrame"] {
+
+    border-radius: var(--radius-md);
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+
+}
+
+/* =====================================================
+   Sidebar
+===================================================== */
+
+section[data-testid="stSidebar"] {
+
+    background: white;
+
+    border-right: 1px solid var(--border);
+
+}
+
+/* =====================================================
+   Images
+===================================================== */
+
+img {
+
+    border-radius: 12px;
+
+}
+
+/* =====================================================
+   Spacing
+===================================================== */
+
+h1 {
+
+    margin-bottom: .25rem;
+
+}
+
+h2 {
+
+    margin-top: 2.5rem;
+
+}
+
+.stCaption {
+
+    margin-bottom: 1rem;
+
+}
+
+/* =====================================================
+   Scrollbar
+===================================================== */
+
+::-webkit-scrollbar {
+
+    width: 8px;
+
+}
+
+::-webkit-scrollbar-thumb {
+
+    background: #CBD5E1;
+
+    border-radius: 20px;
+
 }

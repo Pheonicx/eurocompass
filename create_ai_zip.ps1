@@ -39,6 +39,13 @@ $ExcludedExtensions = @(
     ".pyo"
 )
 
+# Never package secret/credential files
+$ExcludedFileNames = @(
+    ".env",
+    ".env.local",
+    ".env.production"
+)
+
 Write-Host "Copying files..."
 
 Get-ChildItem $ProjectRoot -Recurse -Force -File |
@@ -56,6 +63,10 @@ Where-Object {
     }
 
     if($ExcludedExtensions -contains $_.Extension){
+        $skip = $true
+    }
+
+    if($ExcludedFileNames -contains $_.Name){
         $skip = $true
     }
 

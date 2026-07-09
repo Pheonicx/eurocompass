@@ -14,7 +14,7 @@ from components.recommendation import recommendation
 from components.transfer_comparison import transfer_comparison
 from components.market_table import market_table
 from components.history_section import history_section
-
+from components.intelligence import intelligence
 
 # =====================================================
 # PAGE SETUP
@@ -30,6 +30,10 @@ if data is None:
 
 summary = data["summary"]
 banks = data["banks"]
+market_spread = (
+    summary["highest_sell"]["value"]
+    - summary["lowest_sell"]["value"]
+)
 
 
 # =====================================================
@@ -90,33 +94,12 @@ st.write()
 
 
 # =====================================================
-# QUICK STATS
-# =====================================================
-
-quick_stats(
-    summary,
-)
-
-st.write()
-
-
-# =====================================================
 # MARKET ANALYTICS
 # =====================================================
 
-analytics(
-    summary,
-)
-
-st.write()
-
-
-# =====================================================
-# MARKET GAUGE
-# =====================================================
-
-market_gauge(
-    summary,
+intelligence(
+    selected_bank=summary["lowest_sell"]["bank"],
+    market_spread=market_spread,
 )
 
 st.write()

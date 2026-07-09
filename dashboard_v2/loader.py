@@ -13,6 +13,7 @@ from collectors import brac
 from collectors import city
 from collectors import ebl
 from collectors import prime
+from collectors import sonali
 
 
 DATA_FILE = Path("exports/latest.json")
@@ -25,7 +26,7 @@ def collect_live_data():
 
     banks = []
 
-    for collector in [ebl, city, brac, prime]:
+    for collector in [ebl, city, brac, prime, sonali]:
 
         try:
 
