@@ -3,28 +3,151 @@ import streamlit as st
 from loader import load_market_data
 from theme import load_theme
 
-from components.market_overview import market_overview
+from components.header import header
 from components.metrics import metrics
-from components.germany_planner import germany_planner
+from components.planner import planner
+from components.charts import charts
+from components.quick_stats import quick_stats
+from components.analytics import analytics
+from components.gauge import market_gauge
+from components.recommendation import recommendation
+from components.transfer_comparison import transfer_comparison
+from components.market_table import market_table
+from components.history_section import history_section
+
+
+# =====================================================
+# PAGE SETUP
+# =====================================================
 
 load_theme()
 
 data = load_market_data()
 
 if data is None:
-
     st.error("No market data found.")
-
     st.stop()
 
-market_overview(
+summary = data["summary"]
+banks = data["banks"]
+
+
+# =====================================================
+# HEADER
+# =====================================================
+
+header(
     data,
-    data["summary"],
-)
-metrics(
-    data["summary"]
+    summary,
 )
 
-germany_planner(
-    data["banks"]
+st.write()
+
+
+# =====================================================
+# METRICS
+# =====================================================
+
+metrics(
+    summary,
+)
+
+st.write()
+
+
+# =====================================================
+# EUROCOMPASS AI RECOMMENDATION
+# =====================================================
+
+recommendation(
+    summary,
+    banks,
+)
+
+st.write()
+
+
+# =====================================================
+# GERMANY TRANSFER PLANNER
+# =====================================================
+
+planner(
+    banks,
+)
+
+st.write()
+
+
+# =====================================================
+# LIVE MARKET CHARTS
+# =====================================================
+
+charts(
+    banks,
+)
+
+st.write()
+
+
+# =====================================================
+# QUICK STATS
+# =====================================================
+
+quick_stats(
+    summary,
+)
+
+st.write()
+
+
+# =====================================================
+# MARKET ANALYTICS
+# =====================================================
+
+analytics(
+    summary,
+)
+
+st.write()
+
+
+# =====================================================
+# MARKET GAUGE
+# =====================================================
+
+market_gauge(
+    summary,
+)
+
+st.write()
+
+
+# =====================================================
+# TRANSFER COMPARISON
+# =====================================================
+
+transfer_comparison(
+    banks,
+)
+
+st.write()
+
+
+# =====================================================
+# MARKET TABLE
+# =====================================================
+
+market_table(
+    banks,
+)
+
+st.write()
+
+
+# =====================================================
+# HISTORY
+# =====================================================
+
+history_section(
+    banks,
 )

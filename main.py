@@ -9,6 +9,7 @@ from config.banks import BANKS
 from utils.csv_handler import save_rate
 from utils.exporter import export_csv, export_json
 from utils.history_sync import sync_history, sync_latest
+from utils.history_restore import restore_history
 
 load_dotenv()
 
@@ -16,10 +17,14 @@ console = Console()
 
 
 def main():
+
+    # Restore previous history before collecting new data
+    restore_history()
+
     console.print(
         Panel.fit(
-                 "[bold cyan]🧭 EuroCompass[/bold cyan]\n"
-                 "EUR Exchange Rate Intelligence for Bangladesh",
+            "[bold cyan]🧭 EuroCompass[/bold cyan]\n"
+            "EUR Exchange Rate Intelligence for Bangladesh",
             border_style="cyan",
         )
     )
@@ -37,6 +42,7 @@ def main():
     for collector in BANKS:
 
         try:
+
             rate = collector.get_rate()
 
             if rate:
@@ -91,27 +97,27 @@ def main():
     avg_sell = mean(r["sell"] for r in results)
 
     summary = {
-    "banks_processed": len(results),
-    "lowest_buy": {
-        "bank": best_buy["bank"],
-        "value": best_buy["buy"],
-    },
-    "highest_buy": {
-        "bank": highest_buy["bank"],
-        "value": highest_buy["buy"],
-    },
-    "lowest_sell": {
-        "bank": best_sell["bank"],
-        "value": best_sell["sell"],
-    },
-    "highest_sell": {
-        "bank": highest_sell["bank"],
-        "value": highest_sell["sell"],
-    },
-    "average_buy": avg_buy,
-    "average_sell": avg_sell,
-}
-    # Export latest market snapshot
+        "banks_processed": len(results),
+        "lowest_buy": {
+            "bank": best_buy["bank"],
+            "value": best_buy["buy"],
+        },
+        "highest_buy": {
+            "bank": highest_buy["bank"],
+            "value": highest_buy["buy"],
+        },
+        "lowest_sell": {
+            "bank": best_sell["bank"],
+            "value": best_sell["sell"],
+        },
+        "highest_sell": {
+            "bank": highest_sell["bank"],
+            "value": highest_sell["sell"],
+        },
+        "average_buy": avg_buy,
+        "average_sell": avg_sell,
+    }
+
     export_json(results, summary)
     export_csv(results)
 

@@ -14,17 +14,29 @@ def load_theme():
     assets = Path(__file__).parent / "assets"
 
     css_files = [
-        "tokens.css",
-        "fonts.css",
-        "animations.css",
-        "styles.css",
+        assets / "tokens.css",
+        assets / "fonts.css",
+        assets / "animations.css",
+        assets / "styles.css",
+
+        assets / "theme" / "header.css",
+        assets / "theme" / "metrics.css",
+        assets / "theme" / "planner.css",
+        assets / "theme" / "table.css",
+        assets / "theme" / "charts.css",
     ]
 
     css = ""
 
     for file in css_files:
-        with open(assets / file, encoding="utf-8") as f:
-            css += f.read() + "\n"
+
+        if file.exists():
+
+            css += file.read_text(
+                encoding="utf-8"
+            )
+
+            css += "\n"
 
     st.markdown(
         f"<style>{css}</style>",

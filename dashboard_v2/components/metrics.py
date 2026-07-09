@@ -1,56 +1,53 @@
 import streamlit as st
 
-from components.ui.stat import stat
+
+def metric_card(title, value, bank, icon):
+
+    with st.container(border=True):
+
+        st.caption(f"{icon} {title}")
+
+        st.markdown(
+            f"""
+## ৳ {value:.4f}
+"""
+        )
+
+        st.caption(f"Bank: {bank}")
 
 
 def metrics(summary):
 
-    cols = st.columns(4)
+    c1, c2, c3, c4 = st.columns(4, gap="large")
 
-    with cols[0]:
-        st.markdown(
-            stat(
-                icon="💶",
-                title="Lowest Buy",
-                value=f"{summary['lowest_buy']['value']:.4f}",
-                subtitle=summary["lowest_buy"]["bank"],
-                accent="#10B981",
-            ),
-            unsafe_allow_html=True,
+    with c1:
+        metric_card(
+            "Lowest Sell",
+            summary["lowest_sell"]["value"],
+            summary["lowest_sell"]["bank"],
+            "🏦",
         )
 
-    with cols[1]:
-        st.markdown(
-            stat(
-                icon="💸",
-                title="Highest Buy",
-                value=f"{summary['highest_buy']['value']:.4f}",
-                subtitle=summary["highest_buy"]["bank"],
-                accent="#F59E0B",
-            ),
-            unsafe_allow_html=True,
+    with c2:
+        metric_card(
+            "Highest Sell",
+            summary["highest_sell"]["value"],
+            summary["highest_sell"]["bank"],
+            "📈",
         )
 
-    with cols[2]:
-        st.markdown(
-            stat(
-                icon="🏦",
-                title="Lowest Sell",
-                value=f"{summary['lowest_sell']['value']:.4f}",
-                subtitle=summary["lowest_sell"]["bank"],
-                accent="#2563EB",
-            ),
-            unsafe_allow_html=True,
+    with c3:
+        metric_card(
+            "Lowest Buy",
+            summary["lowest_buy"]["value"],
+            summary["lowest_buy"]["bank"],
+            "💶",
         )
 
-    with cols[3]:
-        st.markdown(
-            stat(
-                icon="📈",
-                title="Highest Sell",
-                value=f"{summary['highest_sell']['value']:.4f}",
-                subtitle=summary["highest_sell"]["bank"],
-                accent="#EF4444",
-            ),
-            unsafe_allow_html=True,
+    with c4:
+        metric_card(
+            "Highest Buy",
+            summary["highest_buy"]["value"],
+            summary["highest_buy"]["bank"],
+            "💰",
         )

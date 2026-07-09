@@ -1,0 +1,155 @@
+/* ==========================================================
+   MARKET TABLE
+========================================================== */
+
+.market-table{
+
+    background:white;
+
+    border-radius:24px;
+
+    padding:30px;
+
+    box-shadow:0 10px 30px rgba(15,23,42,.06);
+
+    border:1px solid #E5E7EB;
+
+    margin-top:32px;
+
+}
+
+.market-table-title{
+
+    font-size:34px;
+
+    font-weight:800;
+
+    color:#0F172A;
+
+}
+
+.market-table-sub{
+
+    margin-top:8px;
+
+    color:#64748B;
+
+    font-size:16px;
+
+}
+
+.market-table-grid{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    margin-top:28px;
+
+}
+
+.market-table-grid thead{
+
+    background:#F8FAFC;
+
+}
+
+.market-table-grid th{
+
+    padding:18px;
+
+    text-align:left;
+
+    font-size:14px;
+
+    color:#64748B;
+
+    font-weight:700;
+
+}
+
+.market-table-grid td{
+
+    padding:20px 18px;
+
+    border-top:1px solid #EEF2F7;
+
+    font-size:16px;
+
+}
+
+.market-table-grid tbody tr{
+
+    transition:.20s;
+
+}
+
+.market-table-grid tbody tr:hover{
+
+    background:#F8FAFC;
+
+}
+
+.rank{
+
+    font-weight:800;
+
+    color:#64748B;
+
+}
+
+.best-row{
+
+    background:#ECFDF5;
+
+}
+
+.best-row:hover{
+
+    background:#D1FAE5 !important;
+
+}
+
+.worst-row{
+
+    background:#FEF2F2;
+
+}
+
+.worst-row:hover{
+
+    background:#FEE2E2 !important;
+
+}
+
+.bank{
+
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+.rate{
+
+    font-weight:700;
+
+    color:#2563EB;
+
+}
+
+.total{
+
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+.saving{
+
+    font-weight:700;
+
+    color:#10B981;
+
+}
