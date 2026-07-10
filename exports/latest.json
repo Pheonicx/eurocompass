@@ -1,11 +1,11 @@
 {
-    "generated_at": "2026-07-10T20:10:07.595174+00:00",
+    "generated_at": "2026-07-10T21:46:44.210975+00:00",
     "currency": "EUR",
     "summary": {
-        "banks_processed": 4,
+        "banks_processed": 3,
         "lowest_buy": {
-            "bank": "EBL",
-            "value": 138.35
+            "bank": "PRIME",
+            "value": 139.444
         },
         "highest_buy": {
             "bank": "SONALI",
@@ -16,19 +16,13 @@
             "value": 142.368
         },
         "highest_sell": {
-            "bank": "EBL",
-            "value": 143.21
+            "bank": "SONALI",
+            "value": 142.8357
         },
-        "average_buy": 139.42665,
-        "average_sell": 142.72795
+        "average_buy": 139.78553333333332,
+        "average_sell": 142.56726666666665
     },
     "banks": [
-        {
-            "bank": "EBL",
-            "currency": "EUR",
-            "buy": 138.35,
-            "sell": 143.21
-        },
         {
             "bank": "BRAC",
             "currency": "EUR",
