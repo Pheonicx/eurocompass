@@ -1,0 +1,42 @@
+name: EuroCompass Daily Report
+
+on:
+
+  workflow_dispatch:
+
+  schedule:
+
+    # 09:00 Bangladesh
+    - cron: "0 3 * * *"
+
+jobs:
+
+  report:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Send Daily Report
+
+        env:
+
+          TELEGRAM_BOT_TOKEN: ${{ secrets.EUROCOMPASS_TELEGRAM_BOT_TOKEN }}
+
+          TELEGRAM_CHAT_ID: ${{ secrets.EUROCOMPASS_TELEGRAM_CHAT_ID }}
+
+        run: |
+
+          python telegram_bot/daily_report.py

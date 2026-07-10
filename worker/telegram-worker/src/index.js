@@ -1,5 +1,7 @@
 const DATA_URL =
   "https://raw.githubusercontent.com/Pheonicx/eurocompass/main/exports/latest.json";
+// Users waiting to enter EUR amount
+const pendingRecommendations = new Map();
 
 async function loadData() {
   const response = await fetch(DATA_URL);
@@ -32,6 +34,7 @@ function calculateTransferCost(banks, euroAmount) {
 }
 
 async function sendTelegramMessage(env, chatId, text) {
+
   const url =
     `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`;
 
@@ -41,14 +44,43 @@ async function sendTelegramMessage(env, chatId, text) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+
       chat_id: chatId,
+
       text: text,
+
+      reply_markup: {
+
+        keyboard: [
+
+        [
+          { text: "📊 Rates" },
+          { text: "💶 Recommend" }
+        ],
+
+        [
+          { text: "🟢 Status" },
+          { text: "🌐 Dashboard" }
+        ],
+
+        [
+          { text: "❓ Help" }
+        ]
+
+      ],
+
+        resize_keyboard: true,
+        is_persistent: true
+
+      }
+
     }),
   });
 
   if (!response.ok) {
     console.log(await response.text());
   }
+
 }
 
 export default {
@@ -122,7 +154,10 @@ if (!message) {
 const chatId = message.chat.id;
 const text = message.text ?? "";
 
-if (text === "/start") {
+if (
+  text === "/start" ||
+  text === "/menu"
+) {
 
   await sendTelegramMessage(
     env,
@@ -133,32 +168,129 @@ Cloud-powered EUR Exchange Intelligence
 
 Available Commands
 
-/rates
-/recommend <EUR amount>
-/help`
+📊 /rates
+Live TT selling rates
+
+💶 /recommend <EUR>
+Find the cheapest bank
+
+🟢 /status
+System status
+
+❓ /help
+Show this help`
   );
 
 }
 
-else if (text === "/rates") {
+else if (
+  text === "/help" ||
+  text === "❓ Help"
+) {
+
+  await sendTelegramMessage(
+    env,
+    chatId,
+`🧭 EuroCompass
+
+Available Commands
+
+📊 /rates
+Live TT selling rates
+
+💶 /recommend <EUR>
+Example:
+ /recommend 11904
+
+🟢 /status
+System status
+
+❓ /help
+Show this help`
+  );
+
+}
+
+else if (text === "🌐 Dashboard") {
+
+  await sendTelegramMessage(
+  env,
+  chatId,
+`🌐 EuroCompass Dashboard
+
+Access the live dashboard here:
+
+https://eurocompass.streamlit.app/
+
+📊 Live rates
+📈 Analytics
+💶 Transfer calculator`
+);
+
+}
+
+else if (
+  text === "/rates" ||
+  text === "📊 Rates"
+) {
 
   const data = await loadData();
 
-  const banks = data.banks
-    .sort((a, b) => a.sell - b.sell);
+  const banks = [...data.banks].sort(
+    (a, b) => a.sell - b.sell
+  );
 
-  let reply = "🏦 Today's EUR TT Selling Rates\n\n";
+  const best = banks[0];
+  const worst = banks[banks.length - 1];
+
+  const spread = worst.sell - best.sell;
+  const saving = spread * 12153;
+
+  let reply =
+`🧭 EuroCompass
+
+🏆 Best Today
+
+${best.bank}
+${best.sell.toFixed(4)} BDT/EUR
+
+💰 Market Spread
+${spread.toFixed(4)} BDT
+
+💸 Estimated Saving
+≈ ${saving.toFixed(0)} BDT
+
+━━━━━━━━━━━━━━
+
+🏦 Today's TT Selling Rates
+
+`;
 
   const medals = ["🥇","🥈","🥉"];
 
   banks.forEach((bank, index) => {
 
-    const rank = medals[index] ?? `${index + 1}.`;
+    const rank =
+      medals[index] ??
+      `${index + 1}.`;
 
-    reply += `${rank} ${bank.bank}\n`;
-    reply += `${bank.sell.toFixed(4)}\n\n`;
+    reply += `${rank} ${bank.bank.padEnd(8)} ${bank.sell.toFixed(4)}\n`;
 
   });
+
+  const updated = new Date(data.generated_at);
+
+  const formatted = updated.toLocaleString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  reply += `
+
+  🕒 Updated
+  ${formatted}`;
 
   await sendTelegramMessage(
     env,
@@ -168,33 +300,128 @@ else if (text === "/rates") {
 
 }
 
-else if (text.startsWith("/recommend")) {
+else if (
+  text === "/status" ||
+  text === "🟢 Status"
+) {
 
-  const parts = text.split(" ");
+  const data = await loadData();
 
-  if (parts.length !== 2) {
+  const updated = new Date(data.generated_at);
 
-    await sendTelegramMessage(
-      env,
-      chatId,
-      "Usage:\n/recommend <EUR amount>"
-    );
+  const formatted =
+    updated.toLocaleString("en-GB",{
+      day:"2-digit",
+      month:"short",
+      hour:"2-digit",
+      minute:"2-digit",
+    });
 
-    return new Response("OK");
-  }
+  await sendTelegramMessage(
+    env,
+    chatId,
+`🟢 EuroCompass Status
+
+━━━━━━━━━━━━━━
+
+System
+✅ Online
+
+Market
+🟢 Live
+
+Banks
+${data.summary.banks_processed}
+
+Best Bank
+${data.summary.lowest_sell.bank}
+
+Best TT Selling
+${data.summary.lowest_sell.value.toFixed(4)}
+
+Updated
+${formatted}`
+  );
+
+}
+
+else if (
+  text.startsWith("/recommend") ||
+  text === "💶 Recommend" ||
+  pendingRecommendations.has(chatId)
+) {
+
+  if (text === "💶 Recommend") {
+
+  pendingRecommendations.set(chatId, true);
+
+  await sendTelegramMessage(
+    env,
+    chatId,
+`💶 Germany Transfer
+
+Please enter the EUR amount.
+
+Example
+
+11904`
+  );
+
+  return new Response("OK");
+
+}
+
+let parts;
+
+if (pendingRecommendations.has(chatId) && !text.startsWith("/recommend")) {
+
+  parts = ["/recommend", text];
+
+  // don't delete yet
+
+}
+else {
+
+  parts = text.split(" ");
+
+}
+
+if (parts.length !== 2) {
+
+  await sendTelegramMessage(
+    env,
+    chatId,
+`Usage
+
+/recommend 12153`
+  );
+
+  return new Response("OK");
+
+}
 
   const euroAmount = Number(parts[1]);
 
   if (isNaN(euroAmount) || euroAmount <= 0) {
 
-    await sendTelegramMessage(
-      env,
-      chatId,
-      "Please enter a valid EUR amount."
+  await sendTelegramMessage(
+    env,
+    chatId,
+    `❌ Invalid amount.
+
+    Please enter a valid EUR amount.
+
+    Example
+
+    11904`
     );
 
     return new Response("OK");
+
   }
+
+// valid amount
+pendingRecommendations.delete(chatId);
 
   const data = await loadData();
 
@@ -210,26 +437,41 @@ else if (text.startsWith("/recommend")) {
     best.total_cost;
 
   await sendTelegramMessage(
-    env,
-    chatId,
-`💶 Germany Transfer
+  env,
+  chatId,
+`🧭 EuroCompass
 
-Amount
-€${euroAmount}
+💶 Germany Transfer Analysis
 
-🏆 Recommended Bank
+━━━━━━━━━━━━━━
 
+💶 Amount
+€${euroAmount.toLocaleString()}
+
+🏆 Best Bank
 ${best.bank}
 
-TT Selling
-${best.rate.toFixed(4)}
+💱 TT Selling
+${best.rate.toFixed(4)} BDT/EUR
 
-Estimated Cost
-${best.total_cost.toFixed(2)} BDT
+💵 Total Cost
+${best.total_cost.toLocaleString(undefined,{
+minimumFractionDigits:2,
+maximumFractionDigits:2
+})} BDT
 
-Savings vs Most Expensive Bank
-${savings.toFixed(2)} BDT`
-  );
+💰 Estimated Saving
+≈ ${savings.toLocaleString(undefined,{
+minimumFractionDigits:0,
+maximumFractionDigits:0
+})} BDT
+
+━━━━━━━━━━━━━━
+
+✅ Recommendation
+
+Transfer using ${best.bank} today.`
+);
 
 }
 
