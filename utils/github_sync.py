@@ -1,5 +1,6 @@
 import base64
 import os
+from urllib import response
 
 import requests
 
@@ -77,6 +78,11 @@ def upload_file(path_in_repo, content, message):
         headers=headers,
         json=payload,
     )
+
+    if not response.ok:
+        print("GitHub API Error:")
+        print(response.status_code)
+        print(response.text)
 
     response.raise_for_status()
 
