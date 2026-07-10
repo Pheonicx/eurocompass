@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>EuroCompass — Germany Finance Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --bg-alt:#F8FAFC;
+    --border:#E2E8F0;
+    --border-strong:#CBD5E1;
+    --text-primary:#0F172A;
+    --text-secondary:#64748B;
+    --text-muted:#94A3B8;
+    --accent:#2563EB;
+    --accent-dark:#1D4ED8;
+    --accent-light:#EFF6FF;
+    --success:#059669;
+    --success-light:#ECFDF5;
+    --amber:#D97706;
+    --amber-light:#FFFBEB;
+    --danger:#DC2626;
+    --danger-light:#FEF2F2;
+    --navy:#0B1728;
+    --radius-card:18px;
+    --radius-sm:10px;
+    --shadow-card:0 1px 2px rgba(15,23,42,0.04), 0 10px 28px rgba(15,23,42,0.07);
+    --shadow-card-lg:0 2px 6px rgba(15,23,42,0.05), 0 20px 44px rgba(15,23,42,0.09);
+    --font-display:'Space Grotesk', sans-serif;
+    --font-sans:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg-alt);
+    font-family:var(--font-sans);
+    color:var(--text-primary);
+    min-width:1280px;
+  }
+  .shell{max-width:1440px;margin:0 auto;padding:0 40px 80px;}
+  a{color:inherit;text-decoration:none;}
+
+  /* ---------- Ticker ---------- */
+  .ticker-wrap{
+    background:var(--navy);
+    overflow:hidden;
+    white-space:nowrap;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .ticker-track{
+    display:inline-flex;
+    align-items:center;
+    animation:scroll-left 38s linear infinite;
+    padding:9px 0;
+  }
+  @keyframes scroll-left{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+  }
+  .ticker-item{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:0 28px;
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:rgba(255,255,255,0.72);
+    border-right:1px solid rgba(255,255,255,0.08);
+  }
+  .ticker-item b{color:#fff;font-weight:500;margin-right:2px;}
+  .ticker-item .up{color:#34D399;}
+  .ticker-item .down{color:#F87171;}
+
+  /* ---------- Nav ---------- */
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 0 20px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{
+    width:34px;height:34px;border-radius:9px;
+    background:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .brand-mark svg{width:18px;height:18px;}
+  .brand-name{font-family:var(--font-display);font-weight:700;font-size:19px;letter-spacing:-0.01em;}
+  .nav-links{display:flex;gap:32px;}
+  .nav-link{font-size:14px;font-weight:500;color:var(--text-secondary);padding:6px 2px;border-bottom:2px solid transparent;}
+  .nav-link.active{color:var(--text-primary);border-bottom-color:var(--accent);}
+  .nav-right{display:flex;align-items:center;gap:18px;}
+  .updated{font-size:12.5px;color:var(--text-muted);font-family:var(--font-mono);}
+  .refresh-btn{
+    display:flex;align-items:center;gap:6px;
+    background:var(--bg);border:1px solid var(--border);border-radius:8px;
+    padding:8px 14px;font-size:13px;font-weight:500;color:var(--text-primary);
+    box-shadow:var(--shadow-card);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    display:grid;grid-template-columns:1.15fr 0.85fr;gap:28px;
+    margin:8px 0 44px;
+  }
+  .hero-left{
+    background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-card);
+    padding:44px 44px 40px;box-shadow:var(--shadow-card);
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .eyebrow{
+    font-size:12px;font-weight:600;letter-spacing:0.08em;color:var(--accent);
+    text-transform:uppercase;margin:0 0 14px;
+  }
+  .hero-title{
+    font-family:var(--font-display);font-weight:700;font-size:38px;line-height:1.15;
+    letter-spacing:-0.02em;margin:0 0 14px;color:var(--text-primary);
+  }
+  .hero-sub{
+    font-size:15px;color:var(--text-secondary);line-height:1.6;margin:0 0 28px;max-width:460px;
+  }
+  .hero-rec{
+    display:flex;align-items:center;gap:14px;
+    background:var(--accent-light);border:1px solid #DBEAFE;border-radius:var(--radius-sm);
+    padding:16px 20px;width:fit-content;
+  }
+  .hero-rec-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+  .hero-rec-text{font-size:13.5px;color:var(--accent-dark);font-weight:500;}
+  .hero-rec-text b{font-weight:600;}
+
+  .hero-right{
+    background:var(--navy);border-radius:var(--radius-card);
+    padding:32px 32px 28px;box-shadow:var(--shadow-card-lg);
+    display:flex;flex-direction:column;gap:22px;color:#fff;
+  }
+  .hero-right-label{font-size:12px;color:rgba(255,255,255,0.55);letter-spacing:0.06em;text-transform:uppercase;font-weight:600;}
+  .best-bank-row{display:flex;align-items:baseline;justify-content:space-between;}
+  .best-bank-name{font-family:var(--font-display);font-weight:600;font-size:26px;}
+  .best-bank-rate{font-family:var(--font-mono);font-size:20px;color:#34D399;font-weight:500;}
+  .hero-divider{height:1px;background:rgba(255,255,255,0.1);}
+  .savings-block{display:flex;flex-direction:column;gap:4px;}
+  .savings-value{font-family:var(--font-mono);font-weight:600;font-size:34px;letter-spacing:-0.01em;}
+  .savings-caption{font-size:12.5px;color:rgba(255,255,255,0.55);}
+  .hero-stats-row{display:flex;gap:20px;}
+  .hero-stat{flex:1;}
+  .hero-stat-label{font-size:11.5px;color:rgba(255,255,255,0.5);margin-bottom:4px;}
+  .hero-stat-value{font-family:var(--font-mono);font-size:15px;font-weight:500;}
+
+  /* ---------- Section headers ---------- */
+  .section{margin-bottom:44px;}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px;}
+  .section-title{font-family:var(--font-display);font-weight:600;font-size:20px;letter-spacing:-0.01em;margin:0;}
+  .section-caption{font-size:13px;color:var(--text-muted);}
+
+  /* ---------- Cards generic ---------- */
+  .card{
+    background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-card);
+    box-shadow:var(--shadow-card);
+  }
+
+  /* ---------- Market Intelligence ---------- */
+  .mi-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1.3fr;gap:20px;}
+  .mi-card{padding:26px 24px;display:flex;flex-direction:column;align-items:flex-start;}
+  .mi-label{font-size:12.5px;color:var(--text-secondary);font-weight:500;margin-bottom:16px;}
+  .gauge-wrap{display:flex;align-items:center;gap:14px;}
+  .gauge-num{font-family:var(--font-mono);font-size:26px;font-weight:600;}
+  .gauge-sub{font-size:12px;color:var(--text-muted);}
+  .health-badge{
+    display:inline-flex;align-items:center;gap:7px;
+    background:var(--success-light);color:#065F46;border-radius:999px;
+    padding:8px 16px;font-size:14px;font-weight:500;
+  }
+  .health-dot{width:7px;height:7px;border-radius:50%;background:var(--success);}
+  .health-note{font-size:12.5px;color:var(--text-muted);margin-top:12px;line-height:1.5;}
+  .confidence-num{font-family:var(--font-mono);font-size:26px;font-weight:600;margin-bottom:12px;}
+  .meter-track{width:100%;height:6px;background:var(--bg-alt);border-radius:99px;overflow:hidden;}
+  .meter-fill{height:100%;background:var(--accent);border-radius:99px;}
+  .reasons-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;width:100%;}
+  .reasons-list li{
+    font-size:13px;color:var(--text-secondary);line-height:1.5;
+    padding-left:16px;position:relative;
+  }
+  .reasons-list li::before{
+    content:"";position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent);
+  }
+
+  /* ---------- Charts row ---------- */
+  .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .chart-card{padding:26px 26px 20px;}
+  .chart-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+  .chart-card-title{font-size:14.5px;font-weight:600;}
+  .legend-row{display:flex;gap:16px;}
+  .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-secondary);}
+  .legend-dot{width:9px;height:9px;border-radius:2px;}
+
+  /* ---------- Calculator ---------- */
+  .calc-card{padding:32px 36px;display:grid;grid-template-columns:0.9fr 2.1fr;gap:36px;}
+  .calc-input-block{display:flex;flex-direction:column;gap:8px;}
+  .calc-label{font-size:12.5px;font-weight:500;color:var(--text-secondary);}
+  .calc-input-row{display:flex;align-items:center;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;}
+  .calc-input-prefix{padding:12px 14px;background:var(--bg-alt);font-family:var(--font-mono);font-size:14px;color:var(--text-secondary);border-right:1px solid var(--border);}
+  .calc-input{
+    border:none;outline:none;padding:12px 14px;font-family:var(--font-mono);font-size:16px;
+    width:100%;color:var(--text-primary);
+  }
+  .calc-hint{font-size:12px;color:var(--text-muted);margin-top:4px;}
+  .calc-results{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  .result-tile{background:var(--bg-alt);border-radius:var(--radius-sm);padding:18px 18px 16px;}
+  .result-tile.accent{background:var(--accent-light);}
+  .result-tile-label{font-size:11.5px;color:var(--text-secondary);font-weight:500;margin-bottom:8px;}
+  .result-tile-value{font-family:var(--font-mono);font-size:19px;font-weight:600;}
+  .result-tile-value.accent-text{color:var(--accent-dark);}
+  .result-tile-sub{font-size:11.5px;color:var(--text-muted);margin-top:4px;}
+
+  /* ---------- Ranking table ---------- */
+  .rank-card{padding:8px 0 4px;}
+  table.rank-table{width:100%;border-collapse:collapse;}
+  .rank-table thead th{
+    text-align:left;font-size:11.5px;font-weight:600;color:var(--text-muted);
+    text-transform:uppercase;letter-spacing:0.04em;
+    padding:16px 26px 12px;border-bottom:1px solid var(--border);
+  }
+  .rank-table thead th.num{text-align:right;}
+  .rank-table tbody td{padding:16px 26px;font-size:14px;border-bottom:1px solid var(--border);}
+  .rank-table tbody tr:last-child td{border-bottom:none;}
+  .rank-table tbody td.num{text-align:right;font-family:var(--font-mono);}
+  .rank-badge{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:26px;height:26px;border-radius:7px;font-size:12.5px;font-weight:600;
+    background:var(--bg-alt);color:var(--text-secondary);
+  }
+  .rank-badge.gold{background:#FFFBEB;color:#B45309;}
+  .rank-badge.silver{background:#F8FAFC;color:#64748B;border:1px solid var(--border-strong);}
+  .rank-badge.bronze{background:#FEF2F2;color:#B45309;}
+  .bank-cell{display:flex;align-items:center;gap:12px;}
+  .bank-icon{
+    width:32px;height:32px;border-radius:8px;background:var(--accent-light);color:var(--accent-dark);
+    display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:600;font-size:12.5px;
+  }
+  .bank-name{font-weight:500;}
+  .diff-pos{color:var(--danger);}
+  .diff-best{color:var(--success);font-weight:500;}
+  .row-best{background:var(--success-light);}
+
+  /* ---------- Historical section ---------- */
+  .hist-card{padding:26px 26px 20px;}
+  .hist-controls{display:flex;align-items:center;gap:10px;}
+  .bank-select{
+    border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:13px;
+    font-family:var(--font-sans);color:var(--text-primary);background:var(--bg);
+  }
+  .range-pills{display:flex;gap:6px;}
+  .pill{
+    border:1px solid var(--border);border-radius:999px;padding:6px 13px;font-size:12.5px;
+    color:var(--text-secondary);font-weight:500;cursor:default;
+  }
+  .pill.active{background:var(--text-primary);color:#fff;border-color:var(--text-primary);}
+
+  footer{text-align:center;font-size:12px;color:var(--text-muted);padding:20px 0 0;}
+</style>
+</head>
+<body>
+
+<div class="ticker-wrap">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
+<div class="shell">
+
+  <div class="nav">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="9" stroke="white" stroke-width="1.6"/>
+          <path d="M12 7L14 12L12 17L10 12L12 7Z" fill="white"/>
+        </svg>
+      </div>
+      <div class="brand-name">EuroCompass</div>
+    </div>
+    <div class="nav-links">
+      <a class="nav-link active" href="#">Overview</a>
+      <a class="nav-link" href="#">Transfer</a>
+      <a class="nav-link" href="#">History</a>
+    </div>
+    <div class="nav-right">
+      <span class="updated" id="updatedStamp">Updated 4 min ago</span>
+      <div class="refresh-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M21 12a9 9 0 1 1-2.64-6.36M21 4v6h-6" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Refresh
+      </div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-left">
+      <p class="eyebrow">Germany finance intelligence</p>
+      <h1 class="hero-title">Send smarter to Germany.</h1>
+      <p class="hero-sub">EuroCompass tracks TT selling rates across five Bangladeshi banks in real time, so you never overpay a tuition or living-cost transfer.</p>
+      <div class="hero-rec">
+        <div class="hero-rec-dot"></div>
+        <div class="hero-rec-text">Transfer recommendation — move funds through <b>Sonali Bank</b> today, the lowest TT selling rate available.</div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div>
+        <div class="hero-right-label">Best bank today</div>
+        <div class="best-bank-row" style="margin-top:8px;">
+          <div class="best-bank-name">Sonali Bank</div>
+          <div class="best-bank-rate">৳142.10</div>
+        </div>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="savings-block">
+        <div class="hero-right-label">Potential savings</div>
+        <div class="savings-value">৳20,237</div>
+        <div class="savings-caption">vs. the highest-priced bank, on a €11,904 transfer</div>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-stats-row">
+        <div class="hero-stat">
+          <div class="hero-stat-label">Spread today</div>
+          <div class="hero-stat-value">৳1.70</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-label">30-day avg spread</div>
+          <div class="hero-stat-value">৳1.15</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-label">Banks tracked</div>
+          <div class="hero-stat-value">5</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <h2 class="section-title">Market intelligence</h2>
+      <span class="section-caption">Assessed against the trailing 30-day rate history</span>
+    </div>
+    <div class="mi-grid">
+      <div class="card mi-card">
+        <div class="mi-label">Opportunity score</div>
+        <div class="gauge-wrap">
+          <svg width="72" height="72" viewBox="0 0 72 72">
+            <circle cx="36" cy="36" r="30" fill="none" stroke="#F1F5F9" stroke-width="8"/>
+            <circle cx="36" cy="36" r="30" fill="none" stroke="#2563EB" stroke-width="8"
+              stroke-dasharray="188.5" stroke-dashoffset="33.9" stroke-linecap="round"
+              transform="rotate(-90 36 36)"/>
+          </svg>
+          <div>
+            <div class="gauge-num">82</div>
+            <div class="gauge-sub">/ 100</div>
+          </div>
+        </div>
+      </div>
+      <div class="card mi-card">
+        <div class="mi-label">Market health</div>
+        <div class="health-badge"><span class="health-dot"></span>Favorable</div>
+        <div class="health-note">Rate spread is wider than usual — a good window to compare before transferring.</div>
+      </div>
+      <div class="card mi-card">
+        <div class="mi-label">Confidence</div>
+        <div class="confidence-num">91%</div>
+        <div class="meter-track"><div class="meter-fill" style="width:91%;"></div></div>
+      </div>
+      <div class="card mi-card">
+        <div class="mi-label">Why this recommendation</div>
+        <ul class="reasons-list">
+          <li>Sonali Bank offers the lowest TT selling rate across all five tracked banks.</li>
+          <li>Today's spread of ৳1.70 is wider than the 30-day average of ৳1.15.</li>
+          <li>EUR/BDT has stayed range-bound over the past week, reducing timing risk.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <h2 class="section-title">Exchange rate charts</h2>
+      <span class="section-caption">TT buying and selling rates, by bank</span>
+    </div>
+    <div class="charts-grid">
+      <div class="card chart-card">
+        <div class="chart-card-head">
+          <span class="chart-card-title">TT buying rate</span>
+          <div class="legend-row"><span class="legend-item"><span class="legend-dot" style="background:#85B7EB;"></span>Buy (৳ / EUR)</span></div>
+        </div>
+        <div style="position:relative;height:220px;">
+          <canvas id="buyChart" role="img" aria-label="Bar chart comparing TT buying rates across five banks"></canvas>
+        </div>
+      </div>
+      <div class="card chart-card">
+        <div class="chart-card-head">
+          <span class="chart-card-title">TT selling rate</span>
+          <div class="legend-row"><span class="legend-item"><span class="legend-dot" style="background:#2563EB;"></span>Sell (৳ / EUR)</span></div>
+        </div>
+        <div style="position:relative;height:220px;">
+          <canvas id="sellChart" role="img" aria-label="Bar chart comparing TT selling rates across five banks"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <h2 class="section-title">Germany transfer calculator</h2>
+      <span class="section-caption">Estimated cost based on current TT selling rates</span>
+    </div>
+    <div class="card calc-card">
+      <div class="calc-input-block">
+        <label class="calc-label">Transfer amount</label>
+        <div class="calc-input-row">
+          <span class="calc-input-prefix">EUR</span>
+          <input class="calc-input" type="text" value="11,904" readonly>
+        </div>
+        <span class="calc-hint">Typical semester tuition + living cost transfer</span>
+      </div>
+      <div class="calc-results">
+        <div class="result-tile accent">
+          <div class="result-tile-label">Recommended bank</div>
+          <div class="result-tile-value accent-text">Sonali Bank</div>
+          <div class="result-tile-sub">Rate ৳142.10</div>
+        </div>
+        <div class="result-tile">
+          <div class="result-tile-label">Total cost</div>
+          <div class="result-tile-value">৳1,691,878</div>
+          <div class="result-tile-sub">at recommended rate</div>
+        </div>
+        <div class="result-tile">
+          <div class="result-tile-label">Costliest option</div>
+          <div class="result-tile-value">৳1,712,115</div>
+          <div class="result-tile-sub">Prime Bank, ৳143.80</div>
+        </div>
+        <div class="result-tile">
+          <div class="result-tile-label">You save</div>
+          <div class="result-tile-value" style="color:var(--success);">৳20,237</div>
+          <div class="result-tile-sub">by choosing wisely</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <h2 class="section-title">Bank ranking</h2>
+      <span class="section-caption">Ranked by lowest TT selling rate</span>
+    </div>
+    <div class="card rank-card">
+      <table class="rank-table">
+        <thead>
+          <tr>
+            <th style="width:60px;">Rank</th>
+            <th>Bank</th>
+            <th class="num">Buy</th>
+            <th class="num">Sell</th>
+            <th class="num">Difference</th>
+          </tr>
+        </thead>
+        <tbody id="rankBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section" style="margin-bottom:0;">
+    <div class="section-head">
+      <h2 class="section-title">Historical exchange rate</h2>
+      <span class="section-caption">14-day trend, TT selling rate</span>
+    </div>
+    <div class="card hist-card">
+      <div class="chart-card-head">
+        <div class="hist-controls">
+          <select class="bank-select" id="histBankSelect">
+            <option>Sonali Bank</option>
+            <option>BRAC Bank</option>
+            <option>City Bank</option>
+            <option>EBL</option>
+            <option>Prime Bank</option>
+          </select>
+        </div>
+        <div class="range-pills">
+          <span class="pill">7D</span>
+          <span class="pill active">14D</span>
+          <span class="pill">30D</span>
+          <span class="pill">90D</span>
+        </div>
+      </div>
+      <div style="position:relative;height:260px;">
+        <canvas id="histChart" role="img" aria-label="Line chart of Sonali Bank's TT selling rate over the past 14 days"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <footer>EuroCompass · Rates refresh automatically via GitHub Actions · Design mockup, not connected to live data</footer>
+</div>
+
+<script>
+const banks = [
+  { name:"Sonali Bank", short:"SB", buy:138.90, sell:142.10 },
+  { name:"BRAC Bank",   short:"BB", buy:139.80, sell:142.90 },
+  { name:"City Bank",   short:"CB", buy:140.05, sell:143.20 },
+  { name:"EBL",         short:"EB", buy:140.20, sell:143.50 },
+  { name:"Prime Bank",  short:"PB", buy:140.50, sell:143.80 },
+];
+const ranked = [...banks].sort((a,b)=>a.sell-b.sell);
+const best = ranked[0].sell;
+
+const tickerHtml = banks.map(b=>{
+  const dir = Math.random()>0.5 ? 'up':'down';
+  const arrow = dir==='up' ? '▲' : '▼';
+  const delta = (Math.random()*0.4+0.05).toFixed(2);
+  return `<span class="ticker-item"><b>${b.name}</b>Sell ৳${b.sell.toFixed(2)} <span class="${dir}">${arrow} ${delta}</span></span>`;
+}).join('');
+document.getElementById('tickerTrack').innerHTML = tickerHtml + tickerHtml;
+
+const rankBody = document.getElementById('rankBody');
+rankBody.innerHTML = ranked.map((b,i)=>{
+  const diff = (b.sell-best).toFixed(2);
+  const badgeClass = i===0?'gold':i===1?'silver':i===2?'bronze':'';
+  const rowClass = i===0?'row-best':'';
+  const diffCell = i===0 ? '<span class="diff-best">Best rate</span>' : `<span class="diff-pos">+৳${diff}</span>`;
+  return `<tr class="${rowClass}">
+    <td><span class="rank-badge ${badgeClass}">${i+1}</span></td>
+    <td><div class="bank-cell"><div class="bank-icon">${b.short}</div><span class="bank-name">${b.name}</span></div></td>
+    <td class="num">৳${b.buy.toFixed(2)}</td>
+    <td class="num">৳${b.sell.toFixed(2)}</td>
+    <td class="num">${diffCell}</td>
+  </tr>`;
+}).join('');
+
+const chartDefaults = {
+  responsive:true, maintainAspectRatio:false,
+  plugins:{ legend:{display:false}, tooltip:{ backgroundColor:'#0F172A', padding:10, titleFont:{family:'Inter'}, bodyFont:{family:'JetBrains Mono'} } },
+  scales:{
+    x:{ grid:{display:false}, ticks:{ font:{family:'Inter', size:11}, color:'#64748B' } },
+    y:{ grid:{color:'#F1F5F9'}, ticks:{ font:{family:'JetBrains Mono', size:11}, color:'#94A3B8' } }
+  }
+};
+
+new Chart(document.getElementById('buyChart'), {
+  type:'bar',
+  data:{ labels:banks.map(b=>b.short), datasets:[{ data:banks.map(b=>b.buy), backgroundColor:'#85B7EB', borderRadius:4, maxBarThickness:34 }] },
+  options: chartDefaults
+});
+new Chart(document.getElementById('sellChart'), {
+  type:'bar',
+  data:{ labels:banks.map(b=>b.short), datasets:[{ data:banks.map(b=>b.sell), backgroundColor:'#2563EB', borderRadius:4, maxBarThickness:34 }] },
+  options: chartDefaults
+});
+
+const histSeries = {
+  "Sonali Bank": [141.10,141.20,141.35,141.40,141.55,141.60,141.75,141.80,141.90,141.95,142.00,141.95,142.05,142.10],
+  "BRAC Bank":   [141.90,142.00,142.10,142.20,142.25,142.35,142.40,142.50,142.55,142.60,142.70,142.75,142.80,142.90],
+  "City Bank":   [142.20,142.30,142.40,142.45,142.55,142.60,142.70,142.80,142.85,142.95,143.00,143.05,143.10,143.20],
+  "EBL":         [142.50,142.60,142.70,142.80,142.90,142.95,143.05,143.10,143.20,143.25,143.30,143.35,143.40,143.50],
+  "Prime Bank":  [142.80,142.90,143.00,143.10,143.20,143.30,143.35,143.45,143.50,143.55,143.60,143.65,143.70,143.80],
+};
+const days = Array.from({length:14}, (_,i)=>`D${i+1}`);
+const histChart = new Chart(document.getElementById('histChart'), {
+  type:'line',
+  data:{
+    labels:days,
+    datasets:[{
+      data:histSeries["Sonali Bank"],
+      borderColor:'#2563EB', backgroundColor:'rgba(37,99,235,0.08)',
+      fill:true, tension:0.35, pointRadius:0,
+      borderWidth:2, pointHoverRadius:5, pointHoverBackgroundColor:'#2563EB', pointHoverBorderColor:'#fff', pointHoverBorderWidth:2
+    }]
+  },
+  options: chartDefaults
+});
+document.getElementById('histBankSelect').addEventListener('change', function(){
+  histChart.data.datasets[0].data = histSeries[this.value];
+  histChart.update();
+});
+</script>
+</body>
+</html>

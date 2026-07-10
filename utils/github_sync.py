@@ -1,6 +1,5 @@
 import base64
 import os
-from urllib import response
 
 import requests
 
@@ -46,7 +45,15 @@ def upload_file(path_in_repo, content, message):
 
     url = f"{API}/repos/{owner}/{repo}/contents/{path_in_repo}"
 
-    response = requests.get(url, headers=headers)
+    # -----------------------------
+    # Get current file information
+    # -----------------------------
+
+    response = requests.get(
+        url,
+        headers=headers,
+        timeout=30,
+    )
 
     sha = None
 
@@ -60,8 +67,17 @@ def upload_file(path_in_repo, content, message):
             existing["content"]
         ).decode("utf-8")
 
+        # Nothing changed
         if existing_content == content:
             return False
+
+    elif response.status_code != 404:
+
+        print("GitHub GET Error")
+        print(response.status_code)
+        print(response.text)
+
+        response.raise_for_status()
 
     payload = {
         "message": message,
@@ -73,14 +89,49 @@ def upload_file(path_in_repo, content, message):
     if sha:
         payload["sha"] = sha
 
+    # -----------------------------
+    # First upload attempt
+    # -----------------------------
+
     response = requests.put(
         url,
         headers=headers,
         json=payload,
+        timeout=30,
     )
 
+    # -----------------------------
+    # Retry once if SHA changed
+    # -----------------------------
+
+    if response.status_code == 422:
+
+        print("GitHub returned 422. Retrying with latest SHA...")
+
+        latest = requests.get(
+            url,
+            headers=headers,
+            timeout=30,
+        )
+
+        if latest.status_code == 200:
+
+            payload["sha"] = latest.json()["sha"]
+
+            response = requests.put(
+                url,
+                headers=headers,
+                json=payload,
+                timeout=30,
+            )
+
+    # -----------------------------
+    # Final error handling
+    # -----------------------------
+
     if not response.ok:
-        print("GitHub API Error:")
+
+        print("GitHub API Error")
         print(response.status_code)
         print(response.text)
 

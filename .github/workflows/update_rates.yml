@@ -6,6 +6,10 @@ on:
   schedule:
     # Every hour
     - cron: "0 * * * *"
+    
+concurrency:
+  group: eurocompass-update
+  cancel-in-progress: false
 
 permissions:
   contents: write
