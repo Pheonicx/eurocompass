@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EuroCompass — Germany Finance Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  :root{
+    --bg:#FBF8F3; --bg-alt:#F3ECDD; --ink:#14213D;
+    --text-secondary:#5B6472; --text-muted:#8B8578;
+    --gold:#B8862F; --gold-deep:#8F6A24; --gold-light:#FBF1DD;
+    --border:#EAE3D6; --white:#FFFFFF;
+    --success:#3F7A57; --success-light:#EDF5EF;
+    --danger:#B23A63; --danger-light:#FBEFF2;
+    --radius-card:20px; --radius-sm:12px;
+    --shadow-card:0 1px 2px rgba(20,33,61,0.04), 0 12px 32px rgba(20,33,61,0.07);
+    --shadow-hover:0 6px 14px rgba(20,33,61,0.09), 0 28px 56px rgba(20,33,61,0.13);
+    --font-display:'Fraunces', serif; --font-sans:'Inter', sans-serif; --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg-alt);font-family:var(--font-sans);color:var(--ink);min-width:1320px;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  .shell{max-width:1480px;margin:0 auto;padding:0 40px 80px;}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+  .reveal{opacity:0;animation:fadeUp .6s cubic-bezier(.2,.7,.3,1) forwards;}
+  .r1{animation-delay:.02s;} .r2{animation-delay:.08s;} .r3{animation-delay:.14s;}
+
+  /* ---------- Loading / error states ---------- */
+  #loadingScreen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px;}
+  .spinner{width:34px;height:34px;border-radius:50%;border:3px solid var(--border);border-top-color:var(--gold);animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  #loadingScreen p{font-size:14px;color:var(--text-secondary);}
+  #errorScreen{display:none;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:14px;text-align:center;padding:0 40px;}
+  #errorScreen h2{font-family:var(--font-display);font-size:22px;margin:0;}
+  #errorScreen p{font-size:14px;color:var(--text-secondary);max-width:420px;line-height:1.6;margin:0;}
+  #errorScreen button{margin-top:6px;background:var(--ink);color:#fff;border:none;border-radius:999px;padding:11px 22px;font-size:14px;cursor:pointer;}
+  #app{display:none;}
+
+  .ticker-wrap{background:var(--ink);overflow:hidden;white-space:nowrap;}
+  .ticker-track{display:inline-flex;align-items:center;animation:scroll-left 34s linear infinite;padding:9px 0;}
+  @keyframes scroll-left{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+  .ticker-item{display:inline-flex;align-items:center;gap:8px;padding:0 26px;font-family:var(--font-mono);font-size:12.5px;color:rgba(255,255,255,0.72);border-right:1px solid rgba(255,255,255,0.08);}
+  .ticker-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+  .ticker-item b{color:#fff;font-weight:500;margin-right:2px;}
+
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:24px 0 22px;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{width:34px;height:34px;border-radius:9px;background:var(--ink);display:flex;align-items:center;justify-content:center;}
+  .brand-mark svg{width:18px;height:18px;}
+  .brand-name{font-family:var(--font-display);font-weight:600;font-size:19px;letter-spacing:-0.01em;}
+  .nav-links{display:flex;gap:32px;}
+  .nav-link{font-size:14px;font-weight:500;color:var(--text-secondary);padding:6px 2px;border-bottom:2px solid transparent;}
+  .nav-link.active{color:var(--ink);border-bottom-color:var(--gold);}
+  .nav-right{display:flex;align-items:center;gap:18px;}
+  .updated{font-size:12.5px;color:var(--text-muted);font-family:var(--font-mono);}
+  .refresh-btn{display:flex;align-items:center;gap:6px;background:var(--white);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:13px;font-weight:500;color:var(--ink);box-shadow:var(--shadow-card);cursor:pointer;}
+  .refresh-btn svg{transition:transform .5s ease;}
+  .refresh-btn.spinning svg{animation:spin .8s linear infinite;}
+
+  .insight-banner{display:flex;align-items:center;gap:16px;background:var(--gold-light);border:1px solid #EFDCAF;border-radius:var(--radius-sm);padding:16px 22px;margin-bottom:18px;}
+  .insight-icon{width:30px;height:30px;border-radius:8px;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .insight-text{font-size:13.5px;color:var(--gold-deep);line-height:1.5;}
+  .insight-text b{font-weight:600;}
+
+  .mode-bar{display:flex;align-items:center;gap:14px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px;margin-bottom:24px;box-shadow:var(--shadow-card);}
+  .mode-bar-label{font-size:12.5px;color:var(--text-secondary);font-weight:500;padding-left:8px;white-space:nowrap;}
+  .mode-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:11px 18px;border-radius:8px;border:1px solid transparent;background:transparent;cursor:pointer;font-family:var(--font-sans);}
+  .mode-btn .m-title{font-size:13.5px;font-weight:600;color:var(--text-secondary);}
+  .mode-btn .m-sub{font-size:11.5px;color:var(--text-muted);}
+  .mode-btn.active{background:var(--ink);border-color:var(--ink);}
+  .mode-btn.active .m-title{color:#fff;}
+  .mode-btn.active .m-sub{color:rgba(255,255,255,0.6);}
+
+  .hero{display:grid;grid-template-columns:0.82fr 1.18fr;gap:22px;margin-bottom:36px;align-items:stretch;}
+  .best-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:32px 32px 28px;display:flex;flex-direction:column;}
+  .best-eyebrow{font-size:12px;font-weight:600;letter-spacing:0.07em;color:var(--gold-deep);text-transform:uppercase;margin:0 0 18px;display:flex;align-items:center;justify-content:space-between;}
+  .mode-chip{font-size:10.5px;font-weight:600;letter-spacing:0;text-transform:none;background:var(--bg-alt);color:var(--text-secondary);padding:4px 10px;border-radius:999px;}
+  .best-name-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+  .best-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
+  .best-name{font-family:var(--font-display);font-weight:600;font-size:22px;}
+  .best-rate{font-family:var(--font-mono);font-size:40px;font-weight:600;letter-spacing:-0.01em;margin-bottom:4px;}
+  .best-rate-unit{font-size:13px;color:var(--text-muted);margin-bottom:22px;}
+  .best-compare{display:flex;align-items:center;gap:10px;background:var(--bg-alt);border-radius:var(--radius-sm);padding:13px 16px;margin-bottom:18px;}
+  .best-compare-text{font-size:12.5px;color:var(--text-secondary);line-height:1.5;}
+  .best-compare-text b{color:var(--ink);font-weight:600;}
+  .spark-block{margin-bottom:20px;}
+  .spark-label-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+  .spark-label{font-size:11.5px;color:var(--text-secondary);font-weight:500;}
+  .spark-delta{font-family:var(--font-mono);font-size:11.5px;}
+  .spark-svg{width:100%;height:44px;display:block;}
+  .spark-empty{font-size:11.5px;color:var(--text-muted);font-style:italic;}
+  .chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;}
+  .chip{font-size:11.5px;font-weight:500;color:var(--text-secondary);background:var(--bg-alt);border-radius:999px;padding:6px 12px;}
+
+  .rank-hero-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:26px 0 10px;display:flex;flex-direction:column;}
+  .rank-hero-head{display:flex;align-items:baseline;justify-content:space-between;padding:0 28px;margin-bottom:12px;}
+  .rank-hero-title{font-family:var(--font-display);font-weight:600;font-size:17px;}
+  .rank-hero-caption{font-size:12px;color:var(--text-muted);}
+
+  .section{margin-bottom:40px;}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px;}
+  .section-title{font-family:var(--font-display);font-weight:600;font-size:19px;letter-spacing:-0.01em;margin:0;}
+  .section-caption{font-size:12.5px;color:var(--text-muted);}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-card);box-shadow:var(--shadow-card);}
+
+  .mi-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1.3fr;gap:18px;}
+  .mi-card{padding:24px 22px;display:flex;flex-direction:column;align-items:flex-start;}
+  .mi-label{font-size:12px;color:var(--text-secondary);font-weight:500;margin-bottom:15px;}
+  .gauge-wrap{display:flex;align-items:center;gap:14px;}
+  .gauge-num{font-family:var(--font-mono);font-size:24px;font-weight:600;}
+  .gauge-sub{font-size:11.5px;color:var(--text-muted);}
+  .gauge-arc{stroke-dasharray:188.5;stroke-dashoffset:188.5;transition:stroke-dashoffset 1.1s cubic-bezier(.2,.7,.2,1) .3s;}
+  .health-badge{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:8px 15px;font-size:13.5px;font-weight:500;}
+  .health-badge.favorable{background:var(--success-light);color:#2E5E42;}
+  .health-badge.normal{background:var(--gold-light);color:var(--gold-deep);}
+  .health-badge.tight{background:var(--danger-light);color:#8C2E4C;}
+  .health-dot{width:7px;height:7px;border-radius:50%;background:currentColor;}
+  .health-note{font-size:12px;color:var(--text-muted);margin-top:11px;line-height:1.5;}
+  .confidence-num{font-family:var(--font-mono);font-size:24px;font-weight:600;margin-bottom:11px;}
+  .meter-track{width:100%;height:6px;background:var(--bg-alt);border-radius:99px;overflow:hidden;}
+  .meter-fill{height:100%;background:var(--gold);border-radius:99px;width:0;transition:width 1s cubic-bezier(.2,.7,.2,1) .3s;}
+  .reasons-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;width:100%;}
+  .reasons-list li{font-size:12.5px;color:var(--text-secondary);line-height:1.5;padding-left:16px;position:relative;}
+  .reasons-list li::before{content:"";position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--gold);}
+
+  .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .chart-card{padding:24px 24px 18px;}
+  .chart-card-title{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;}
+  .active-tag{font-size:10px;font-weight:600;background:var(--gold-light);color:var(--gold-deep);padding:3px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:0.04em;}
+  .legend-row{display:flex;gap:13px;flex-wrap:wrap;}
+  .legend-item{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--text-secondary);}
+  .legend-dot{width:8px;height:8px;border-radius:50%;}
+
+  .calc-card{padding:30px 34px;}
+  .calc-top{display:grid;grid-template-columns:0.9fr 2.1fr;gap:34px;margin-bottom:26px;}
+  .calc-input-block{display:flex;flex-direction:column;gap:8px;}
+  .calc-label{font-size:12px;font-weight:500;color:var(--text-secondary);}
+  .calc-input-row{display:flex;align-items:center;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;}
+  .calc-input-prefix{padding:12px 14px;background:var(--bg-alt);font-family:var(--font-mono);font-size:14px;color:var(--text-secondary);border-right:1px solid var(--border);}
+  .calc-input{border:none;outline:none;padding:12px 14px;font-family:var(--font-mono);font-size:16px;width:100%;color:var(--ink);}
+  .calc-hint{font-size:11.5px;color:var(--text-muted);margin-top:4px;}
+  .calc-results{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;}
+  .result-tile{background:var(--bg-alt);border-radius:var(--radius-sm);padding:17px 17px 15px;}
+  .result-tile.accent{background:var(--gold-light);}
+  .result-tile-label{font-size:11px;color:var(--text-secondary);font-weight:500;margin-bottom:8px;}
+  .result-tile-value{font-family:var(--font-mono);font-size:18px;font-weight:600;display:flex;align-items:center;gap:8px;}
+  .result-tile-value.accent-text{color:var(--gold-deep);}
+  .result-tile-sub{font-size:11px;color:var(--text-muted);margin-top:4px;}
+  .tile-dot{width:9px;height:9px;border-radius:50%;}
+
+  .fees-block{border-top:1px solid var(--border);padding-top:22px;}
+  .fees-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .fees-title{font-size:13px;font-weight:600;}
+  .fees-caption{font-size:11.5px;color:var(--text-muted);}
+  .add-fee-btn{font-size:12.5px;font-weight:500;color:var(--gold-deep);background:var(--gold-light);border:none;border-radius:8px;padding:7px 13px;cursor:pointer;}
+  .fee-row{display:grid;grid-template-columns:1.6fr 1fr 0.8fr auto;gap:10px;margin-bottom:10px;align-items:center;}
+  .fee-row input[type=text], .fee-row input[type=number]{border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;font-family:var(--font-sans);color:var(--ink);width:100%;}
+  .fee-row input[type=number]{font-family:var(--font-mono);}
+  .fee-row select{border:1px solid var(--border);border-radius:8px;padding:9px 10px;font-size:13px;font-family:var(--font-sans);color:var(--ink);background:var(--white);}
+  .fee-remove{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:var(--white);color:var(--text-muted);cursor:pointer;font-size:14px;}
+  .fee-note{font-size:11px;color:var(--text-muted);margin-top:6px;}
+
+  .rank-card{padding:6px 0 4px;}
+  table.rank-table{width:100%;border-collapse:collapse;}
+  .rank-table thead th{text-align:left;font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;padding:12px 24px 10px;border-bottom:1px solid var(--border);}
+  .rank-table thead th.num{text-align:right;}
+  .rank-table thead th.hl{color:var(--gold-deep);}
+  .rank-table tbody td{padding:13px 24px;font-size:13.5px;border-bottom:1px solid var(--border);}
+  .rank-table tbody tr:hover{background:var(--bg-alt);}
+  .rank-table tbody tr:last-child td{border-bottom:none;}
+  .rank-table tbody td.num{text-align:right;font-family:var(--font-mono);}
+  .rank-table tbody td.hl{font-weight:600;color:var(--ink);}
+  .rank-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;font-size:11.5px;font-weight:600;background:var(--bg-alt);color:var(--text-secondary);}
+  .rank-badge.gold{background:var(--gold-light);color:var(--gold-deep);}
+  .rank-badge.silver{background:#F5F3EE;color:#7A7568;border:1px solid var(--border);}
+  .rank-badge.bronze{background:#F6EAE2;color:#9C5A34;}
+  .bank-cell{display:flex;align-items:center;gap:11px;}
+  .bank-swatch{width:8px;height:22px;border-radius:3px;flex-shrink:0;}
+  .bank-name{font-weight:500;}
+  .diff-pos{color:var(--text-secondary);}
+  .diff-best{color:var(--success);font-weight:500;}
+  .row-best{background:var(--success-light);}
+  .row-best:hover{background:var(--success-light);}
+
+  .hist-card{padding:24px 24px 18px;}
+  .hist-empty{padding:40px 0;text-align:center;font-size:13px;color:var(--text-muted);}
+
+  .cost-note{font-size:12px;color:var(--text-muted);padding:14px 24px 4px;}
+  .data-note{font-size:12px;color:var(--text-muted);text-align:center;margin-top:6px;}
+  footer{text-align:center;font-size:12px;color:var(--text-muted);padding:24px 0 0;}
+  footer a{text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<div id="loadingScreen"><div class="spinner"></div><p>Loading live rates from GitHub…</p></div>
+
+<div id="errorScreen">
+  <h2>Couldn't load live rates</h2>
+  <p id="errorDetail">The data source didn't respond. This can happen right after a deploy or if the source repository changed. Try again in a moment.</p>
+  <button onclick="location.reload()">Retry</button>
+</div>
+
+<div id="app">
+  <div class="ticker-wrap"><div class="ticker-track" id="tickerTrack"></div></div>
+
+  <div class="shell">
+    <div class="nav reveal r1">
+      <div class="brand">
+        <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="1.6"/><path d="M12 7L14 12L12 17L10 12L12 7Z" fill="white"/></svg></div>
+        <div class="brand-name">EuroCompass</div>
+      </div>
+      <div class="nav-links">
+        <a class="nav-link active" href="#">Overview</a>
+        <a class="nav-link" href="#calc-section">Transfer</a>
+        <a class="nav-link" href="#hist-section">History</a>
+      </div>
+      <div class="nav-right">
+        <span class="updated" id="updatedStamp">—</span>
+        <div class="refresh-btn" id="refreshBtn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M21 12a9 9 0 1 1-2.64-6.36M21 4v6h-6" stroke="#14213D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Refresh</div>
+      </div>
+    </div>
+
+    <div class="insight-banner reveal r1">
+      <div class="insight-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5L5.7 21l2.3-7.2-6-4.6h7.6L12 2Z" stroke="white" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+      <div class="insight-text" id="insightText">—</div>
+    </div>
+
+    <div class="mode-bar reveal r1">
+      <span class="mode-bar-label">I want to</span>
+      <button class="mode-btn active" id="modeBuyBtn">
+        <span class="m-title">Send money to Germany</span>
+        <span class="m-sub">Buy EUR with BDT — uses TT selling rate</span>
+      </button>
+      <button class="mode-btn" id="modeSellBtn">
+        <span class="m-title">Convert EUR to BDT</span>
+        <span class="m-sub">Sell EUR for BDT — uses TT buying rate</span>
+      </button>
+    </div>
+
+    <div class="hero">
+      <div class="best-card reveal r2">
+        <p class="best-eyebrow">Best bank today <span class="mode-chip" id="modeChip">Sending to Germany</span></p>
+        <div class="best-name-row"><span class="best-dot" id="bestDot"></span><span class="best-name" id="bestName">—</span></div>
+        <div class="best-rate">৳<span id="heroRate">0.00</span></div>
+        <div class="best-rate-unit" id="rateUnitLabel">TT selling rate, per EUR</div>
+        <div class="best-compare"><div class="best-compare-text" id="compareText">—</div></div>
+        <div class="spark-block">
+          <div class="spark-label-row"><span class="spark-label" id="sparkLabel">Recent trend</span><span class="spark-delta" id="sparkDelta">—</span></div>
+          <svg class="spark-svg" id="sparkSvg" viewBox="0 0 240 44" preserveAspectRatio="none"></svg>
+          <div class="spark-empty" id="sparkEmpty" style="display:none;">Not enough history yet to chart a trend.</div>
+        </div>
+        <div class="chip-row" id="chipRow"></div>
+      </div>
+
+      <div class="rank-hero-card reveal r3">
+        <div class="rank-hero-head">
+          <span class="rank-hero-title">Bank ranking</span>
+          <span class="rank-hero-caption" id="rankCaption">—</span>
+        </div>
+        <table class="rank-table"><thead id="rankHead"></thead><tbody id="rankBody"></tbody></table>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head reveal r3"><h2 class="section-title">Market intelligence</h2><span class="section-caption" id="miCaption">Assessed against recent rate history</span></div>
+      <div class="mi-grid">
+        <div class="card mi-card reveal r3">
+          <div class="mi-label">Opportunity score</div>
+          <div class="gauge-wrap">
+            <svg width="68" height="68" viewBox="0 0 72 72">
+              <circle cx="36" cy="36" r="30" fill="none" stroke="#F3ECDD" stroke-width="8"/>
+              <circle id="gaugeArc" class="gauge-arc" cx="36" cy="36" r="30" fill="none" stroke="#B8862F" stroke-width="8" stroke-linecap="round" transform="rotate(-90 36 36)"/>
+            </svg>
+            <div><div class="gauge-num" id="gaugeNum">—</div><div class="gauge-sub">/ 100</div></div>
+          </div>
+        </div>
+        <div class="card mi-card reveal r3">
+          <div class="mi-label">Market health</div>
+          <div class="health-badge" id="healthBadge"><span class="health-dot"></span><span id="healthLabel">—</span></div>
+          <div class="health-note" id="healthNote">—</div>
+        </div>
+        <div class="card mi-card reveal r3">
+          <div class="mi-label">Data confidence</div>
+          <div class="confidence-num" id="confidenceNum">—</div>
+          <div class="meter-track"><div class="meter-fill" id="confFill"></div></div>
+        </div>
+        <div class="card mi-card reveal r3">
+          <div class="mi-label">Why this recommendation</div>
+          <ul class="reasons-list" id="reasonsList"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2 class="section-title">Exchange rate charts</h2><span class="section-caption">TT buying and selling rates, by bank — colors match the ranking table above</span></div>
+      <div class="charts-grid">
+        <div class="card chart-card">
+          <span class="chart-card-title">TT buying rate <span class="active-tag" id="buyActiveTag" style="display:none;">Active for your mode</span></span>
+          <div class="legend-row" id="buyLegend" style="margin:10px 0 12px;"></div>
+          <div style="position:relative;height:190px;"><canvas id="buyChart"></canvas></div>
+        </div>
+        <div class="card chart-card">
+          <span class="chart-card-title">TT selling rate <span class="active-tag" id="sellActiveTag">Active for your mode</span></span>
+          <div class="legend-row" id="sellLegend" style="margin:10px 0 12px;"></div>
+          <div style="position:relative;height:190px;"><canvas id="sellChart"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="calc-section">
+      <div class="section-head"><h2 class="section-title" id="calcTitle">Transfer calculator</h2><span class="section-caption" id="calcCaption">—</span></div>
+      <div class="card calc-card">
+        <div class="calc-top">
+          <div class="calc-input-block">
+            <label class="calc-label" id="calcAmountLabel">Amount to send</label>
+            <div class="calc-input-row"><span class="calc-input-prefix">EUR</span><input class="calc-input" type="text" id="calcAmount" value="11,904"></div>
+            <span class="calc-hint">Typical semester tuition + living cost transfer</span>
+          </div>
+          <div class="calc-results" id="calcResults"></div>
+        </div>
+        <div class="fees-block">
+          <div class="fees-head">
+            <div><div class="fees-title">Additional costs</div><div class="fees-caption">Transfer fees, student file charges — anything on top of the exchange itself</div></div>
+            <button class="add-fee-btn" id="addFeeBtn">+ Add cost</button>
+          </div>
+          <div id="feeRows"></div>
+          <div class="fee-note">EUR fees convert at the recommended bank's own rate. USD fees convert at an approximate reference rate of ৳121.50/USD — not a live tracked rate.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2 class="section-title" id="costSectionTitle">Cost by bank</h2><span class="section-caption" id="costSectionCaption">—</span></div>
+      <div class="card rank-card">
+        <table class="rank-table"><thead id="costHead"></thead><tbody id="costBody"></tbody></table>
+        <div class="cost-note" id="costNote"></div>
+      </div>
+    </div>
+
+    <div class="section" id="hist-section" style="margin-bottom:0;">
+      <div class="section-head"><h2 class="section-title">Historical exchange rate</h2><span class="section-caption" id="histCaption">—</span></div>
+      <div class="card hist-card">
+        <div class="chart-card-head" style="display:flex;justify-content:space-between;align-items:center;">
+          <div class="legend-row" id="histLegend"></div>
+        </div>
+        <div style="position:relative;height:260px;margin-top:6px;"><canvas id="histChart"></canvas></div>
+        <div class="hist-empty" id="histEmpty" style="display:none;">Not enough historical data collected yet — check back after a few days of hourly updates.</div>
+      </div>
+    </div>
+
+    <div class="data-note">Live data from <a href="https://github.com/Pheonicx/eurocompass" target="_blank" rel="noopener">github.com/Pheonicx/eurocompass</a>, refreshed automatically by GitHub Actions.</div>
+    <footer>EuroCompass · Independent, unaffiliated with any bank</footer>
+  </div>
+</div>
+
+<script>
+const REPO_RAW = "https://raw.githubusercontent.com/Pheonicx/eurocompass/main";
+const REF_USD_BDT = 121.50;
+const BANK_META = {
+  SONALI: { name:"Sonali Bank", color:"#0D9488" },
+  BRAC:   { name:"BRAC Bank",   color:"#6366F1" },
+  CITY:   { name:"City Bank",   color:"#C2622D" },
+  EBL:    { name:"EBL",         color:"#B23A63" },
+  PRIME:  { name:"Prime Bank",  color:"#6B7280" },
+};
+
+let mode = 'buy';
+let fees = [
+  { label:"Bank transfer fee", amount:500, currency:"BDT" },
+  { label:"Student file opening fee", amount:3000, currency:"BDT" },
+];
+let banks = [];           // [{key,name,color,buy,sell}]
+let sellHistByBank = {};  // {key: [{date, sell}]}
+let buyHistByBank = {};
+let generatedAt = null;
+let summary = null;
+let histChart, buyChart, sellChart;
+
+async function fetchJSON(url){
+  const res = await fetch(url + (url.includes('?')?'&':'?') + '_=' + Date.now());
+  if(!res.ok) throw new Error('Failed to fetch ' + url + ' (' + res.status + ')');
+  return res.json();
+}
+async function fetchText(url){
+  const res = await fetch(url + (url.includes('?')?'&':'?') + '_=' + Date.now());
+  if(!res.ok) throw new Error('Failed to fetch ' + url + ' (' + res.status + ')');
+  return res.text();
+}
+
+function parseHistoryCSV(text){
+  const lines = text.trim().split(/\r?\n/);
+  if(lines.length < 2) return [];
+  const rows = lines.slice(1).map(line=>{
+    const parts = line.split(',');
+    return { date: parts[0], time: parts[1], buy: parseFloat(parts[3]), sell: parseFloat(parts[4]) };
+  }).filter(r=>r.date && !isNaN(r.sell) && !isNaN(r.buy));
+  // one entry per date: keep the last reading of each day
+  const byDate = {};
+  rows.forEach(r=>{ byDate[r.date] = r; });
+  return Object.keys(byDate).sort().map(d=>byDate[d]);
+}
+
+async function loadAll(){
+  const latest = await fetchJSON(`${REPO_RAW}/exports/latest.json`);
+  generatedAt = latest.generated_at;
+  summary = latest.summary;
+  banks = latest.banks.map(b=>{
+    const meta = BANK_META[b.bank] || { name:b.bank, color:"#6B7280" };
+    return { key:b.bank, name:meta.name, color:meta.color, buy:b.buy, sell:b.sell };
+  });
+
+  const histResults = await Promise.allSettled(
+    banks.map(b => fetchText(`${REPO_RAW}/history/${b.key}.csv`))
+  );
+  banks.forEach((b,i)=>{
+    const r = histResults[i];
+    const daily = r.status==='fulfilled' ? parseHistoryCSV(r.value) : [];
+    sellHistByBank[b.key] = daily.map(d=>({date:d.date, value:d.sell}));
+    buyHistByBank[b.key]  = daily.map(d=>({date:d.date, value:d.buy}));
+  });
+}
+
+function rankedBanks(){
+  return [...banks].sort((a,b)=> mode==='buy' ? a.sell-b.sell : b.buy-a.buy );
+}
+function activeRate(b){ return mode==='buy' ? b.sell : b.buy; }
+
+function feeTotalBDT(rate){
+  return fees.reduce((sum,f)=>{
+    const amt = parseFloat(f.amount)||0;
+    if(f.currency==='BDT') return sum+amt;
+    if(f.currency==='EUR') return sum+amt*rate;
+    return sum+amt*REF_USD_BDT;
+  },0);
+}
+function computeForBank(b, amountEUR){
+  const rate = activeRate(b);
+  const baseBDT = amountEUR*rate;
+  const fBDT = feeTotalBDT(rate);
+  const totalBDT = mode==='buy' ? baseBDT+fBDT : baseBDT-fBDT;
+  const totalEUR = totalBDT/rate;
+  return { rate, baseBDT, feesBDT:fBDT, totalBDT, totalEUR };
+}
+
+function fmtDateShort(iso){
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+}
+function fmtTimestamp(iso){
+  if(!iso) return '—';
+  const d = new Date(iso);
+  return 'Rates as of ' + d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}) + ' · ' + d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+}
+
+function renderTicker(){
+  document.getElementById('tickerTrack').innerHTML = (function(){
+    const items = banks.map(b=>`<span class="ticker-item"><span class="ticker-dot" style="background:${b.color};"></span><b>${b.name}</b>Sell ৳${b.sell.toFixed(2)} · Buy ৳${b.buy.toFixed(2)}</span>`).join('');
+    return items+items;
+  })();
+}
+function legendHtml(){ return banks.map(b=>`<span class="legend-item"><span class="legend-dot" style="background:${b.color};"></span>${b.name}</span>`).join(''); }
+
+function renderFeeRows(){
+  document.getElementById('feeRows').innerHTML = fees.map((f,i)=>`
+    <div class="fee-row">
+      <input type="text" value="${f.label}" data-i="${i}" data-field="label">
+      <input type="number" value="${f.amount}" data-i="${i}" data-field="amount">
+      <select data-i="${i}" data-field="currency">
+        <option value="BDT" ${f.currency==='BDT'?'selected':''}>BDT</option>
+        <option value="EUR" ${f.currency==='EUR'?'selected':''}>EUR</option>
+        <option value="USD" ${f.currency==='USD'?'selected':''}>USD</option>
+      </select>
+      <button class="fee-remove" data-i="${i}">×</button>
+    </div>`).join('');
+  document.querySelectorAll('#feeRows input, #feeRows select').forEach(el=>{
+    el.addEventListener('input', e=>{
+      fees[+e.target.dataset.i][e.target.dataset.field] = e.target.value;
+      renderCalcAndCostTable();
+    });
+  });
+  document.querySelectorAll('.fee-remove').forEach(btn=>{
+    btn.addEventListener('click', e=>{ fees.splice(+e.target.dataset.i,1); renderFeeRows(); renderCalcAndCostTable(); });
+  });
+}
+
+function renderRankTable(){
+  const ranked = rankedBanks();
+  const bestVal = activeRate(ranked[0]);
+  document.getElementById('rankHead').innerHTML = `<tr>
+    <th style="width:52px;padding-left:28px;">Rank</th><th>Bank</th>
+    <th class="num ${mode==='sell'?'hl':''}">Buy</th>
+    <th class="num ${mode==='buy'?'hl':''}">Sell</th>
+    <th class="num" style="padding-right:28px;">Difference</th></tr>`;
+  document.getElementById('rankBody').innerHTML = ranked.map((b,i)=>{
+    const val = activeRate(b);
+    const diff = mode==='buy' ? (val-bestVal).toFixed(2) : (bestVal-val).toFixed(2);
+    const badgeClass = i===0?'gold':i===1?'silver':i===2?'bronze':'';
+    const diffCell = i===0 ? '<span class="diff-best">Best rate</span>' : `<span class="diff-pos">+৳${diff}</span>`;
+    return `<tr class="${i===0?'row-best':''}">
+      <td style="padding-left:28px;"><span class="rank-badge ${badgeClass}">${i+1}</span></td>
+      <td><div class="bank-cell"><div class="bank-swatch" style="background:${b.color};"></div><span class="bank-name">${b.name}</span></div></td>
+      <td class="num ${mode==='sell'?'hl':''}">৳${b.buy.toFixed(2)}</td>
+      <td class="num ${mode==='buy'?'hl':''}">৳${b.sell.toFixed(2)}</td>
+      <td class="num" style="padding-right:28px;">${diffCell}</td>
+    </tr>`;
+  }).join('');
+  const dateLabel = generatedAt ? new Date(generatedAt).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}) : '—';
+  document.getElementById('rankCaption').textContent = `${dateLabel} · ranked by ${mode==='buy'?'lowest TT selling rate':'highest TT buying rate'}`;
+}
+
+function countUp(el, target, decimals, duration){
+  const start = performance.now();
+  function step(now){
+    const p = Math.min((now-start)/duration,1); const eased = 1-Math.pow(1-p,3); const val = target*eased;
+    el.textContent = decimals ? val.toFixed(decimals) : Math.round(val).toLocaleString();
+    if(p<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function renderHero(){
+  const ranked = rankedBanks();
+  const b0 = ranked[0], b1 = ranked[1];
+  const rate0 = activeRate(b0), rate1 = activeRate(b1);
+  const diff = Math.abs(rate1-rate0).toFixed(2);
+
+  document.getElementById('modeChip').textContent = mode==='buy' ? 'Sending to Germany' : 'Converting to BDT';
+  document.getElementById('bestDot').style.background = b0.color;
+  document.getElementById('bestName').textContent = b0.name;
+  document.getElementById('rateUnitLabel').textContent = mode==='buy' ? 'TT selling rate, per EUR' : 'TT buying rate, per EUR';
+  document.getElementById('compareText').innerHTML = mode==='buy'
+    ? `৳<b>${diff}</b> better than the 2nd-best rate today — <b>${b1.name}</b> at ৳${rate1.toFixed(2)}.`
+    : `৳<b>${diff}</b> more BDT per EUR than the 2nd-best rate — <b>${b1.name}</b> at ৳${rate1.toFixed(2)}.`;
+
+  const hist = (mode==='buy' ? sellHistByBank : buyHistByBank)[b0.key] || [];
+  const last7 = hist.slice(-7);
+  document.getElementById('sparkEmpty').style.display = last7.length < 2 ? 'block' : 'none';
+  document.getElementById('sparkSvg').style.display = last7.length < 2 ? 'none' : 'block';
+  if(last7.length >= 2){
+    const vals = last7.map(d=>d.value);
+    const min = Math.min(...vals), max = Math.max(...vals), range=(max-min)||1;
+    const w=240,h=44,pad=4;
+    const pts = vals.map((v,i)=>{ const x=(i/(vals.length-1))*w; const y=h-pad-((v-min)/range)*(h-pad*2); return `${x.toFixed(1)},${y.toFixed(1)}`; }).join(' ');
+    document.getElementById('sparkSvg').innerHTML = `<polyline points="${pts}" fill="none" stroke="${b0.color}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`;
+    const delta = (vals[vals.length-1]-vals[0]).toFixed(2);
+    const favorable = mode==='buy' ? delta<=0 : delta>=0;
+    const el = document.getElementById('sparkDelta');
+    el.textContent = (delta>=0?'+':'')+'৳'+delta;
+    el.style.color = favorable ? '#3F7A57' : '#B23A63';
+    document.getElementById('sparkLabel').textContent = `${b0.name.split(' ')[0]}'s own ${mode==='buy'?'sell':'buy'} rate, past ${last7.length} days`;
+    document.getElementById('chipRow').innerHTML = mode==='buy'
+      ? `<span class="chip">Lowest sell rate of ${banks.length}</span><span class="chip">${favorable?'Improving':'Rising'} trend, still cheapest</span>`
+      : `<span class="chip">Highest buy rate of ${banks.length}</span><span class="chip">${favorable?'Improving':'Softening'} trend, still best</span>`;
+  } else {
+    document.getElementById('sparkDelta').textContent = '—';
+    document.getElementById('chipRow').innerHTML = mode==='buy'
+      ? `<span class="chip">Lowest sell rate of ${banks.length}</span>`
+      : `<span class="chip">Highest buy rate of ${banks.length}</span>`;
+  }
+
+  document.getElementById('heroRate').textContent = '0.00';
+  countUp(document.getElementById('heroRate'), rate0, 2, 700);
+}
+
+function renderChartTags(){
+  document.getElementById('buyActiveTag').style.display = mode==='sell' ? 'inline-block' : 'none';
+  document.getElementById('sellActiveTag').style.display = mode==='buy' ? 'inline-block' : 'none';
+}
+
+function computeMarketIntelligence(){
+  const activeVals = banks.map(activeRate);
+  const todaySpread = Math.max(...activeVals) - Math.min(...activeVals);
+
+  // average daily cross-bank spread over the last 7 available days, using each bank's own history
+  const histSource = mode==='buy' ? sellHistByBank : buyHistByBank;
+  const dateSet = new Set();
+  banks.forEach(b => (histSource[b.key]||[]).forEach(d=>dateSet.add(d.date)));
+  const dates = [...dateSet].sort().slice(-7);
+  const spreadsByDate = dates.map(date=>{
+    const vals = banks.map(b=>{
+      const rec = (histSource[b.key]||[]).find(d=>d.date===date);
+      return rec ? rec.value : null;
+    }).filter(v=>v!==null);
+    if(vals.length < 2) return null;
+    return Math.max(...vals) - Math.min(...vals);
+  }).filter(v=>v!==null);
+  const avgSpread = spreadsByDate.length ? spreadsByDate.reduce((a,b)=>a+b,0)/spreadsByDate.length : todaySpread;
+
+  const ratio = avgSpread>0 ? (todaySpread-avgSpread)/avgSpread : 0;
+  const opportunityScore = Math.max(5, Math.min(95, Math.round(50 + ratio*50)));
+
+  let health, healthClass;
+  if(todaySpread > avgSpread*1.15){ health='Favorable'; healthClass='favorable'; }
+  else if(todaySpread < avgSpread*0.85){ health='Tight'; healthClass='tight'; }
+  else { health='Normal'; healthClass='normal'; }
+
+  const banksProcessed = summary ? summary.banks_processed : banks.length;
+  const confidence = Math.round((banksProcessed / 5) * 100);
+
+  return { todaySpread, avgSpread, opportunityScore, health, healthClass, confidence, hasHistory: spreadsByDate.length>0 };
+}
+
+function renderMarketIntelligence(){
+  const mi = computeMarketIntelligence();
+  const ranked = rankedBanks();
+  const best = ranked[0];
+
+  document.getElementById('gaugeNum').textContent = mi.opportunityScore;
+  document.getElementById('gaugeArc').style.strokeDashoffset = 188.5 - (188.5*(mi.opportunityScore/100));
+
+  const badge = document.getElementById('healthBadge');
+  badge.className = 'health-badge ' + mi.healthClass;
+  document.getElementById('healthLabel').textContent = mi.health;
+  document.getElementById('healthNote').textContent = mi.hasHistory
+    ? (mi.healthClass==='favorable'
+        ? `Today's spread of ৳${mi.todaySpread.toFixed(2)} is wider than the recent average of ৳${mi.avgSpread.toFixed(2)} — a good window to compare.`
+        : mi.healthClass==='tight'
+        ? `Today's spread of ৳${mi.todaySpread.toFixed(2)} is narrower than usual (avg ৳${mi.avgSpread.toFixed(2)}) — banks are closely matched right now.`
+        : `Today's spread of ৳${mi.todaySpread.toFixed(2)} is close to the recent average of ৳${mi.avgSpread.toFixed(2)}.`)
+    : `Today's spread across banks is ৳${mi.todaySpread.toFixed(2)}. Historical comparison will appear once more days of data are collected.`;
+
+  document.getElementById('confidenceNum').textContent = mi.confidence + '%';
+  document.getElementById('confFill').style.width = mi.confidence + '%';
+
+  document.getElementById('reasonsList').innerHTML = `
+    <li>${best.name} offers the ${mode==='buy'?'lowest TT selling':'highest TT buying'} rate across all ${banks.length} tracked banks.</li>
+    <li>Today's cross-bank spread is ৳${mi.todaySpread.toFixed(2)}${mi.hasHistory ? `, vs a recent average of ৳${mi.avgSpread.toFixed(2)}` : ''}.</li>
+    <li>${mi.confidence}% of tracked banks reported data in the latest collection run.</li>
+  `;
+}
+
+function renderCalcAndCostTable(){
+  const raw = document.getElementById('calcAmount').value.replace(/,/g,'');
+  const amountEUR = parseFloat(raw) || 0;
+  const ranked = rankedBanks();
+  const results = ranked.map(b=>({...b, ...computeForBank(b, amountEUR)}));
+  const bestR = results[0], worstR = results[results.length-1];
+  const diffBDT = mode==='buy' ? (worstR.totalBDT-bestR.totalBDT) : (bestR.totalBDT-worstR.totalBDT);
+
+  document.getElementById('calcAmountLabel').textContent = mode==='buy' ? 'Amount to send' : 'Amount to convert';
+  document.getElementById('calcTitle').textContent = mode==='buy' ? 'Transfer calculator' : 'Conversion calculator';
+  document.getElementById('calcCaption').textContent = mode==='buy'
+    ? 'Estimated cost, including fees, based on current TT selling rates'
+    : 'Estimated BDT received, after fees, based on current TT buying rates';
+
+  document.getElementById('calcResults').innerHTML = `
+    <div class="result-tile accent">
+      <div class="result-tile-label">Recommended bank</div>
+      <div class="result-tile-value accent-text"><span class="tile-dot" style="background:${bestR.color};"></span>${bestR.name}</div>
+      <div class="result-tile-sub">Rate ৳${bestR.rate.toFixed(2)}</div>
+    </div>
+    <div class="result-tile">
+      <div class="result-tile-label">${mode==='buy'?'Total cost':'Net you receive'}</div>
+      <div class="result-tile-value">৳${Math.round(bestR.totalBDT).toLocaleString()}</div>
+      <div class="result-tile-sub">≈ €${Math.round(bestR.totalEUR).toLocaleString()} equivalent</div>
+    </div>
+    <div class="result-tile">
+      <div class="result-tile-label">${mode==='buy'?'Costliest option':'Weakest option'}</div>
+      <div class="result-tile-value"><span class="tile-dot" style="background:${worstR.color};"></span>৳${Math.round(worstR.totalBDT).toLocaleString()}</div>
+      <div class="result-tile-sub">${worstR.name}, ৳${worstR.rate.toFixed(2)}</div>
+    </div>
+    <div class="result-tile">
+      <div class="result-tile-label">${mode==='buy'?'You save':'You gain'}</div>
+      <div class="result-tile-value" style="color:var(--success);">৳${Math.round(diffBDT).toLocaleString()}</div>
+      <div class="result-tile-sub">fees included, all banks</div>
+    </div>`;
+
+  document.getElementById('costSectionTitle').textContent = mode==='buy' ? 'Cost by bank' : 'BDT received, by bank';
+  document.getElementById('costSectionCaption').textContent = mode==='buy'
+    ? 'Your entered amount plus all added costs, at every bank'
+    : 'Your entered amount minus all added costs, at every bank';
+  document.getElementById('costHead').innerHTML = `<tr>
+    <th style="width:52px;">Rank</th><th>Bank</th><th class="num">Rate</th>
+    <th class="num">${mode==='buy'?'Total cost':'Net received'}</th><th class="num">EUR equiv.</th><th class="num">${mode==='buy'?'vs. cheapest':'vs. best'}</th></tr>`;
+  document.getElementById('costBody').innerHTML = results.map((b,i)=>{
+    const d = mode==='buy' ? Math.round(b.totalBDT-bestR.totalBDT) : Math.round(bestR.totalBDT-b.totalBDT);
+    const diffCell = i===0 ? `<span class="diff-best">${mode==='buy'?'Cheapest':'Best'}</span>` : `<span class="diff-pos">${mode==='buy'?'+':'-'}৳${Math.abs(d).toLocaleString()}</span>`;
+    return `<tr class="${i===0?'row-best':''}">
+      <td><span class="rank-badge ${i===0?'gold':i===1?'silver':i===2?'bronze':''}">${i+1}</span></td>
+      <td><div class="bank-cell"><div class="bank-swatch" style="background:${b.color};"></div><span class="bank-name">${b.name}</span></div></td>
+      <td class="num">৳${b.rate.toFixed(2)}</td>
+      <td class="num">৳${Math.round(b.totalBDT).toLocaleString()}</td>
+      <td class="num">€${Math.round(b.totalEUR).toLocaleString()}</td>
+      <td class="num">${diffCell}</td>
+    </tr>`;
+  }).join('');
+  const spreadNote = Math.round(Math.abs(results[results.length-1].totalBDT-bestR.totalBDT));
+  document.getElementById('costNote').textContent = mode==='buy'
+    ? `For €${amountEUR.toLocaleString()} plus your added costs, the gap between the cheapest and priciest bank is ৳${spreadNote.toLocaleString()}.`
+    : `For €${amountEUR.toLocaleString()} minus your added costs, the gap between the best and weakest bank is ৳${spreadNote.toLocaleString()}.`;
+}
+
+function renderCharts(){
+  const ctxBuy = document.getElementById('buyChart');
+  const ctxSell = document.getElementById('sellChart');
+  const chartDefaults = {
+    responsive:true, maintainAspectRatio:false, animation:{duration:700,easing:'easeOutQuart'},
+    plugins:{ legend:{display:false}, tooltip:{backgroundColor:'#14213D',padding:10,titleFont:{family:'Inter'},bodyFont:{family:'JetBrains Mono'}} },
+    scales:{ x:{grid:{display:false},ticks:{font:{family:'Inter',size:11},color:'#5B6472'}}, y:{grid:{color:'#F3ECDD'},ticks:{font:{family:'JetBrains Mono',size:11},color:'#8B8578'}} }
+  };
+  if(buyChart) buyChart.destroy();
+  if(sellChart) sellChart.destroy();
+  buyChart = new Chart(ctxBuy, { type:'bar', data:{labels:banks.map(b=>b.key.slice(0,2)),datasets:[{data:banks.map(b=>b.buy),backgroundColor:banks.map(b=>b.color),borderRadius:5,maxBarThickness:32}]}, options:chartDefaults });
+  sellChart = new Chart(ctxSell, { type:'bar', data:{labels:banks.map(b=>b.key.slice(0,2)),datasets:[{data:banks.map(b=>b.sell),backgroundColor:banks.map(b=>b.color),borderRadius:5,maxBarThickness:32}]}, options:chartDefaults });
+}
+
+function renderHistChart(){
+  const histSource = mode==='buy' ? sellHistByBank : buyHistByBank;
+  const dateSet = new Set();
+  banks.forEach(b => (histSource[b.key]||[]).forEach(d=>dateSet.add(d.date)));
+  const dates = [...dateSet].sort().slice(-14);
+
+  document.getElementById('histEmpty').style.display = dates.length < 2 ? 'block' : 'none';
+  document.getElementById('histCaption').textContent = dates.length
+    ? `${mode==='buy'?'TT selling':'TT buying'} rate, all banks compared — ${fmtDateShort(dates[0])} to ${fmtDateShort(dates[dates.length-1])}`
+    : 'Not enough historical data yet';
+
+  const chartDefaults = {
+    responsive:true, maintainAspectRatio:false, animation:{duration:700,easing:'easeOutQuart'},
+    plugins:{ legend:{display:false}, tooltip:{backgroundColor:'#14213D',padding:10,titleFont:{family:'Inter'},bodyFont:{family:'JetBrains Mono'}} },
+    scales:{ x:{grid:{display:false},ticks:{font:{family:'Inter',size:11},color:'#5B6472'}}, y:{grid:{color:'#F3ECDD'},ticks:{font:{family:'JetBrains Mono',size:11},color:'#8B8578'}} }
+  };
+  const datasets = banks.map(b=>{
+    const byDate = {}; (histSource[b.key]||[]).forEach(d=>byDate[d.date]=d.value);
+    return {
+      label:b.name, data: dates.map(d=>byDate[d]!==undefined?byDate[d]:null), spanGaps:true,
+      borderColor:b.color, backgroundColor:'transparent', fill:false, tension:0.35, pointRadius:0, borderWidth:2.25,
+      pointHoverRadius:5, pointHoverBackgroundColor:b.color, pointHoverBorderColor:'#fff', pointHoverBorderWidth:2
+    };
+  });
+  if(histChart) histChart.destroy();
+  histChart = new Chart(document.getElementById('histChart'), { type:'line', data:{labels:dates.map(fmtDateShort), datasets}, options:chartDefaults });
+}
+
+function renderAll(){
+  document.getElementById('updatedStamp').textContent = fmtTimestamp(generatedAt);
+  renderTicker();
+  document.getElementById('buyLegend').innerHTML = legendHtml();
+  document.getElementById('sellLegend').innerHTML = legendHtml();
+  document.getElementById('histLegend').innerHTML = legendHtml();
+  renderRankTable();
+  renderHero();
+  renderChartTags();
+  renderMarketIntelligence();
+  renderCalcAndCostTable();
+  renderCharts();
+  renderHistChart();
+
+  const mi = computeMarketIntelligence();
+  const ranked = rankedBanks();
+  document.getElementById('insightText').innerHTML = mi.hasHistory
+    ? `Today's spread of <b>৳${mi.todaySpread.toFixed(2)}</b> is ${mi.todaySpread>mi.avgSpread ? 'wider' : 'narrower'} than the recent average of ৳${mi.avgSpread.toFixed(2)} — ${mi.healthClass==='favorable' ? 'comparing before you transfer is worth more than usual right now.' : 'banks are closely matched, so the choice matters less than usual.'}`
+    : `<b>${ranked[0].name}</b> currently has the best rate for ${mode==='buy'?'sending money to Germany':'converting EUR to BDT'}. Historical comparison will appear as more data is collected.`;
+}
+
+document.getElementById('modeBuyBtn').addEventListener('click', ()=>{
+  mode='buy';
+  document.getElementById('modeBuyBtn').classList.add('active');
+  document.getElementById('modeSellBtn').classList.remove('active');
+  renderAll();
+});
+document.getElementById('modeSellBtn').addEventListener('click', ()=>{
+  mode='sell';
+  document.getElementById('modeSellBtn').classList.add('active');
+  document.getElementById('modeBuyBtn').classList.remove('active');
+  renderAll();
+});
+document.getElementById('calcAmount').addEventListener('input', renderCalcAndCostTable);
+document.getElementById('addFeeBtn').addEventListener('click', ()=>{
+  fees.push({label:"New cost", amount:0, currency:"BDT"});
+  renderFeeRows(); renderCalcAndCostTable();
+});
+document.getElementById('refreshBtn').addEventListener('click', ()=>location.reload());
+
+async function init(){
+  try{
+    await loadAll();
+    renderFeeRows();
+    renderAll();
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+  } catch(err){
+    console.error(err);
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.getElementById('errorScreen').style.display = 'flex';
+    document.getElementById('errorDetail').textContent = err.message || 'The data source did not respond.';
+  }
+}
+init();
+</script>
+</body>
+</html>
