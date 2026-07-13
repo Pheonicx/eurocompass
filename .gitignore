@@ -57,3 +57,5 @@ exports/
 data/
 
 .wrangler/
+
+create_ai_zip.ps1

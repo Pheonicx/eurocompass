@@ -10,6 +10,7 @@ from utils.csv_handler import save_rate
 from utils.exporter import export_csv, export_json
 from utils.history_sync import sync_history, sync_latest
 from utils.history_restore import restore_history
+from utils.rate_validator import is_plausible_rate
 
 load_dotenv()
 
@@ -45,6 +46,29 @@ def main():
 
             rate = collector.get_rate()
 
+            rejected = False
+
+            if rate:
+
+                valid, reason = is_plausible_rate(rate)
+
+                if not valid:
+
+                    console.print(
+                        f"[red]{rate['bank']} REJECTED: {reason}[/red]"
+                    )
+
+                    table.add_row(
+                        rate["bank"],
+                        rate.get("currency", "-"),
+                        f'{rate["buy"]:.4f}' if rate.get("buy") is not None else "-",
+                        f'{rate["sell"]:.4f}' if rate.get("sell") is not None else "-",
+                        "[red]REJECTED[/red]",
+                    )
+
+                    rate = None
+                    rejected = True
+
             if rate:
 
                 save_rate(rate)
@@ -59,7 +83,7 @@ def main():
                     "[green]OK[/green]",
                 )
 
-            else:
+            elif not rejected:
 
                 table.add_row(
                     collector.__name__.split(".")[-1].upper(),

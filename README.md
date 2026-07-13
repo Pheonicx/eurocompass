@@ -6,9 +6,14 @@ EuroCompass automatically collects live EUR exchange rates, tracks historical tr
 
 ---
 
-## 🚀 Live Demo
+## 🚀 Live Site
 
-**Dashboard:** https://eurocompass.streamlit.app
+**Dashboard:** https://eurocompass.eurocompass.workers.dev
+
+The site is a static page (`site/index.html`) hosted on Cloudflare, and reads
+`exports/latest.json` and `history/*.csv` directly from this repository on
+every page load — so it always reflects the latest hourly update with no
+redeploy required.
 
 ---
 
@@ -16,30 +21,13 @@ EuroCompass automatically collects live EUR exchange rates, tracks historical tr
 
 - 💶 Live EUR exchange rates from multiple Bangladeshi banks
 - 📈 Historical exchange-rate tracking
-- 🏦 Intelligent bank recommendation engine
-- 💸 Germany transfer cost calculator
-- 📊 Interactive Streamlit dashboard
+- 🏦 Intelligent bank recommendation engine, for both sending money to
+  Germany (TT selling rate) and converting EUR back to BDT (TT buying rate)
+- 💸 Transfer calculator with support for additional costs (transfer fees,
+  student file charges) in BDT, EUR, or USD
 - ☁️ Automatic hourly updates with GitHub Actions
 - 📂 GitHub-based historical storage (no database required)
 - 🤖 Telegram bot integration
-
-## 📸 Screenshots
-
-### Dashboard Overview
-
-![Dashboard](assets/dashboard-home.png)
-
-### Transfer Calculator
-
-![Calculator](assets/calculator.png)
-
-### Historical Analysis
-
-![History](assets/history.png)
-
-### Automated Updates
-
-![GitHub Actions](assets/github-actions.png)
 
 ## 🎯 Why EuroCompass?
 
@@ -60,7 +48,7 @@ Instead of manually checking multiple banking websites, users can make informed 
 ```text
                     ┌─────────────────────┐
                     │ Bangladeshi Banks   │
-                    │ BRAC • CITY • EBL • PRIME
+                    │ BRAC • CITY • EBL • PRIME • SONALI
                     └──────────┬──────────┘
                                │
                                ▼
@@ -74,11 +62,19 @@ Instead of manually checking multiple banking websites, users can make informed 
      Latest Market Snapshot              Historical CSV Files
              │                                   │
              ▼                                   ▼
-      Streamlit Dashboard              GitHub Repository
-             ▲                                   ▲
+      exports/latest.json                 history/*.csv
+             │                                   │
              └───────────────┬───────────────────┘
                              │
                              ▼
+                  GitHub Repository (Pheonicx/eurocompass)
+                             │
+                             ▼
+              Static Dashboard (site/index.html)
+              fetched live on every page load,
+              hosted on Cloudflare
+                             ▲
+                             │
                   GitHub Actions (Hourly)
 ```
 
@@ -86,26 +82,27 @@ Instead of manually checking multiple banking websites, users can make informed 
 
 1. Collect live EUR exchange rates from supported banks.
 2. Process and validate exchange-rate data.
-3. Export the latest market snapshot.
-4. Update historical CSV files stored in GitHub.
-5. Automatically refresh the Streamlit dashboard.
-6. Recommend the most cost-effective bank for transfers.
+3. Export the latest market snapshot to `exports/latest.json`.
+4. Update historical CSV files in `history/` and push to GitHub.
+5. The static dashboard fetches both files live from GitHub on every visit —
+   no build or redeploy needed for new rates to appear.
+6. Recommend the most cost-effective bank for transfers, in either direction.
 
 ## 🛠️ Technology Stack
 
 | Category | Technology |
 |----------|------------|
-| Language | Python 3.12 |
-| Dashboard | Streamlit |
-| Charts | Plotly |
-| Data Processing | Pandas |
+| Language (data pipeline) | Python 3.12 |
+| Dashboard | Static HTML/CSS/JS, Chart.js |
+| Dashboard Hosting | Cloudflare Pages/Workers |
 | Web Requests | Requests |
 | Web Scraping | BeautifulSoup |
+| PDF Rate Extraction | pdfplumber |
 | Automation | GitHub Actions |
 | Version Control | Git & GitHub |
 | Environment Management | python-dotenv |
 | Notifications | Telegram Bot API |
-| Data Storage | CSV + GitHub Repository |
+| Data Storage | CSV + JSON, GitHub Repository |
 
 ## ⚙️ Installation
 
@@ -144,7 +141,7 @@ pip install -r requirements.txt
 
 ## 🔑 Configuration
 
-Create a `.env` file in the project root.
+Create a `.env` file in the project root (copy `.env.example` as a starting point).
 
 ```env
 GITHUB_TOKEN=your_personal_access_token
@@ -175,17 +172,12 @@ This will:
 
 ---
 
-### Launch the Dashboard
+### View the Dashboard
 
-```bash
-streamlit run dashboard/app.py
-```
+The dashboard is a static site — no local server needed. Either open
+`site/index.html` directly in a browser, or visit the live deployed version:
 
-Then open:
-
-```
-http://localhost:8501
-```
+https://eurocompass.eurocompass.workers.dev
 
 ---
 
@@ -198,7 +190,10 @@ Each run:
 - Collects fresh exchange rates
 - Updates historical data
 - Pushes changes to GitHub
-- Keeps the Streamlit dashboard up to date
+- The live dashboard picks up the new data automatically on next visit
+
+Whenever `site/index.html` itself is changed and pushed, Cloudflare
+redeploys the site automatically within a minute or two.
 
 ## 📁 Project Structure
 
@@ -206,13 +201,15 @@ Each run:
 EuroCompass/
 │
 ├── collectors/          # Bank-specific collectors
-├── config/              # Configuration
-├── dashboard/           # Streamlit dashboard
+├── config/               # Configuration
 ├── data/                # Latest market data
-├── history/             # Historical CSV files
-├── services/            # Shared services
-├── telegram_bot/        # Telegram bot
-├── utils/               # Helper modules
+├── exports/              # latest.json snapshot
+├── history/              # Historical CSV files
+├── services/             # Shared services (market data, transfer calculator)
+├── site/                 # Static dashboard, deployed to Cloudflare
+├── telegram_bot/         # Telegram bot
+├── utils/                # Helper modules
+├── worker/                # Cloudflare Worker (Telegram webhook)
 │
 ├── .github/
 │   └── workflows/
@@ -229,10 +226,16 @@ EuroCompass/
 
 - Live exchange-rate collectors
 - Historical tracking
-- Interactive dashboard
 - Germany transfer calculator
 - GitHub Actions automation
 - Telegram bot integration
+
+### ✅ Version 2.0
+
+- Static dashboard on Cloudflare, replacing the Streamlit app
+- Buy/sell direction toggle (send to Germany vs. convert to BDT)
+- Fee-aware transfer calculator (BDT/EUR/USD)
+- Cost-by-bank comparison table
 
 ### 🚀 Future Improvements
 
@@ -240,7 +243,6 @@ EuroCompass/
 - Exchange-rate forecasting
 - Trend and volatility analysis
 - Personalized alerts
-- Enhanced dashboard analytics
 
 ## 📄 License
 

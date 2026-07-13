@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from dashboard.calculator import calculate_transfer_cost, get_best_bank
+from services.calculator import calculate_transfer_cost, get_best_bank
 
 
 EXPORT_FILE = Path("exports/latest.json")

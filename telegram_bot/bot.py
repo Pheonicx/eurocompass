@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
-from dashboard.calculator import calculate_transfer_cost
+from services.calculator import calculate_transfer_cost
 from services.market_service import get_rates, recommend_bank
 
 
