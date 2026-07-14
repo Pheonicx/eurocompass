@@ -1,38 +1,38 @@
 {
   "EBL": {
-    "last_checked_at": "2026-07-14T16:05:48.094832+00:00",
-    "last_status": "ok",
+    "last_checked_at": "2026-07-14T17:54:00.139545+00:00",
+    "last_status": "failed",
     "last_success_at": "2026-07-14T16:05:48.094832+00:00",
     "last_buy": 137.92,
     "last_sell": 142.78,
-    "last_failure_reason": null
+    "last_failure_reason": "Collector returned no data"
   },
   "CITY": {
-    "last_checked_at": "2026-07-14T16:05:49.063730+00:00",
-    "last_status": "ok",
+    "last_checked_at": "2026-07-14T17:54:06.905215+00:00",
+    "last_status": "failed",
     "last_success_at": "2026-07-14T16:05:49.063730+00:00",
     "last_buy": 137.95161,
     "last_sell": 142.78691,
-    "last_failure_reason": null
+    "last_failure_reason": "Collector returned no data"
   },
   "BRAC": {
-    "last_checked_at": "2026-07-14T16:05:51.579763+00:00",
+    "last_checked_at": "2026-07-14T17:54:09.432588+00:00",
     "last_status": "failed",
     "last_failure_reason": "Rejected: sell (138.7303) is lower than buy (140.9511), which shouldn't happen",
     "last_success_at": null
   },
   "PRIME": {
-    "last_checked_at": "2026-07-14T16:05:57.474710+00:00",
+    "last_checked_at": "2026-07-14T17:54:15.549451+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-14T16:05:57.474710+00:00",
+    "last_success_at": "2026-07-14T17:54:15.549451+00:00",
     "last_buy": 139.0144,
     "last_sell": 142.1764,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-07-14T16:05:58.486957+00:00",
+    "last_checked_at": "2026-07-14T17:54:16.417771+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-14T16:05:58.486957+00:00",
+    "last_success_at": "2026-07-14T17:54:16.417771+00:00",
     "last_buy": 139.8491,
     "last_sell": 142.4233,
     "last_failure_reason": null
