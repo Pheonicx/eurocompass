@@ -11,6 +11,23 @@ from utils.exporter import export_csv, export_json
 from utils.history_sync import sync_history, sync_latest
 from utils.history_restore import restore_history
 from utils.rate_validator import is_plausible_rate
+from utils import collector_status
+
+
+def _date_cell(rate):
+    """
+    Formats the Rate Date column: shows the date the bank's PDF is
+    actually for, and flags it clearly when it isn't today's rate.
+    """
+    rate_date = rate.get("rate_date") if rate else None
+
+    if not rate_date:
+        return "-"
+
+    if rate.get("is_stale"):
+        return f"[yellow]{rate_date} (stale)[/yellow]"
+
+    return rate_date
 
 load_dotenv()
 
@@ -36,6 +53,7 @@ def main():
     table.add_column("Currency", justify="center")
     table.add_column("Buy", justify="right")
     table.add_column("Sell", justify="right")
+    table.add_column("Rate Date", justify="center")
     table.add_column("Status", justify="center")
 
     results = []
@@ -63,8 +81,11 @@ def main():
                         rate.get("currency", "-"),
                         f'{rate["buy"]:.4f}' if rate.get("buy") is not None else "-",
                         f'{rate["sell"]:.4f}' if rate.get("sell") is not None else "-",
+                        _date_cell(rate),
                         "[red]REJECTED[/red]",
                     )
+
+                    collector_status.record(rate["bank"], ok=False, reason=f"Rejected: {reason}")
 
                     rate = None
                     rejected = True
@@ -80,32 +101,47 @@ def main():
                     rate["currency"],
                     f'{rate["buy"]:.4f}',
                     f'{rate["sell"]:.4f}',
+                    _date_cell(rate),
                     "[green]OK[/green]",
                 )
 
+                collector_status.record(rate["bank"], ok=True, buy=rate["buy"], sell=rate["sell"])
+
             elif not rejected:
 
+                bank_name = collector.__name__.split(".")[-1].upper()
+
                 table.add_row(
-                    collector.__name__.split(".")[-1].upper(),
+                    bank_name,
+                    "-",
                     "-",
                     "-",
                     "-",
                     "[red]FAILED[/red]",
                 )
 
+                collector_status.record(bank_name, ok=False, reason="Collector returned no data")
+
         except Exception as e:
 
+            bank_name = collector.__name__.split(".")[-1].upper()
+
             table.add_row(
-                collector.__name__.split(".")[-1].upper(),
+                bank_name,
+                "-",
                 "-",
                 "-",
                 "-",
                 "[red]ERROR[/red]",
             )
 
+            collector_status.record(bank_name, ok=False, reason=str(e))
+
             console.print(f"[red]{e}[/red]")
 
     console.print(table)
+
+    collector_status.sync()
 
     if not results:
         console.print("\n[bold red]No bank data collected.[/bold red]")
