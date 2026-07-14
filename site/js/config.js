@@ -19,7 +19,7 @@ export const DEFAULT_FEES = [
   { label: "Student file opening fee", amount: 8000, currency: "BDT" },
 ];
 
-export const DEFAULT_VAT_PERCENT = 5;
+export const DEFAULT_VAT_PERCENT = 0;
 
 // How many days of history to use for the trend forecast, and how many
 // days ahead to project.
