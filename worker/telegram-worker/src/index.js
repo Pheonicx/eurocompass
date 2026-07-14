@@ -220,7 +220,7 @@ else if (text === "🌐 Dashboard") {
 
 Access the live dashboard here:
 
-https://eurocompass.streamlit.app/
+https://eurocompass.eurocompass.workers.dev/#
 
 📊 Live rates
 📈 Analytics
