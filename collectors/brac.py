@@ -6,6 +6,7 @@ from utils.pdf_utils import (
     extract_tables_from_pdf,
     extract_text_from_pdf,
     extract_buy_sell,
+    extract_buy_sell_by_repetition,
     extract_rate_date,
     find_currency_row,
     find_student_rate,
@@ -39,27 +40,47 @@ def _get_pdf_url():
     return match.group(0)
 
 
-def _extract_from_row(row):
+def _numbers_from_eur_line(text):
     """
-    BRAC's rate table has an extra leading "Cash Notes" column that
-    Sonali/Prime's tables don't have, so the generic buy_index=3,
-    sell_index=0 convention is wrong here — it would silently pick the
-    cash-note sell rate instead of the TT&OD sell rate. Verified against
-    a real BRAC PDF: correct positions are index 1 (TT&OD sell) and
-    index 3 (T.T. Clean buy).
+    Finds the line of text starting at "EUR" and pulls out every
+    plausible-looking decimal number on it. Kept separate from row
+    parsing since BRAC's table is dense enough that pdfplumber's column
+    boundaries aren't fully reliable — working from the flat list of
+    numbers on the EUR line and letting the repetition pattern decide
+    which are buy/sell has proven more robust in practice than trusting
+    fixed positions.
     """
-    if row is None or len(row) < 4:
-        return None, None
+    match = re.search(r"EUR\b(.{0,150})", text)
+    if not match:
+        return []
+    return [to_float(n) for n in re.findall(r"-?[0-9][0-9,]*\.[0-9]+", match.group(1))]
 
-    sell = to_float(row[1])
-    buy = to_float(row[3])
 
-    if sell is not None and buy is not None and 50.0 <= sell <= 300.0 and 50.0 <= buy <= 300.0:
+def _extract_eur_buy_sell(row, text):
+    """
+    Tries three strategies in order of reliability, verified against
+    BRAC's actual PDF structure:
+      1. Repetition pattern across the EUR row's own cells (most
+         reliable — BRAC repeats identical TT rates across 2-3 columns).
+      2. Repetition pattern across the raw EUR text line (same idea,
+         used when table extraction doesn't cleanly split into a row).
+      3. Fixed-index fallback as a last resort.
+    """
+    if row:
+        row_numbers = [to_float(c) for c in row]
+        buy, sell = extract_buy_sell_by_repetition(row_numbers)
+        if buy is not None:
+            return buy, sell
+
+    line_numbers = _numbers_from_eur_line(text)
+    buy, sell = extract_buy_sell_by_repetition(line_numbers)
+    if buy is not None:
         return buy, sell
 
-    # Fall back to the generic defensive extractor in case BRAC ever
-    # simplifies their table to match the other banks' layout.
-    return extract_buy_sell(row, buy_index=3, sell_index=0)
+    if row:
+        return extract_buy_sell(row, buy_index=3, sell_index=0)
+
+    return None, None
 
 
 def _get_rate_via_pdf():
@@ -77,21 +98,7 @@ def _get_rate_via_pdf():
     tables = extract_tables_from_pdf(pdf_bytes)
     row = find_currency_row(tables, "EUR")
 
-    buy, sell = _extract_from_row(row) if row else (None, None)
-
-    if buy is None or sell is None:
-        # Table extraction can fail on BRAC's denser multi-section PDF —
-        # fall back to a direct text scan for a clean "EUR <numbers>" row.
-        # Column order verified against a real BRAC PDF: skip the first
-        # (Cash Notes) number, sell is the 2nd, buy is the 4th.
-        match = re.search(
-            r"EUR\s+([0-9]+\.[0-9]+)\s+([0-9]+\.[0-9]+)\s+([0-9]+\.[0-9]+)\s+([0-9]+\.[0-9]+)",
-            text,
-        )
-        if match:
-            nums = [float(g) for g in match.groups()]
-            sell = nums[1]
-            buy = nums[3]
+    buy, sell = _extract_eur_buy_sell(row, text)
 
     if buy is None or sell is None:
         return None

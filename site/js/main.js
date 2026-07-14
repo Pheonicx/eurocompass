@@ -6,6 +6,7 @@ import { renderMarketIntelligence } from './render-market-intelligence.js';
 import { renderBuySellCharts, renderHistChart } from './charts.js';
 import { renderFeeRows, renderCalcAndCostTable } from './render-calculator.js';
 import { renderForecast } from './render-forecast.js';
+import { renderStudentRates } from './render-student-rates.js';
 
 function fmtTimestamp(iso) {
   if (!iso) return '—';
@@ -25,6 +26,7 @@ function renderAll() {
   renderChartTags();
   renderMarketIntelligence();
   renderCalcAndCostTable();
+  renderStudentRates();
   renderBuySellCharts();
   renderHistChart();
   renderForecast();

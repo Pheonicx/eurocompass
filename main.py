@@ -120,7 +120,15 @@ def main():
                     "[red]FAILED[/red]",
                 )
 
-                collector_status.record(bank_name, ok=False, reason="Collector returned no data")
+                specific_reason = None
+                if hasattr(collector, "get_last_error"):
+                    specific_reason = collector.get_last_error()
+
+                collector_status.record(
+                    bank_name,
+                    ok=False,
+                    reason=specific_reason or "Collector returned no data",
+                )
 
         except Exception as e:
 

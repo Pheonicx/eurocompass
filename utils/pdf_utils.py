@@ -137,6 +137,36 @@ def extract_buy_sell(row, buy_index, sell_index, min_rate=50.0, max_rate=300.0):
     return None, None
 
 
+def extract_buy_sell_by_repetition(numbers, min_rate=50.0, max_rate=300.0):
+    """
+    Some banks (BRAC, notably) quote the same TT rate across several
+    columns at once (e.g. "TT Clean," "TT Doc," and "OD Sight" buying
+    are identical numbers repeated three times; "TT & OD" and "B.C."
+    selling repeated twice). That repetition is a far more reliable
+    signal than any fixed column position, which breaks the moment a
+    row has one extra or one fewer column than expected — exactly what
+    happened with a fixed-index approach in practice.
+
+    Groups the row's plausible numbers by value; if exactly two distinct
+    values each appear 2+ times, the lower one is buy and the higher is
+    sell (a bank's sell rate is always above its buy rate).
+
+    Returns (buy, sell) or (None, None) if the pattern doesn't hold —
+    callers should fall back to a different strategy in that case, not
+    guess.
+    """
+    from collections import Counter
+
+    plausible = [n for n in numbers if n is not None and min_rate <= n <= max_rate]
+    counts = Counter(round(n, 4) for n in plausible)
+    repeated = sorted(v for v, c in counts.items() if c >= 2)
+
+    if len(repeated) == 2:
+        return repeated[0], repeated[1]
+
+    return None, None
+
+
 def extract_text_from_pdf(pdf_bytes):
     """
     Extract all text from a PDF.
