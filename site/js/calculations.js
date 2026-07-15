@@ -4,9 +4,40 @@ export function activeRate(state, b) {
   return state.mode === 'buy' ? b.sell : b.buy;
 }
 
+// The rate the calculator should actually use for a bank: its student
+// file rate, if the toggle is on and that bank publishes one, otherwise
+// its normal rate. Student rates only make sense for sending money
+// (buy mode) — an education remittance context — so the toggle has no
+// effect in sell mode even if left on.
+export function effectiveRate(state, b) {
+  if (state.useStudentRate && state.mode === 'buy' && b.student) {
+    if (b.student.rate !== undefined) return b.student.rate;
+    if (b.student.sell !== undefined) return b.student.sell;
+  }
+  if (state.useStudentRate && state.mode === 'sell' && b.student && b.student.buy !== undefined) {
+    return b.student.buy;
+  }
+  return activeRate(state, b);
+}
+
+export function usingStudentRate(state, b) {
+  return effectiveRate(state, b) !== activeRate(state, b);
+}
+
 export function rankedBanks(state) {
   return [...state.banks].sort((a, b) =>
     state.mode === 'buy' ? a.sell - b.sell : b.buy - a.buy
+  );
+}
+
+// Same idea as rankedBanks, but ranks by whatever rate the calculator
+// is actually going to use (student or normal) — so the "recommended
+// bank" reflects reality when the student toggle changes who's cheapest.
+export function rankedBanksForCalculator(state) {
+  return [...state.banks].sort((a, b) =>
+    state.mode === 'buy'
+      ? effectiveRate(state, a) - effectiveRate(state, b)
+      : effectiveRate(state, b) - effectiveRate(state, a)
   );
 }
 
@@ -41,12 +72,12 @@ export function feeTotalBDT(state, rate, baseBDT) {
 }
 
 export function computeForBank(state, b, amountEUR) {
-  const rate = activeRate(state, b);
+  const rate = effectiveRate(state, b);
   const baseBDT = amountEUR * rate;
   const fees = feeTotalBDT(state, rate, baseBDT);
   const totalBDT = state.mode === 'buy' ? baseBDT + fees.total : baseBDT - fees.total;
   const totalEUR = totalBDT / rate;
-  return { rate, baseBDT, feesBDT: fees.total, feesFlat: fees.flat, feesVat: fees.vat, totalBDT, totalEUR };
+  return { rate, baseBDT, feesBDT: fees.total, feesFlat: fees.flat, feesVat: fees.vat, totalBDT, totalEUR, usedStudentRate: usingStudentRate(state, b) };
 }
 
 export function computeMarketIntelligence(state) {

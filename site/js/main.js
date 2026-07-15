@@ -53,6 +53,10 @@ function wireEvents() {
   });
 
   document.getElementById('calcAmount').addEventListener('input', renderCalcAndCostTable);
+  document.getElementById('useStudentRateToggle').addEventListener('change', e => {
+    state.useStudentRate = e.target.checked;
+    renderCalcAndCostTable();
+  });
   document.getElementById('calcAmountCurrency').addEventListener('change', e => {
     state.amountCurrency = e.target.value;
     renderCalcAndCostTable();

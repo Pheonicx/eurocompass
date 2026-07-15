@@ -1,5 +1,5 @@
 import { state } from './state.js';
-import { rankedBanks, computeForBank, toEURAmount, activeRate } from './calculations.js';
+import { rankedBanksForCalculator, computeForBank, toEURAmount, activeRate } from './calculations.js';
 
 export function renderFeeRows() {
   document.getElementById('feeRows').innerHTML = state.fees.map((f, i) => `
@@ -36,8 +36,31 @@ function getAmountEUR(bestBank) {
   return { amount, amountEUR: toEURAmount(amount, state.amountCurrency, rate) };
 }
 
+export function renderStudentToggle() {
+  const wrap = document.getElementById('studentToggleWrap');
+  const anyStudentRates = state.banks.some(b => b.student);
+
+  if (!anyStudentRates) {
+    wrap.style.display = 'none';
+    return;
+  }
+
+  wrap.style.display = 'flex';
+
+  const disabled = state.mode === 'sell';
+  const checkbox = document.getElementById('useStudentRateToggle');
+  checkbox.checked = state.useStudentRate;
+  checkbox.disabled = disabled;
+
+  document.getElementById('studentToggleNote').textContent = disabled
+    ? "Student rates apply when sending money — switch to \"Send money to Germany\" to use them."
+    : "Uses each bank's student-file rate instead of its normal rate, where available.";
+
+  wrap.classList.toggle('disabled', disabled);
+}
+
 export function renderCalcAndCostTable() {
-  const ranked = rankedBanks(state);
+  const ranked = rankedBanksForCalculator(state);
   const bestBankForConversion = ranked[0];
   const { amount, amountEUR } = getAmountEUR(bestBankForConversion);
 
@@ -57,10 +80,12 @@ export function renderCalcAndCostTable() {
     document.getElementById('calcAmountHint').textContent = 'Typical semester tuition + living cost transfer';
   }
 
+  const studentTag = (b) => b.usedStudentRate ? '<span class="student-tag">student rate</span>' : '';
+
   document.getElementById('calcResults').innerHTML = `
     <div class="result-tile accent">
       <div class="result-tile-label">Recommended bank</div>
-      <div class="result-tile-value accent-text"><span class="tile-dot" style="background:${bestR.color};"></span>${bestR.name}</div>
+      <div class="result-tile-value accent-text"><span class="tile-dot" style="background:${bestR.color};"></span>${bestR.name} ${studentTag(bestR)}</div>
       <div class="result-tile-sub">Rate ৳${bestR.rate.toFixed(2)}</div>
     </div>
     <div class="result-tile">
@@ -91,7 +116,7 @@ export function renderCalcAndCostTable() {
     const diffCell = i === 0 ? `<span class="diff-best">${state.mode === 'buy' ? 'Cheapest' : 'Best'}</span>` : `<span class="diff-pos">${state.mode === 'buy' ? '+' : '-'}৳${Math.abs(d).toLocaleString()}</span>`;
     return `<tr class="${i === 0 ? 'row-best' : ''}">
       <td><span class="rank-badge ${i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : ''}">${i + 1}</span></td>
-      <td><div class="bank-cell"><div class="bank-swatch" style="background:${b.color};"></div><span class="bank-name">${b.name}</span></div></td>
+      <td><div class="bank-cell"><div class="bank-swatch" style="background:${b.color};"></div><span class="bank-name">${b.name}</span>${studentTag(b)}</div></td>
       <td class="num">৳${b.rate.toFixed(2)}</td>
       <td class="num">৳${Math.round(b.totalBDT).toLocaleString()}</td>
       <td class="num">€${Math.round(b.totalEUR).toLocaleString()}</td>
@@ -102,4 +127,6 @@ export function renderCalcAndCostTable() {
   document.getElementById('costNote').textContent = state.mode === 'buy'
     ? `For your entered amount plus all added costs, the gap between the cheapest and priciest bank is ৳${spreadNote.toLocaleString()}.`
     : `For your entered amount minus all added costs, the gap between the best and weakest bank is ৳${spreadNote.toLocaleString()}.`;
+
+  renderStudentToggle();
 }

@@ -6,6 +6,7 @@ import { DEFAULT_FEES, DEFAULT_VAT_PERCENT } from './config.js';
 export const state = {
   mode: 'buy',            // 'buy' = sending to Germany (TT sell) | 'sell' = converting EUR to BDT (TT buy)
   amountCurrency: 'EUR',  // currency of the number typed into the calculator's amount box
+  useStudentRate: false,  // when true, the calculator uses a bank's student-file rate instead of its normal rate, for banks that publish one
   fees: DEFAULT_FEES.map(f => ({ ...f })),
   vat: {
     percent: DEFAULT_VAT_PERCENT,
