@@ -1,11 +1,11 @@
 {
-    "generated_at": "2026-07-15T04:59:38.111324+00:00",
+    "generated_at": "2026-07-15T07:04:10.367170+00:00",
     "currency": "EUR",
     "summary": {
-        "banks_processed": 3,
+        "banks_processed": 5,
         "lowest_buy": {
-            "bank": "BRAC",
-            "value": 138.7303
+            "bank": "CITY",
+            "value": 138.47922
         },
         "highest_buy": {
             "bank": "SONALI",
@@ -13,26 +13,38 @@
         },
         "lowest_sell": {
             "bank": "BRAC",
-            "value": 141.4886
+            "value": 142.0971
         },
         "highest_sell": {
-            "bank": "SONALI",
-            "value": 142.9732
+            "bank": "EBL",
+            "value": 143.41
         },
-        "average_buy": 139.57026666666667,
-        "average_sell": 142.4066
+        "average_buy": 139.269384,
+        "average_sell": 142.911424
     },
     "banks": [
         {
+            "bank": "EBL",
+            "currency": "EUR",
+            "buy": 138.56,
+            "sell": 143.41
+        },
+        {
+            "bank": "CITY",
+            "currency": "EUR",
+            "buy": 138.47922,
+            "sell": 143.31882
+        },
+        {
             "bank": "BRAC",
             "currency": "EUR",
-            "buy": 138.7303,
-            "sell": 141.4886,
+            "buy": 139.3272,
+            "sell": 142.0971,
             "rate_date": "2024-12-31",
             "is_stale": true,
             "student": {
                 "buy": 124.2,
-                "sell": 166.1441
+                "sell": 166.7283
             }
         },
         {
