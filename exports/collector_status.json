@@ -1,40 +1,40 @@
 {
   "EBL": {
-    "last_checked_at": "2026-07-15T07:03:34.086244+00:00",
+    "last_checked_at": "2026-07-15T09:45:08.567565+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-15T07:03:34.086244+00:00",
+    "last_success_at": "2026-07-15T09:45:08.567565+00:00",
     "last_buy": 138.56,
     "last_sell": 143.41,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-07-15T07:03:59.384224+00:00",
+    "last_checked_at": "2026-07-15T09:45:32.081336+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-15T07:03:59.384224+00:00",
+    "last_success_at": "2026-07-15T09:45:32.081336+00:00",
     "last_buy": 138.47922,
     "last_sell": 143.31882,
     "last_failure_reason": null
   },
   "BRAC": {
-    "last_checked_at": "2026-07-15T07:04:02.424674+00:00",
+    "last_checked_at": "2026-07-15T09:45:34.946544+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-07-15T07:04:02.424674+00:00",
+    "last_success_at": "2026-07-15T09:45:34.946544+00:00",
     "last_buy": 139.3272,
     "last_sell": 142.0971
   },
   "PRIME": {
-    "last_checked_at": "2026-07-15T07:04:08.719412+00:00",
+    "last_checked_at": "2026-07-15T09:45:40.311079+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-15T07:04:08.719412+00:00",
+    "last_success_at": "2026-07-15T09:45:40.311079+00:00",
     "last_buy": 139.5913,
     "last_sell": 142.758,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-07-15T07:04:09.440488+00:00",
+    "last_checked_at": "2026-07-15T09:45:41.053229+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-15T07:04:09.440488+00:00",
+    "last_success_at": "2026-07-15T09:45:41.053229+00:00",
     "last_buy": 140.3892,
     "last_sell": 142.9732,
     "last_failure_reason": null
