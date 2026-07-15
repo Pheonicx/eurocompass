@@ -1,8 +1,8 @@
 {
-    "generated_at": "2026-07-15T01:04:45.454160+00:00",
+    "generated_at": "2026-07-15T04:36:41.723171+00:00",
     "currency": "EUR",
     "summary": {
-        "banks_processed": 5,
+        "banks_processed": 4,
         "lowest_buy": {
             "bank": "EBL",
             "value": 137.92
@@ -17,10 +17,10 @@
         },
         "highest_sell": {
             "bank": "CITY",
-            "value": 142.78691
+            "value": 143.31882
         },
-        "average_buy": 138.693082,
-        "average_sell": 142.331042
+        "average_buy": 138.744655,
+        "average_sell": 142.50268
     },
     "banks": [
         {
@@ -32,8 +32,8 @@
         {
             "bank": "CITY",
             "currency": "EUR",
-            "buy": 137.95161,
-            "sell": 142.78691
+            "buy": 138.47922,
+            "sell": 143.31882
         },
         {
             "bank": "BRAC",
@@ -45,17 +45,6 @@
             "student": {
                 "buy": 124.2,
                 "sell": 166.1441
-            }
-        },
-        {
-            "bank": "PRIME",
-            "currency": "EUR",
-            "buy": 139.0144,
-            "sell": 142.1764,
-            "rate_date": "2026-07-14",
-            "is_stale": true,
-            "student": {
-                "rate": 141.075
             }
         },
         {
