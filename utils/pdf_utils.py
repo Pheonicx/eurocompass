@@ -364,22 +364,23 @@ def find_student_rate(pdf_text, currency="EUR"):
     Look for a dedicated "student file" rate section and pull out the
     rate for the given currency, if the bank publishes one at all.
 
-    Handles two layouts seen in practice across real bank PDFs:
+    Verified against real student-rate tables from four different banks
+    (Prime, BRAC, City, EBL) — every one of them uses the same
+    underlying shape: a run of currency codes listed together, followed
+    immediately by a run of numeric values in the same order. Some
+    banks label it explicitly ("CURRENCY ... RATE ..."), others don't
+    (just "USD/BDT GBP/BDT EUR/BDT ..." then the numbers on the next
+    line) — this doesn't depend on those labels being present, only on
+    the position of each currency code within its run of codes matching
+    the position of its value within the following run of numbers.
 
-      - Column-list layout (Prime Bank): a "CURRENCY" row listing several
-        currency codes in order, followed by a "RATE" (or "BUYING" /
-        "SELLING") row listing values in the same order — the value's
-        *position* in the list is what ties it to a currency, not
-        adjacency in the raw text.
-          e.g. "CURRENCY USD GBP EUR ... RATE 122.20 164.95 143.86 ..."
+    Wide tables that wrap across multiple code/value groups (as EBL's
+    does) are handled by finding *all* such runs and using whichever one
+    actually contains the requested currency.
 
-      - Row layout: each currency is immediately followed by its own
-        number(s) on the same line.
-          e.g. "EUR 140.82 140.10 139.39 ..."
-
-    Returns a dict like {"rate": 143.86} or {"buy": x, "sell": y},
-    or None if no student-rate section was found for this currency —
-    that's a normal, expected result for most banks, not an error.
+    Returns a dict like {"rate": 143.86}, or None if no student-rate
+    section was found for this currency — a normal, expected result for
+    most banks, not an error.
     """
     if not pdf_text:
         return None
@@ -396,34 +397,44 @@ def find_student_rate(pdf_text, currency="EUR"):
     if section_idx is None:
         return None
 
-    window = pdf_text[section_idx: section_idx + 700]
+    window = pdf_text[section_idx: section_idx + 1200]
     window_upper = window.upper()
 
     currency = currency.upper()
     aliases = CURRENCY_ALIASES.get(currency, [currency])
 
-    result = _find_student_rate_columnar(window, window_upper, aliases)
+    result = _find_student_rate_by_position(window, window_upper, aliases)
     if result:
         return result
 
     return _find_student_rate_row(window, window_upper, aliases)
 
 
-def _currency_token_positions(window_upper, currency_codes):
+_KNOWN_CURRENCY_CODES = [
+    "USD", "GBP", "EUR", "JPY", "CAD", "AUD", "CHF", "SAR", "AED", "CNY",
+    "SGD", "MYR", "NZD", "DKK", "NOK", "CZK", "KRW", "THB", "INR", "HKD",
+    "RUB", "SEK", "PLN", "OMR", "QAR", "BHD",
+]
+
+_NUMBER_RE = re.compile(r"-?[0-9][0-9,]*\.[0-9]+")
+
+
+def _currency_token_positions(text_upper, currency_codes):
     """
     Finds every recognizable currency-code token in order of appearance
-    and returns their (start_index, code) pairs, so we can establish a
-    stable left-to-right ordering for the column-list layout.
+    and returns their (start_index, code) pairs. Matches "EUR" whether
+    it's standalone or written as "EUR/BDT" — only checks that it isn't
+    part of a longer alphabetic word.
     """
     positions = []
     for code in currency_codes:
         start = 0
         while True:
-            idx = window_upper.find(code, start)
+            idx = text_upper.find(code, start)
             if idx == -1:
                 break
-            before_ok = idx == 0 or not window_upper[idx - 1].isalpha()
-            after_ok = idx + len(code) >= len(window_upper) or not window_upper[idx + len(code)].isalpha()
+            before_ok = idx == 0 or not text_upper[idx - 1].isalpha()
+            after_ok = idx + len(code) >= len(text_upper) or not text_upper[idx + len(code)].isalpha()
             if before_ok and after_ok:
                 positions.append((idx, code))
             start = idx + len(code)
@@ -431,56 +442,63 @@ def _currency_token_positions(window_upper, currency_codes):
     return positions
 
 
-def _find_student_rate_columnar(window, window_upper, aliases):
-    known_codes = ["USD", "GBP", "EUR", "JPY", "CAD", "AUD", "CHF", "SAR", "AED", "CNY", "SGD"]
-
-    cur_label_idx = window_upper.find("CURRENCY")
-    if cur_label_idx == -1:
+def _find_student_rate_by_position(window, window_upper, aliases):
+    code_positions = _currency_token_positions(window_upper, _KNOWN_CURRENCY_CODES)
+    if len(code_positions) < 2:
         return None
 
-    value_labels = []
-    for label in ("RATE", "SELLING", "BUYING"):
-        idx = window_upper.find(label, cur_label_idx + len("CURRENCY"))
-        if idx != -1:
-            value_labels.append((idx, label))
-    if not value_labels:
-        return None
-    value_labels.sort()
-    first_value_idx, _ = value_labels[0]
-
-    currency_zone_upper = window_upper[cur_label_idx:first_value_idx]
-    codes_in_order = [code for _, code in _currency_token_positions(currency_zone_upper, known_codes)]
-
-    if not codes_in_order:
+    number_positions = [(m.start(), m.group()) for m in _NUMBER_RE.finditer(window)]
+    if not number_positions:
         return None
 
-    target_index = None
-    for alias in aliases:
-        if alias in codes_in_order:
-            target_index = codes_in_order.index(alias)
-            break
-    if target_index is None:
-        return None
+    # Group currency codes into runs — a run breaks wherever a number
+    # appears between two consecutive codes (that number belongs to a
+    # different section/value-list, not the header list we're reading).
+    runs = [[code_positions[0]]]
+    for prev, curr in zip(code_positions, code_positions[1:]):
+        interrupted = any(prev[0] < npos < curr[0] for npos, _ in number_positions)
+        if interrupted:
+            runs.append([curr])
+        else:
+            runs[-1].append(curr)
 
-    results = {}
-    for idx, label in value_labels:
-        segment = window[idx + len(label): idx + len(label) + 400]
-        numbers = [to_float(n) for n in re.findall(r"-?[0-9][0-9,]*\.[0-9]+", segment)]
-        numbers = [n for n in numbers if n is not None]
-        if target_index < len(numbers):
-            val = numbers[target_index]
+    # Only runs of 2+ codes look like a real currency-header list rather
+    # than a stray one-off mention of a currency elsewhere in the text.
+    runs = [r for r in runs if len(r) >= 2]
+
+    for run in runs:
+        codes_in_order = [code for _, code in run]
+
+        target_index = None
+        for alias in aliases:
+            if alias in codes_in_order:
+                target_index = codes_in_order.index(alias)
+                break
+        if target_index is None:
+            continue
+
+        run_end = run[-1][0]
+        following_numbers = [
+            to_float(txt) for pos, txt in number_positions if pos > run_end
+        ]
+        following_numbers = [n for n in following_numbers if n is not None]
+
+        if target_index < len(following_numbers):
+            val = following_numbers[target_index]
             if 50.0 <= val <= 300.0:
-                results[label] = val
-
-    if "RATE" in results:
-        return {"rate": results["RATE"]}
-    if "BUYING" in results and "SELLING" in results:
-        return {"buy": min(results["BUYING"], results["SELLING"]), "sell": max(results["BUYING"], results["SELLING"])}
+                return {"rate": val}
 
     return None
 
 
 def _find_student_rate_row(window, window_upper, aliases):
+    """
+    Last-resort fallback for a currency immediately followed by its own
+    number(s) on the same line (e.g. "EUR 140.82 140.10"). Verified
+    real-world student-rate tables (Prime, BRAC, City, EBL) all use the
+    positional column-list layout above instead, so this mainly exists
+    as a safety net for a bank format not yet seen.
+    """
     cur_idx = None
     for alias in aliases:
         idx = window_upper.find(alias)
