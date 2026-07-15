@@ -1,42 +1,42 @@
 {
   "EBL": {
-    "last_checked_at": "2026-07-15T04:35:58.370757+00:00",
+    "last_checked_at": "2026-07-15T07:03:34.086244+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-15T04:35:58.370757+00:00",
-    "last_buy": 137.92,
-    "last_sell": 142.78,
+    "last_success_at": "2026-07-15T07:03:34.086244+00:00",
+    "last_buy": 138.56,
+    "last_sell": 143.41,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-07-15T04:36:22.399610+00:00",
+    "last_checked_at": "2026-07-15T07:03:59.384224+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-15T04:36:22.399610+00:00",
+    "last_success_at": "2026-07-15T07:03:59.384224+00:00",
     "last_buy": 138.47922,
     "last_sell": 143.31882,
     "last_failure_reason": null
   },
   "BRAC": {
-    "last_checked_at": "2026-07-15T04:36:28.633410+00:00",
+    "last_checked_at": "2026-07-15T07:04:02.424674+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-07-15T04:36:28.633410+00:00",
-    "last_buy": 138.7303,
-    "last_sell": 141.4886
+    "last_success_at": "2026-07-15T07:04:02.424674+00:00",
+    "last_buy": 139.3272,
+    "last_sell": 142.0971
   },
   "PRIME": {
-    "last_checked_at": "2026-07-15T04:36:36.437218+00:00",
-    "last_status": "failed",
-    "last_success_at": "2026-07-15T01:04:41.113440+00:00",
-    "last_buy": 139.0144,
-    "last_sell": 142.1764,
-    "last_failure_reason": "Collector returned no data"
+    "last_checked_at": "2026-07-15T07:04:08.719412+00:00",
+    "last_status": "ok",
+    "last_success_at": "2026-07-15T07:04:08.719412+00:00",
+    "last_buy": 139.5913,
+    "last_sell": 142.758,
+    "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-07-15T04:36:40.363517+00:00",
+    "last_checked_at": "2026-07-15T07:04:09.440488+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-15T04:36:40.363517+00:00",
-    "last_buy": 139.8491,
-    "last_sell": 142.4233,
+    "last_success_at": "2026-07-15T07:04:09.440488+00:00",
+    "last_buy": 140.3892,
+    "last_sell": 142.9732,
     "last_failure_reason": null
   }
 }
