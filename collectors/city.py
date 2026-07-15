@@ -6,11 +6,28 @@ from utils.pdf_utils import (
     extract_rate_date,
     find_currency_row,
     find_student_rate,
+    is_plausible_student_rate,
     is_stale,
 )
 from utils.city_api import get_exchange_rates
 
 EXCHANGE_RATES_PAGE = "https://www.citybankplc.com/exchange-rates"
+
+# Records the specific stage that failed, so main.py can write a precise
+# reason to collector_status.json instead of a generic "no data" — no
+# need to dig through GitHub Actions logs to find out why City failed.
+_last_error = None
+
+
+def get_last_error():
+    return _last_error
+
+
+def _fail(reason):
+    global _last_error
+    _last_error = reason
+    print(f"CITY: {reason}")
+    return None
 
 
 def _get_latest_pdf_via_browser():
@@ -24,32 +41,42 @@ def _get_latest_pdf_via_browser():
     try:
         from playwright.sync_api import sync_playwright
     except ImportError:
-        print("CITY: playwright not installed, skipping browser method.")
-        return None
+        return _fail("playwright not installed")
 
     try:
         with sync_playwright() as p:
-            browser = p.chromium.launch()
-            page = browser.new_page()
-            page.goto(EXCHANGE_RATES_PAGE, timeout=30000)
-            page.wait_for_selector('a[href*="currency_files"]', timeout=20000)
+            try:
+                browser = p.chromium.launch()
+            except Exception as e:
+                return _fail(f"browser launch failed (is chromium installed? {e})")
 
-            links = page.eval_on_selector_all(
-                'a[href*="currency_files"]',
-                "els => els.map(e => e.href)",
-            )
+            try:
+                page = browser.new_page()
+                page.goto(EXCHANGE_RATES_PAGE, timeout=45000, wait_until="domcontentloaded")
+            except Exception as e:
+                browser.close()
+                return _fail(f"page navigation failed/timed out: {e}")
+
+            try:
+                page.wait_for_selector('a[href*="currency_files"]', timeout=25000)
+                links = page.eval_on_selector_all(
+                    'a[href*="currency_files"]',
+                    "els => els.map(e => e.href)",
+                )
+            except Exception as e:
+                browser.close()
+                return _fail(f"reports list never appeared on the page: {e}")
 
             browser.close()
 
         if not links:
-            return None
+            return _fail("page loaded but no report links were found")
 
         # The reports list is newest-first (confirmed visually).
         return links[0]
 
     except Exception as e:
-        print(f"CITY: browser method failed: {e}")
-        return None
+        return _fail(f"unexpected browser error: {e}")
 
 
 def _get_rate_via_pdf():
@@ -58,7 +85,11 @@ def _get_rate_via_pdf():
     if pdf_url is None:
         return None
 
-    pdf_bytes = download_pdf(pdf_url)
+    try:
+        pdf_bytes = download_pdf(pdf_url)
+    except Exception as e:
+        return _fail(f"found a PDF link but couldn't download it: {e}")
+
     text = extract_text_from_pdf(pdf_bytes)
 
     rate_date = extract_rate_date(text, filename_hint=pdf_url)
@@ -68,16 +99,14 @@ def _get_rate_via_pdf():
     row = find_currency_row(tables, "EUR")
 
     if row is None:
-        print("CITY: EUR row not found in PDF.")
-        return None
+        return _fail("downloaded the PDF but couldn't find an EUR row in it")
 
     # Verified against a real City Bank PDF: same column convention as
     # Sonali/Prime (sell first, "TT Clean" buy at index 3).
     buy, sell = extract_buy_sell(row, buy_index=3, sell_index=0)
 
     if buy is None or sell is None:
-        print(f"CITY: EUR row found but values look wrong: {row}")
-        return None
+        return _fail(f"found an EUR row but the values look wrong: {row}")
 
     result = {
         "bank": "CITY",
@@ -88,8 +117,10 @@ def _get_rate_via_pdf():
         "is_stale": is_stale(rate_date),
     }
 
-    if student:
+    if student and is_plausible_student_rate(student, result["buy"], result["sell"]):
         result["student"] = student
+    elif student:
+        print(f"{result['bank']}: student rate found but looks implausible next to the normal rate, discarding: {student}")
 
     return result
 
@@ -127,6 +158,7 @@ def get_rate():
     """
     Collect EUR exchange rate from City Bank.
     """
+    global _last_error
 
     try:
         result = _get_rate_via_pdf()
@@ -134,6 +166,7 @@ def get_rate():
         if result is not None:
             return result
 
+        pdf_failure = _last_error
         print("CITY: PDF/browser method failed, trying private API fallback.")
 
         result = _get_rate_via_api()
@@ -141,9 +174,11 @@ def get_rate():
         if result is not None:
             return result
 
+        if pdf_failure:
+            _last_error = f"PDF method: {pdf_failure}; API fallback also failed"
+
         print("CITY: EUR data not found via either method.")
         return None
 
     except Exception as e:
-        print(f"CITY ERROR: {e}")
-        return None
+        return _fail(f"unexpected error: {e}")

@@ -202,14 +202,23 @@ _MONTHS = {
     "jul": 7, "aug": 8, "sep": 9, "oct": 10, "nov": 11, "dec": 12,
 }
 
-# Ordered from most to least specific/reliable.
+# Ordered from most to least specific/reliable. No \b anchors here —
+# \b doesn't create a boundary next to an underscore (underscore counts
+# as a "word" character to Python's regex engine), which silently broke
+# matching on underscore-separated filenames like BRAC's
+# "..._as_on_14_Jul_2026...". No trailing digit guard either — BRAC's
+# filename has a hash suffix glued directly onto the year with no
+# separator ("20266a55c75fd5040"), which a "not followed by a digit"
+# check would incorrectly reject. The separator classes before each
+# group, plus real-month-name validation in parse_date_loose, are
+# specific enough on their own.
 _DATE_PATTERNS = [
-    # 13/May/26, 13-May-2026, 13 May 2026
-    (re.compile(r"\b(\d{1,2})[/\-\s]([A-Za-z]{3,9})[/\-\s](\d{2,4})\b"), "dmy_named"),
+    # 13/May/26, 13-May-2026, 13 May 2026, 13_May_2026 (filenames)
+    (re.compile(r"(\d{1,2})[/\-\s_]([A-Za-z]{3,9})[/\-\s_](\d{2,4})"), "dmy_named"),
     # 13.05.2026, 13-05-2026, 13/05/2026
-    (re.compile(r"\b(\d{1,2})[./\-](\d{1,2})[./\-](\d{2,4})\b"), "dmy_numeric"),
+    (re.compile(r"(\d{1,2})[./\-](\d{1,2})[./\-](\d{2,4})"), "dmy_numeric"),
     # 2026-05-13
-    (re.compile(r"\b(\d{4})-(\d{1,2})-(\d{1,2})\b"), "ymd_numeric"),
+    (re.compile(r"(\d{4})-(\d{1,2})-(\d{1,2})"), "ymd_numeric"),
 ]
 
 
@@ -275,7 +284,12 @@ def extract_rate_date(pdf_text, filename_hint=None):
     callers should treat None as "unknown," not "today."
     """
     if filename_hint:
-        d = parse_date_loose(filename_hint)
+        # URLs often have %20 etc. instead of real spaces — decode first
+        # so a date like "Rate%20Sheet%2028%20Sep%202025" parses the
+        # same way "Rate Sheet 28 Sep 2025" would.
+        import urllib.parse
+        decoded_hint = urllib.parse.unquote(filename_hint)
+        d = parse_date_loose(decoded_hint)
         if d:
             return d
 
@@ -318,6 +332,31 @@ def is_stale(rate_date, reference_date=None, tz_offset_hours=6):
 # --- Student-rate extraction ----------------------------------------------
 
 _STUDENT_SECTION_KEYWORDS = ("STUDENT FILE", "STUDENT FILES", "STUDENT RATE")
+
+
+def is_plausible_student_rate(student, normal_buy, normal_sell, max_diff=8.0):
+    """
+    Sanity-checks an extracted student rate against the bank's own
+    normal buy/sell for the same day. Student rates are a modest
+    preferential adjustment (typically within a taka or two of the
+    normal rate) — not a different number entirely. A large mismatch
+    almost always means the extraction grabbed a different currency's
+    figures by mistake (exactly what happened once already: a bank's
+    "student" section got matched against unrelated USD/GBP numbers).
+
+    Returns True if the student rate is close enough to the bank's own
+    normal rate to trust; False if it should be discarded.
+    """
+    if student is None:
+        return False
+
+    if "rate" in student:
+        return abs(student["rate"] - normal_sell) <= max_diff or abs(student["rate"] - normal_buy) <= max_diff
+
+    if "buy" in student and "sell" in student:
+        return abs(student["buy"] - normal_buy) <= max_diff and abs(student["sell"] - normal_sell) <= max_diff
+
+    return False
 
 
 def find_student_rate(pdf_text, currency="EUR"):

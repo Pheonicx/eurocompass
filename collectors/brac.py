@@ -10,6 +10,7 @@ from utils.pdf_utils import (
     extract_rate_date,
     find_currency_row,
     find_student_rate,
+    is_plausible_student_rate,
     is_stale,
     to_float,
 )
@@ -112,8 +113,10 @@ def _get_rate_via_pdf():
         "is_stale": is_stale(rate_date),
     }
 
-    if student:
+    if student and is_plausible_student_rate(student, result["buy"], result["sell"]):
         result["student"] = student
+    elif student:
+        print(f"{result['bank']}: student rate found but looks implausible next to the normal rate, discarding: {student}")
 
     return result
 
