@@ -15,11 +15,11 @@ export const BANK_META = {
 };
 
 export const DEFAULT_FEES = [
-  { label: "Bank transfer fee", amount: 60, currency: "EUR" },
-  { label: "Student file opening fee", amount: 8000, currency: "BDT" },
+  { label: "Bank transfer fee", amount: 500, currency: "BDT" },
+  { label: "Student file opening fee", amount: 3000, currency: "BDT" },
 ];
 
-export const DEFAULT_VAT_PERCENT = 0;
+export const DEFAULT_VAT_PERCENT = 15;
 
 // How many days of history to use for the trend forecast, and how many
 // days ahead to project.

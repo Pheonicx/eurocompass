@@ -46,31 +46,68 @@ def _get_latest_pdf_via_browser():
     try:
         with sync_playwright() as p:
             try:
-                browser = p.chromium.launch()
+                # --no-sandbox and --disable-dev-shm-usage are standard,
+                # near-mandatory flags for running headless Chromium
+                # inside a Docker container (which is exactly what
+                # GitHub Actions runners are) — without them, Chromium
+                # can render unreliably or hang rather than error
+                # outright, which matches exactly what was observed:
+                # the page loaded but its JS-driven content never
+                # finished appearing.
+                browser = p.chromium.launch(
+                    args=["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"]
+                )
             except Exception as e:
                 return _fail(f"browser launch failed (is chromium installed? {e})")
 
             try:
                 page = browser.new_page()
-                page.goto(EXCHANGE_RATES_PAGE, timeout=45000, wait_until="domcontentloaded")
+                page.goto(EXCHANGE_RATES_PAGE, timeout=60000, wait_until="domcontentloaded")
+
+                # The reports list is populated by a client-side API
+                # call after the initial page load — give that a chance
+                # to settle before looking for the links. Not fatal if
+                # this itself times out; the selector wait below is the
+                # real gate.
+                try:
+                    page.wait_for_load_state("networkidle", timeout=20000)
+                except Exception:
+                    pass
+
             except Exception as e:
                 browser.close()
                 return _fail(f"page navigation failed/timed out: {e}")
 
-            try:
-                page.wait_for_selector('a[href*="currency_files"]', timeout=25000)
-                links = page.eval_on_selector_all(
-                    'a[href*="currency_files"]',
-                    "els => els.map(e => e.href)",
-                )
-            except Exception as e:
-                browser.close()
-                return _fail(f"reports list never appeared on the page: {e}")
+            links = []
+            last_selector_error = None
+
+            # One retry via a full page reload — CI environments can be
+            # slower and less consistent than a normal desktop browser,
+            # so a single transient slow load shouldn't be treated the
+            # same as the page genuinely being broken.
+            for attempt in range(2):
+                try:
+                    page.wait_for_selector('a[href*="currency_files"]', timeout=40000)
+                    links = page.eval_on_selector_all(
+                        'a[href*="currency_files"]',
+                        "els => els.map(e => e.href)",
+                    )
+                    if links:
+                        break
+                except Exception as e:
+                    last_selector_error = e
+
+                if attempt == 0:
+                    try:
+                        page.reload(timeout=60000, wait_until="domcontentloaded")
+                        page.wait_for_load_state("networkidle", timeout=20000)
+                    except Exception:
+                        pass
 
             browser.close()
 
-        if not links:
-            return _fail("page loaded but no report links were found")
+            if not links:
+                return _fail(f"reports list never appeared on the page after retry: {last_selector_error}")
 
         # The reports list is newest-first (confirmed visually).
         return links[0]
