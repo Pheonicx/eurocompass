@@ -17,6 +17,12 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
+    # Without this, GitHub's default job timeout is 6 hours. Combined
+    # with cancel-in-progress: false above, a single hung run (e.g. a
+    # browser process that doesn't exit cleanly) could silently block
+    # every hourly trigger behind it for hours. 10 minutes is generous
+    # for what this job actually does, even with Playwright involved.
+    timeout-minutes: 10
 
     steps:
       - name: 📥 Checkout Repository
