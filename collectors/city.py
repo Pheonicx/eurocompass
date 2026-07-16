@@ -1,3 +1,5 @@
+import re
+
 from utils.pdf_utils import (
     download_pdf,
     extract_tables_from_pdf,
@@ -61,14 +63,26 @@ def _get_latest_pdf_via_browser():
                 return _fail(f"browser launch failed (is chromium installed? {e})")
 
             try:
-                page = browser.new_page()
+                # A realistic user agent and viewport, in case City's
+                # site behaves differently for an obviously-automated
+                # browser (a common, simple form of bot detection) —
+                # City's page has succeeded at least once before and
+                # then started timing out intermittently with no code
+                # change in between, which fits a site treating headless
+                # requests inconsistently more than a genuine, stable
+                # rendering problem.
+                context = browser.new_context(
+                    user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+                    viewport={"width": 1366, "height": 900},
+                )
+                page = context.new_page()
                 page.goto(EXCHANGE_RATES_PAGE, timeout=60000, wait_until="domcontentloaded")
 
                 # The reports list is populated by a client-side API
                 # call after the initial page load — give that a chance
                 # to settle before looking for the links. Not fatal if
-                # this itself times out; the selector wait below is the
-                # real gate.
+                # this itself times out; the checks below are the real
+                # gate.
                 try:
                     page.wait_for_load_state("networkidle", timeout=20000)
                 except Exception:
@@ -87,7 +101,13 @@ def _get_latest_pdf_via_browser():
             # same as the page genuinely being broken.
             for attempt in range(2):
                 try:
-                    page.wait_for_selector('a[href*="currency_files"]', timeout=40000)
+                    # state="attached" only requires the element to exist
+                    # in the DOM, not to be visually on-screen — the
+                    # default ("visible") can time out even once the data
+                    # has loaded, if it's rendered behind a loading
+                    # overlay or off-screen momentarily, which fits City
+                    # having succeeded before with no code change since.
+                    page.wait_for_selector('a[href*="currency_files"]', timeout=40000, state="attached")
                     links = page.eval_on_selector_all(
                         'a[href*="currency_files"]',
                         "els => els.map(e => e.href)",
@@ -103,6 +123,19 @@ def _get_latest_pdf_via_browser():
                         page.wait_for_load_state("networkidle", timeout=20000)
                     except Exception:
                         pass
+
+            # Last-resort fallback: bypass Playwright's element-query
+            # mechanics entirely and just regex-search the raw rendered
+            # HTML for the link pattern. If the data is genuinely present
+            # in the page by now but some element-state check is still
+            # being finicky, this still finds it.
+            if not links:
+                try:
+                    html = page.content()
+                    found = re.findall(r'href="([^"]*currency_files[^"]*\.pdf)"', html)
+                    links = [f if f.startswith("http") else "https://citybankplc.com" + f for f in found]
+                except Exception:
+                    pass
 
             browser.close()
 
