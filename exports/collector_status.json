@@ -1,40 +1,40 @@
 {
   "EBL": {
-    "last_checked_at": "2026-07-17T11:11:09.104968+00:00",
-    "last_status": "ok",
+    "last_checked_at": "2026-07-17T12:54:12.030105+00:00",
+    "last_status": "failed",
     "last_success_at": "2026-07-17T11:11:09.104968+00:00",
     "last_buy": 138.87,
     "last_sell": 143.74,
-    "last_failure_reason": null
+    "last_failure_reason": "Collector returned no data"
   },
   "CITY": {
-    "last_checked_at": "2026-07-17T11:12:35.134700+00:00",
+    "last_checked_at": "2026-07-17T12:55:41.228137+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
     "last_sell": 143.31882,
-    "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
+    "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed (Authentication request failed.)"
   },
   "BRAC": {
-    "last_checked_at": "2026-07-17T11:12:38.039394+00:00",
+    "last_checked_at": "2026-07-17T12:55:43.720604+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-07-17T11:12:38.039394+00:00",
+    "last_success_at": "2026-07-17T12:55:43.720604+00:00",
     "last_buy": 139.6437,
     "last_sell": 142.4326
   },
   "PRIME": {
-    "last_checked_at": "2026-07-17T11:12:43.370959+00:00",
+    "last_checked_at": "2026-07-17T12:55:49.542405+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-17T11:12:43.370959+00:00",
+    "last_success_at": "2026-07-17T12:55:49.542405+00:00",
     "last_buy": 139.9964,
     "last_sell": 143.055,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-07-17T11:12:51.397315+00:00",
+    "last_checked_at": "2026-07-17T12:55:52.834016+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-17T11:12:51.397315+00:00",
+    "last_success_at": "2026-07-17T12:55:52.834016+00:00",
     "last_buy": 140.7329,
     "last_sell": 143.3232,
     "last_failure_reason": null
