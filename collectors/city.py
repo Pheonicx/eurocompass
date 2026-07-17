@@ -95,34 +95,24 @@ def _get_latest_pdf_via_browser():
             links = []
             last_selector_error = None
 
-            # One retry via a full page reload — CI environments can be
-            # slower and less consistent than a normal desktop browser,
-            # so a single transient slow load shouldn't be treated the
-            # same as the page genuinely being broken.
-            for attempt in range(2):
-                try:
-                    # state="attached" only requires the element to exist
-                    # in the DOM, not to be visually on-screen — the
-                    # default ("visible") can time out even once the data
-                    # has loaded, if it's rendered behind a loading
-                    # overlay or off-screen momentarily, which fits City
-                    # having succeeded before with no code change since.
-                    page.wait_for_selector('a[href*="currency_files"]', timeout=40000, state="attached")
-                    links = page.eval_on_selector_all(
-                        'a[href*="currency_files"]',
-                        "els => els.map(e => e.href)",
-                    )
-                    if links:
-                        break
-                except Exception as e:
-                    last_selector_error = e
-
-                if attempt == 0:
-                    try:
-                        page.reload(timeout=60000, wait_until="domcontentloaded")
-                        page.wait_for_load_state("networkidle", timeout=20000)
-                    except Exception:
-                        pass
+            # Deliberately a single attempt, no reload/retry: if City's
+            # site is flagging repeated or reloaded requests as
+            # suspicious, retrying could be actively making detection
+            # worse rather than working around a transient blip. One
+            # clean, patient wait is the least bot-like way to ask.
+            try:
+                # state="attached" only requires the element to exist in
+                # the DOM, not to be visually on-screen — the default
+                # ("visible") can time out even once the data has
+                # loaded, if it's rendered behind a loading overlay or
+                # off-screen momentarily.
+                page.wait_for_selector('a[href*="currency_files"]', timeout=45000, state="attached")
+                links = page.eval_on_selector_all(
+                    'a[href*="currency_files"]',
+                    "els => els.map(e => e.href)",
+                )
+            except Exception as e:
+                last_selector_error = e
 
             # Last-resort fallback: bypass Playwright's element-query
             # mechanics entirely and just regex-search the raw rendered
@@ -140,7 +130,7 @@ def _get_latest_pdf_via_browser():
             browser.close()
 
             if not links:
-                return _fail(f"reports list never appeared on the page after retry: {last_selector_error}")
+                return _fail(f"reports list never appeared on the page: {last_selector_error}")
 
         # The reports list is newest-first (confirmed visually).
         return links[0]

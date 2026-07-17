@@ -14,7 +14,6 @@ AUTH_USER = "api-user"
 AUTH_PASSWORD = "a@i_u$e4_*b1"
 
 TIMEOUT = 20
-_last_api_error = None
 
 S_BOX = (
     0x63,0x7C,0x77,0x7B,0xF2,0x6B,0x6F,0xC5,
@@ -189,28 +188,64 @@ def _build_auth_param():
     )
 
 
+_last_api_error = None
+
+
+def get_last_api_error():
+    return _last_api_error
+
+
+def _safe_json(response, step_name):
+    """
+    Parses a response as JSON, but catches the case where the server
+    didn't actually return JSON at all — the classic signature of a
+    request getting intercepted by bot-protection (a WAF/Cloudflare-style
+    challenge) and served an HTML page instead of the real API response.
+    This case was previously falling through every error check silently,
+    which is exactly why every past failure just said "also failed"
+    with no further detail.
+    """
+    global _last_api_error
+
+    try:
+        return response.json()
+    except ValueError:
+        looks_like_html = response.text.strip()[:100].lower().startswith(("<!doctype", "<html"))
+        if looks_like_html:
+            _last_api_error = (
+                f"{step_name}: server returned HTML instead of JSON (status {response.status_code}) — "
+                "this is the classic signature of the request being intercepted by bot-protection "
+                "(a WAF/Cloudflare-style challenge page) rather than reaching the real API"
+            )
+        else:
+            snippet = response.text[:120].replace("\n", " ")
+            _last_api_error = f"{step_name}: response wasn't valid JSON (status {response.status_code}): {snippet!r}"
+        return {}
+
+
 def _get_token():
     global _last_api_error
 
+    # Deliberately a single attempt, not the shared retry logic used
+    # elsewhere: if City's site flags repeated requests with an
+    # identical signature as suspicious, retrying could be actively
+    # tripping bot-protection rather than working around a transient
+    # blip, making things worse rather than better.
     response = http_client.post(
         AUTH_URL,
         json={"param": _build_auth_param()},
         timeout=TIMEOUT,
+        retries=1,
     )
 
     if response is None:
-        _last_api_error = "Authentication request failed."
+        _last_api_error = "auth request failed (network error or non-2xx status — see console for the http_client error above; a 401/403 there usually means the credentials have been rotated)"
         return None
 
-    token = (
-        response.json()
-        .get("data", {})
-        .get("access_token")
-    )
+    token = _safe_json(response, "auth step").get("data", {}).get("access_token")
 
-    if not token:
-        _last_api_error = "Authentication token missing."
-        return None
+    if not token and not _last_api_error:
+        _last_api_error = "auth request succeeded but the response had no access_token — API response schema may have changed"
 
     return token
 
@@ -218,13 +253,12 @@ def _get_token():
 def get_exchange_rates():
     global _last_api_error
 
-    _last_api_error = None
-
     token = _get_token()
 
     if not token:
         return None
 
+    # Same reasoning as above: one clean attempt only.
     response = http_client.post(
         EXCHANGE_RATES_URL,
         headers={
@@ -233,23 +267,11 @@ def get_exchange_rates():
         },
         json={},
         timeout=TIMEOUT,
+        retries=1,
     )
 
     if response is None:
-        _last_api_error = "Exchange rate request failed."
+        _last_api_error = "rates request failed (network error or non-2xx status, despite getting a token — see console for the http_client error above)"
         return None
 
-    data = (
-        response.json()
-        .get("data", {})
-        .get("forex_rates_data", [])
-    )
-
-    if not data:
-        _last_api_error = "No exchange rates returned."
-        return None
-
-    return data
-
-def get_last_api_error():
-    return _last_api_error
+    return _safe_json(response, "rates step").get("data", {}).get("forex_rates_data", [])
