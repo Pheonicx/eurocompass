@@ -14,6 +14,7 @@ AUTH_USER = "api-user"
 AUTH_PASSWORD = "a@i_u$e4_*b1"
 
 TIMEOUT = 20
+_last_api_error = None
 
 S_BOX = (
     0x63,0x7C,0x77,0x7B,0xF2,0x6B,0x6F,0xC5,
@@ -189,6 +190,7 @@ def _build_auth_param():
 
 
 def _get_token():
+    global _last_api_error
 
     response = http_client.post(
         AUTH_URL,
@@ -197,6 +199,7 @@ def _get_token():
     )
 
     if response is None:
+        _last_api_error = "Authentication request failed."
         return None
 
     token = (
@@ -205,10 +208,17 @@ def _get_token():
         .get("access_token")
     )
 
+    if not token:
+        _last_api_error = "Authentication token missing."
+        return None
+
     return token
 
 
 def get_exchange_rates():
+    global _last_api_error
+
+    _last_api_error = None
 
     token = _get_token()
 
@@ -226,10 +236,20 @@ def get_exchange_rates():
     )
 
     if response is None:
+        _last_api_error = "Exchange rate request failed."
         return None
 
-    return (
+    data = (
         response.json()
         .get("data", {})
         .get("forex_rates_data", [])
     )
+
+    if not data:
+        _last_api_error = "No exchange rates returned."
+        return None
+
+    return data
+
+def get_last_api_error():
+    return _last_api_error
