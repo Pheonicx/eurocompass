@@ -11,7 +11,7 @@ from utils.pdf_utils import (
     is_plausible_student_rate,
     is_stale,
 )
-from utils.city_api import get_exchange_rates
+from utils.city_api import get_exchange_rates, get_last_api_error
 
 EXCHANGE_RATES_PAGE = "https://www.citybankplc.com/exchange-rates"
 
@@ -245,7 +245,9 @@ def get_rate():
             return result
 
         if pdf_failure:
-            _last_error = f"PDF method: {pdf_failure}; API fallback also failed"
+            api_reason = get_last_api_error()
+            api_detail = f" ({api_reason})" if api_reason else ""
+            _last_error = f"PDF method: {pdf_failure}; API fallback also failed{api_detail}"
 
         print("CITY: EUR data not found via either method.")
         return None
