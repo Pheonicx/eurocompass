@@ -1,0 +1,70 @@
+{
+  "_comment": "Configuration over Hardcoding (CLAUDE.md). Adding a bank should mean adding an entry here plus one isolated collector file — nothing else should need to change. 'collector' is the dotted path to the EXISTING v1.0 collector module; core/collectors/legacy_adapter.py calls its get_rate() function as-is, so this file does not change any bank's actual scraping/parsing behaviour.",
+
+  "currencies": [
+    { "code": "EUR", "name": "Euro" },
+    { "code": "USD", "name": "US Dollar" }
+  ],
+
+  "products": [
+    { "id": "TT", "name": "Telegraphic Transfer", "description": "Standard bank-to-bank wire transfer rate." }
+  ],
+
+  "banks": [
+    {
+      "id": "BRAC",
+      "name": "BRAC Bank PLC",
+      "currencies": ["EUR"],
+      "products": ["TT"],
+      "collector": "collectors.brac",
+      "source_type": "pdf",
+      "source_urls": {
+        "EUR": "https://www.bracbank.com/en/treasury/foreign-exchange"
+      }
+    },
+    {
+      "id": "CITY",
+      "name": "City Bank PLC",
+      "currencies": ["EUR"],
+      "products": ["TT"],
+      "collector": "collectors.city",
+      "source_type": "pdf",
+      "source_urls": {
+        "EUR": "https://www.citybankplc.com/exchange-rates"
+      }
+    },
+    {
+      "id": "EBL",
+      "name": "Eastern Bank PLC",
+      "currencies": ["EUR"],
+      "products": ["TT"],
+      "collector": "collectors.ebl",
+      "source_type": "pdf",
+      "source_urls": {
+        "EUR": "https://www.ebl.com.bd/forexrate"
+      }
+    },
+    {
+      "id": "PRIME",
+      "name": "Prime Bank PLC",
+      "currencies": ["EUR"],
+      "products": ["TT"],
+      "collector": "collectors.prime",
+      "source_type": "pdf",
+      "source_urls": {
+        "EUR": "https://www.primebank.com.bd/exchange-rate"
+      }
+    },
+    {
+      "id": "SONALI",
+      "name": "Sonali Bank PLC",
+      "currencies": ["EUR"],
+      "products": ["TT"],
+      "collector": "collectors.sonali",
+      "source_type": "pdf",
+      "source_urls": {
+        "EUR": "https://www.sonalibank.com.bd/"
+      }
+    }
+  ]
+}
