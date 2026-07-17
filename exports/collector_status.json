@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-07-17T06:57:47.413959+00:00",
+    "last_checked_at": "2026-07-17T07:04:58.215572+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-17T06:57:47.413959+00:00",
+    "last_success_at": "2026-07-17T07:04:58.215572+00:00",
     "last_buy": 138.87,
     "last_sell": 143.74,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-07-17T06:57:48.860917+00:00",
+    "last_checked_at": "2026-07-17T07:04:59.819675+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,25 +16,25 @@
     "last_failure_reason": "PDF method: browser launch failed (is chromium installed? BrowserType.launch: Executable doesn't exist at C:\\Users\\LENOVO\\AppData\\Local\\ms-playwright\\chromium_headless_shell-1228\\chrome-headless-shell-win64\\chrome-headless-shell.exe\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551 Looks like Playwright was just installed or updated.       \u2551\n\u2551 Please run the following command to download new browsers: \u2551\n\u2551                                                            \u2551\n\u2551     playwright install                                     \u2551\n\u2551                                                            \u2551\n\u2551 <3 Playwright Team                                         \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d); API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-07-17T06:57:50.690732+00:00",
+    "last_checked_at": "2026-07-17T07:05:01.494070+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-07-17T06:57:50.690732+00:00",
+    "last_success_at": "2026-07-17T07:05:01.494070+00:00",
     "last_buy": 139.6437,
     "last_sell": 142.4326
   },
   "PRIME": {
-    "last_checked_at": "2026-07-17T06:57:51.905832+00:00",
+    "last_checked_at": "2026-07-17T07:05:02.601463+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-17T06:57:51.905832+00:00",
+    "last_success_at": "2026-07-17T07:05:02.601463+00:00",
     "last_buy": 139.9964,
     "last_sell": 143.055,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-07-17T06:57:55.073334+00:00",
+    "last_checked_at": "2026-07-17T07:05:05.694347+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-17T06:57:55.073334+00:00",
+    "last_success_at": "2026-07-17T07:05:05.694347+00:00",
     "last_buy": 140.7329,
     "last_sell": 143.3232,
     "last_failure_reason": null
