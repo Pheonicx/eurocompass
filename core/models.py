@@ -56,10 +56,22 @@ class SourceType(str, Enum):
 
 @dataclass(frozen=True)
 class Currency:
-    """A transferable currency. Codes should follow ISO 4217 (e.g. EUR, USD)."""
+    """
+    A transferable currency. Codes should follow ISO 4217 (e.g. EUR, USD).
+
+    min_rate/max_rate/max_spread are used by validation (core/validation)
+    to catch obviously-wrong extractions (e.g. a parser grabbing a page
+    number instead of a rate) before they're trusted. They default to
+    wide-open values so constructing a Currency without them (e.g. in
+    tests) never accidentally rejects everything — real, meaningful
+    thresholds are set per currency in core/config/banks.json.
+    """
 
     code: str
     name: str
+    min_rate: float = 0.0001
+    max_rate: float = 1_000_000.0
+    max_spread: float = 1_000_000.0
 
     def __post_init__(self) -> None:
         if len(self.code) != 3 or not self.code.isalpha():

@@ -66,9 +66,15 @@ def _load_currencies(raw: dict) -> dict[str, Currency]:
     currencies: dict[str, Currency] = {}
     for entry in raw.get("currencies", []):
         try:
-            currency = Currency(code=entry["code"], name=entry["name"])
+            kwargs = {"code": entry["code"], "name": entry["name"]}
         except KeyError as e:
             raise ConfigError(f"Currency entry missing required field {e}: {entry}") from e
+
+        for field_name in ("min_rate", "max_rate", "max_spread"):
+            if field_name in entry:
+                kwargs[field_name] = entry[field_name]
+
+        currency = Currency(**kwargs)
         currencies[currency.code] = currency
     return currencies
 

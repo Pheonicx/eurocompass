@@ -145,7 +145,74 @@ deletions, across `collectors/brac.py`, `city.py`, `ebl.py`, `prime.py`,
 - Generic PDF/HTML fetching helpers as a shared utility, if useful beyond
   what `utils/pdf_utils.py` already provides
 
-## Status: Phase 3 — Validation & Historical Storage — NOT STARTED
+## Status: Phase 3 — Validation & Historical Storage ✅ COMPLETE
+
+### What was built
+
+```
+core/validation/
+├── rules.py        Business validation (per-currency plausible rate
+│                     range + spread, configurable — not hardcoded) and
+│                     cross-field validation (rate_date can't be future)
+├── historical.py    Compares a new observation to the most recent
+│                     accepted one for the same bank/currency/product;
+│                     rejects sudden implausible jumps (default: >5%)
+└── validator.py      Orchestrates: business -> cross-field -> historical
+                       -> accept/reject, with every rejection logged
+
+core/storage/
+└── observation_store.py   Append-only JSONL storage, one file per bank,
+                             under v2_history/ (brand-new location —
+                             v1.0's history/*.csv is completely untouched)
+
+core/pipeline.py      run_collection_cycle(): collect -> validate -> store,
+                       end to end. NOT wired to any schedule yet — it's a
+                       function that exists and is tested, nothing calls
+                       it automatically.
+```
+
+### Key decisions
+
+- **Validation thresholds are evidence-based, not guessed.** Before
+  picking numbers, checked real EUR/BDT (~140-145) and USD/BDT (~122-123)
+  rates via web search (mid-2026). Ranges set wider than the observed
+  band (EUR: 120-170, USD: 100-150) so normal market movement over
+  months won't trigger false rejections, while still catching a parser
+  grabbing a wildly wrong number. The reasoning is written directly into
+  `core/config/banks.json` as a `_threshold_basis` field, not left as an
+  unexplained magic number.
+- **Immutability is enforced structurally, not just by convention.**
+  `observation_store.append()` only ever opens files in append mode —
+  there's no code path that can overwrite an old record, so "historical
+  observations are immutable" is guaranteed by how the function is
+  written, not just a rule everyone has to remember to follow. Proven
+  with a dedicated test (`test_multiple_appends_never_overwrite_earlier_ones`).
+- **A rejected observation never reaches storage.** Proven with a test
+  that intentionally feeds in an implausible rate and confirms nothing
+  gets written to disk.
+- **Historical validation only rejects, never silently downgrades.**
+  Per CLAUDE.md ("prefer false warnings over false confidence"), a
+  suspicious jump is rejected outright rather than accepted with lower
+  confidence — a rejected observation is loud and visible; a silently
+  "less trusted" one could still slip into a future recommendation.
+- **New bank/currency combos always get their first data point.** The
+  historical check only compares against existing history — with none
+  yet, it always passes, so nothing about validation blocks onboarding a
+  6th bank or a 3rd currency later.
+
+### Verified working (all run inside the sandbox before committing)
+
+- `pytest core/tests/` → **49/49 passed** (27 new tests this phase)
+- Confirmed no test run left stray data in the real repo (`v2_history/`
+  doesn't exist — every test uses a temporary directory, `git status`
+  shows only intended source files)
+- Integration test proves a second collection cycle correctly uses the
+  first cycle's stored history to catch an implausible jump — i.e. the
+  full collect → validate → store loop works across separate runs, the
+  way separate hourly runs would behave
+
+---
+
 ## Status: Phase 4 — Core Intelligence (Recommendation Engine, Transfer Calculator) — NOT STARTED
 ## Status: Phase 5 — User Interfaces (Dashboard, Telegram, API) — NOT STARTED
 ## Status: Phase 6 — Intelligence Enhancements (Forecasting, AI) — NOT STARTED

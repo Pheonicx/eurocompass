@@ -3,11 +3,19 @@
   "currencies": [
     {
       "code": "EUR",
-      "name": "Euro"
+      "name": "Euro",
+      "_threshold_basis": "EUR/BDT interbank ~140-145 as of mid-2026 (e.g. tradingeconomics.com EURBDT ~143.4). Retail bank TT buy/sell sits a few taka either side of that. Range set wider than the observed band to tolerate normal market movement without needing frequent manual updates; still tight enough to catch a parser reading the wrong number entirely.",
+      "min_rate": 120,
+      "max_rate": 170,
+      "max_spread": 10
     },
     {
       "code": "USD",
-      "name": "US Dollar"
+      "name": "US Dollar",
+      "_threshold_basis": "USD/BDT interbank ~122-123 as of mid-2026 (xe.com, tradingeconomics.com). Same reasoning as EUR: wide enough for normal drift, tight enough to catch gross extraction errors.",
+      "min_rate": 100,
+      "max_rate": 150,
+      "max_spread": 8
     }
   ],
   "products": [
