@@ -213,7 +213,73 @@ core/pipeline.py      run_collection_cycle(): collect -> validate -> store,
 
 ---
 
-## Status: Phase 4 — Core Intelligence (Recommendation Engine, Transfer Calculator) — NOT STARTED
+## Status: Phase 4 — Core Intelligence (Recommendation Engine, Transfer Calculator) ✅ COMPLETE
+
+### What was built
+
+```
+core/transfer/
+├── calculator.py    calculate_transfer_cost(): deterministic total-cost
+│                     math (exchange rate × amount + fees). Base unit is
+│                     BDT throughout.
+├── recommender.py    generate_recommendation(): ranks banks by real
+│                     total cost, builds a mandatory plain-English
+│                     explanation for every recommendation
+└── service.py        recommend_for_amount(): the one function future
+                       interfaces (dashboard/Telegram/API) should call —
+                       combines the two above so business logic exists
+                       exactly once
+```
+
+### The most important thing this phase addresses
+
+Checked v1.0's actual calculator (`services/calculator.py`): it computes
+`sell_rate × amount` and nothing else — **no fee data exists anywhere in
+the system**, for any bank. That's precisely the gap the specification
+calls out repeatedly ("exchange rates alone are not enough... choosing
+the bank with the best exchange rate does not necessarily produce the
+lowest total cost"). This phase builds a calculator that's fully
+fee-aware (flat fees, percentage fees, multiple fees combined) — but
+since no real fee data has been collected from any bank yet, it does
+NOT pretend fees are zero. Every result carries a `fees_verified` flag,
+and a recommendation with unverified fees explicitly says so in its
+explanation ("No verified fee data is available yet for this bank...")
+and has its confidence capped at MEDIUM even if the underlying exchange
+rate was collected with HIGH confidence. This is a deliberate trust
+decision, not an oversight — a confident-looking total built on an
+unverified assumption is exactly what CLAUDE.md's "prefer false warnings
+over false confidence" principle warns against.
+
+### Every recommendation explains itself (spec 9.11 requirement)
+
+Each `Recommendation.explanation` is auto-generated plain text covering:
+which bank and why, the exact numbers behind the total cost, whether
+fees were actually included, how much more the next-best option would
+cost, all other options considered, a stale-rate warning if relevant,
+and the overall confidence level. This isn't a template filled in
+later — it's produced by the same function that ranks the banks, so an
+explanation can't accidentally go missing from a real recommendation.
+
+### A real bug my own tests caught before it shipped
+
+`fees_verified` was originally set based on whether fee objects were
+*supplied* to the calculator, not whether any were actually *applied* to
+the total. A fee stated in an unsupported currency gets skipped (with a
+note) rather than converted — but the original code still marked the
+result as "fees verified" even though nothing was actually added to the
+total. `test_fee_in_unsupported_currency_is_skipped_with_a_note` caught
+this immediately; fixed to check `len(applied) > 0` instead of
+`len(fees) > 0`. Left in V2_PROGRESS.md deliberately, as a concrete
+example of why the test-before-commit habit matters here, not just a
+box-ticking exercise.
+
+### Verified working (all run inside the sandbox before committing)
+
+- `pytest core/tests/` → **74/74 passed** (25 new tests this phase)
+- Confirmed no stray files or test data leaked into the real repo
+
+---
+
 ## Status: Phase 5 — User Interfaces (Dashboard, Telegram, API) — NOT STARTED
 ## Status: Phase 6 — Intelligence Enhancements (Forecasting, AI) — NOT STARTED
 
