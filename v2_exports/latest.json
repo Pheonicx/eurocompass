@@ -1,0 +1,113 @@
+{
+  "generated_at": "2026-07-18T18:21:57.725777+00:00",
+  "rates_by_currency": {
+    "EUR": [
+      {
+        "bank_id": "BRAC",
+        "bank_name": "BRAC Bank PLC",
+        "buy": 139.6437,
+        "sell": 142.4326,
+        "confidence": "medium",
+        "is_stale": true,
+        "collected_at": "2026-07-16T12:00:00+00:00"
+      },
+      {
+        "bank_id": "PRIME",
+        "bank_name": "Prime Bank PLC",
+        "buy": 139.9964,
+        "sell": 143.055,
+        "confidence": "medium",
+        "is_stale": true,
+        "collected_at": "2026-07-16T12:00:00+00:00"
+      },
+      {
+        "bank_id": "SONALI",
+        "bank_name": "Sonali Bank PLC",
+        "buy": 140.7329,
+        "sell": 143.3232,
+        "confidence": "medium",
+        "is_stale": true,
+        "collected_at": "2026-07-16T12:00:00+00:00"
+      },
+      {
+        "bank_id": "EBL",
+        "bank_name": "Eastern Bank PLC",
+        "buy": 138.87,
+        "sell": 143.74,
+        "confidence": "medium",
+        "is_stale": true,
+        "collected_at": "2026-07-16T12:00:00+00:00"
+      }
+    ]
+  },
+  "recommendations": [
+    {
+      "currency": "EUR",
+      "product_id": "TT",
+      "requested_amount": 1000.0,
+      "recommended_bank_id": "BRAC",
+      "recommended_bank_name": "BRAC Bank PLC",
+      "total_cost_bdt": 142432.6,
+      "estimated_savings_vs_most_expensive_bdt": 1307.4,
+      "confidence": "medium",
+      "explanation": "BRAC Bank PLC is recommended for 1,000.00 EUR: total estimated cost of 142,432.60 BDT (exchange rate 142.4326, gross cost 142,432.60 BDT). No verified fee data (SWIFT charge, processing fee, VAT, etc.) is available yet for this bank, so this total reflects the exchange cost only \u2014 the real total may be somewhat higher once fees are added. The next-best option, Prime Bank PLC, would cost 622.40 BDT more. Other options considered, in order: Sonali Bank PLC, Eastern Bank PLC. The underlying rate used for this recommendation is flagged as stale (older than expected) \u2014 treat this recommendation with extra caution until a fresher rate is collected. Overall confidence in this recommendation: medium.",
+      "alternatives": [
+        {
+          "bank_id": "PRIME",
+          "bank_name": "Prime Bank PLC",
+          "total_cost_bdt": 143055.0,
+          "extra_cost_vs_recommended_bdt": 622.4,
+          "fees_verified": false
+        },
+        {
+          "bank_id": "SONALI",
+          "bank_name": "Sonali Bank PLC",
+          "total_cost_bdt": 143323.2,
+          "extra_cost_vs_recommended_bdt": 890.6,
+          "fees_verified": false
+        },
+        {
+          "bank_id": "EBL",
+          "bank_name": "Eastern Bank PLC",
+          "total_cost_bdt": 143740.0,
+          "extra_cost_vs_recommended_bdt": 1307.4,
+          "fees_verified": false
+        }
+      ]
+    },
+    {
+      "currency": "EUR",
+      "product_id": "TT",
+      "requested_amount": 12208.0,
+      "recommended_bank_id": "BRAC",
+      "recommended_bank_name": "BRAC Bank PLC",
+      "total_cost_bdt": 1738817.18,
+      "estimated_savings_vs_most_expensive_bdt": 15960.74,
+      "confidence": "medium",
+      "explanation": "BRAC Bank PLC is recommended for 12,208.00 EUR: total estimated cost of 1,738,817.18 BDT (exchange rate 142.4326, gross cost 1,738,817.18 BDT). No verified fee data (SWIFT charge, processing fee, VAT, etc.) is available yet for this bank, so this total reflects the exchange cost only \u2014 the real total may be somewhat higher once fees are added. The next-best option, Prime Bank PLC, would cost 7,598.26 BDT more. Other options considered, in order: Sonali Bank PLC, Eastern Bank PLC. The underlying rate used for this recommendation is flagged as stale (older than expected) \u2014 treat this recommendation with extra caution until a fresher rate is collected. Overall confidence in this recommendation: medium.",
+      "alternatives": [
+        {
+          "bank_id": "PRIME",
+          "bank_name": "Prime Bank PLC",
+          "total_cost_bdt": 1746415.44,
+          "extra_cost_vs_recommended_bdt": 7598.26,
+          "fees_verified": false
+        },
+        {
+          "bank_id": "SONALI",
+          "bank_name": "Sonali Bank PLC",
+          "total_cost_bdt": 1749689.63,
+          "extra_cost_vs_recommended_bdt": 10872.45,
+          "fees_verified": false
+        },
+        {
+          "bank_id": "EBL",
+          "bank_name": "Eastern Bank PLC",
+          "total_cost_bdt": 1754777.92,
+          "extra_cost_vs_recommended_bdt": 15960.74,
+          "fees_verified": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EuroCompass v2.0 — Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF8F3; --bg-alt:#F3ECDD; --ink:#14213D;
+    --text-secondary:#5B6472; --text-muted:#8B8578;
+    --gold:#B8862F; --gold-deep:#8F6A24; --gold-light:#FBF1DD;
+    --border:#EAE3D6; --white:#FFFFFF;
+    --success:#3F7A57; --success-light:#EDF5EF;
+    --warn:#8F6A24; --warn-light:#FBF1DD;
+    --radius-card:20px; --radius-sm:12px;
+    --shadow-card:0 1px 2px rgba(20,33,61,0.04), 0 12px 32px rgba(20,33,61,0.07);
+    --font-display:'Fraunces', serif; --font-sans:'Inter', sans-serif; --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg-alt);font-family:var(--font-sans);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .shell{max-width:960px;margin:0 auto;padding:0 24px 80px;}
+
+  .preview-banner{background:var(--ink);color:#fff;text-align:center;font-size:13px;padding:9px 16px;font-family:var(--font-mono);}
+  .preview-banner b{color:var(--gold);}
+
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:28px 0 20px;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{width:34px;height:34px;border-radius:9px;background:var(--ink);display:flex;align-items:center;justify-content:center;color:var(--gold);font-family:var(--font-display);font-weight:600;}
+  .brand-name{font-family:var(--font-display);font-weight:600;font-size:19px;}
+  .brand-name span{color:var(--gold);}
+  .updated{font-size:12px;color:var(--text-muted);font-family:var(--font-mono);}
+
+  h1{font-family:var(--font-display);font-weight:600;font-size:28px;margin:8px 0 4px;}
+  .subtitle{color:var(--text-secondary);font-size:14.5px;line-height:1.6;margin:0 0 28px;max-width:620px;}
+
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:24px 26px;margin-bottom:20px;}
+  .card h2{font-family:var(--font-display);font-size:18px;margin:0 0 16px;font-weight:600;}
+
+  table{width:100%;border-collapse:collapse;font-size:14px;}
+  th{text-align:left;color:var(--text-muted);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.03em;padding:0 10px 10px;}
+  td{padding:12px 10px;border-top:1px solid var(--border);}
+  tr:first-child td{font-weight:600;}
+  .best-badge{display:inline-block;background:var(--success-light);color:var(--success);font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;margin-left:8px;}
+  .stale-badge{display:inline-block;background:var(--warn-light);color:var(--warn-deep,var(--warn));font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;margin-left:6px;}
+  .mono{font-family:var(--font-mono);}
+
+  .rec-card{border:1px solid var(--gold);background:var(--gold-light);border-radius:var(--radius-sm);padding:18px 20px;margin-bottom:14px;}
+  .rec-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+  .rec-amount{font-family:var(--font-mono);font-size:13px;color:var(--gold-deep);}
+  .rec-bank{font-family:var(--font-display);font-size:19px;font-weight:600;color:var(--ink);}
+  .rec-cost{font-family:var(--font-mono);font-size:15px;font-weight:600;}
+  .rec-explanation{font-size:13.5px;line-height:1.65;color:var(--text-secondary);margin:0 0 12px;}
+  .confidence-pill{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;text-transform:capitalize;}
+  .confidence-high{background:var(--success-light);color:var(--success);}
+  .confidence-medium{background:var(--warn-light);color:var(--warn-deep,var(--warn));}
+  .confidence-low{background:#FBEFF2;color:#B23A63;}
+
+  .alt-list{font-size:13px;color:var(--text-secondary);margin-top:10px;}
+  .alt-row{display:flex;justify-content:space-between;padding:6px 0;border-top:1px dashed var(--border);}
+
+  .empty-state, .error-state{text-align:center;padding:50px 20px;color:var(--text-secondary);}
+  #loading{text-align:center;padding:60px 20px;color:var(--text-muted);font-size:14px;}
+  #app{display:none;}
+  #errorScreen{display:none;text-align:center;padding:60px 20px;}
+  #errorScreen h2{font-family:var(--font-display);font-size:20px;}
+  #errorScreen p{color:var(--text-secondary);font-size:14px;max-width:420px;margin:8px auto 0;line-height:1.6;}
+
+  footer{margin-top:30px;font-size:12px;color:var(--text-muted);text-align:center;line-height:1.7;}
+  footer a{color:var(--gold-deep);}
+</style>
+</head>
+<body>
+
+<div class="preview-banner">
+  🚧 <b>EuroCompass v2.0 — Preview</b> — new intelligence layer, not the live site. Your current dashboard is unaffected.
+</div>
+
+<div class="shell">
+  <div class="nav">
+    <div class="brand">
+      <div class="brand-mark">€</div>
+      <div class="brand-name">EuroCompass <span>v2</span></div>
+    </div>
+    <div class="updated" id="updatedAt"></div>
+  </div>
+
+  <div id="loading">Loading the latest rates…</div>
+
+  <div id="errorScreen">
+    <h2>Couldn't load rate data</h2>
+    <p>This page reads <code>v2_exports/latest.json</code>. That file only exists once the new collection pipeline has actually run — this is expected until then.</p>
+  </div>
+
+  <div id="app">
+    <h1>Which bank should you use today?</h1>
+    <p class="subtitle">
+      Every recommendation below explains itself — the exact numbers behind it, whether fees were verified, and how confident EuroCompass is. Nothing here is hidden or guessed silently.
+    </p>
+
+    <div id="recommendations"></div>
+
+    <div class="card">
+      <h2>Current EUR rates by bank</h2>
+      <table id="ratesTable">
+        <thead>
+          <tr><th>Bank</th><th>Buy</th><th>Sell</th><th>Confidence</th></tr>
+        </thead>
+        <tbody id="ratesBody"></tbody>
+      </table>
+    </div>
+
+    <footer>
+      Generated by EuroCompass's v2.0 data pipeline — see
+      <a href="https://github.com/Pheonicx/eurocompass/blob/v2-dev/V2_PROGRESS.md" target="_blank" rel="noopener">V2_PROGRESS.md</a>
+      for exactly what's been verified so far and what hasn't.
+    </footer>
+  </div>
+</div>
+
+<script>
+const EXPORT_URL = "https://raw.githubusercontent.com/Pheonicx/eurocompass/main/v2_exports/latest.json";
+
+function fmtBDT(n) {
+  return Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function confidencePill(level) {
+  return `<span class="confidence-pill confidence-${level}">${level} confidence</span>`;
+}
+
+function renderRecommendation(rec) {
+  const alts = rec.alternatives.map(a => `
+    <div class="alt-row">
+      <span>${a.bank_name}</span>
+      <span class="mono">+${fmtBDT(a.extra_cost_vs_recommended_bdt)} BDT</span>
+    </div>
+  `).join("");
+
+  return `
+    <div class="rec-card">
+      <div class="rec-head">
+        <div>
+          <div class="rec-amount">${fmtBDT(rec.requested_amount)} ${rec.currency} · ${rec.product_id}</div>
+          <div class="rec-bank">${rec.recommended_bank_name}<span class="best-badge">Best option</span></div>
+        </div>
+        <div style="text-align:right">
+          <div class="rec-cost">${fmtBDT(rec.total_cost_bdt)} BDT</div>
+          ${confidencePill(rec.confidence)}
+        </div>
+      </div>
+      <p class="rec-explanation">${rec.explanation}</p>
+      <div class="alt-list">
+        <strong style="font-size:12px;color:var(--text-muted);">OTHER OPTIONS</strong>
+        ${alts}
+      </div>
+    </div>
+  `;
+}
+
+function renderRatesTable(rates) {
+  if (!rates || rates.length === 0) return "";
+  const cheapestSell = Math.min(...rates.map(r => r.sell));
+  return rates.map(r => `
+    <tr>
+      <td>${r.bank_name}${r.sell === cheapestSell ? '<span class="best-badge">Lowest sell</span>' : ''}${r.is_stale ? '<span class="stale-badge">Stale</span>' : ''}</td>
+      <td class="mono">${r.buy.toFixed(4)}</td>
+      <td class="mono">${r.sell.toFixed(4)}</td>
+      <td style="text-transform:capitalize;">${r.confidence}</td>
+    </tr>
+  `).join("");
+}
+
+fetch(EXPORT_URL)
+  .then(res => {
+    if (!res.ok) throw new Error("Export file not found (HTTP " + res.status + ")");
+    return res.json();
+  })
+  .then(data => {
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("app").style.display = "block";
+
+    const generated = new Date(data.generated_at);
+    document.getElementById("updatedAt").textContent = "Updated " + generated.toLocaleString();
+
+    document.getElementById("recommendations").innerHTML =
+      data.recommendations.length
+        ? data.recommendations.map(renderRecommendation).join("")
+        : '<div class="empty-state">No recommendations available yet.</div>';
+
+    document.getElementById("ratesBody").innerHTML =
+      renderRatesTable(data.rates_by_currency.EUR) ||
+      '<tr><td colspan="4" class="empty-state">No EUR rate data yet.</td></tr>';
+  })
+  .catch(err => {
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("errorScreen").style.display = "block";
+    console.error("EuroCompass v2 export load failed:", err);
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1 @@
+{"bank_id": "EBL", "buy": 138.87, "collected_at": "2026-07-16T12:00:00+00:00", "confidence": "medium", "currency": "EUR", "is_stale": true, "metadata": {"seeded_from": "v1.0 exports/latest.json, 2026-07-16 (real collected rate, not a live v2.0 run)", "student_rate": 142.748}, "product_id": "TT", "rate_date": "2026-07-16", "raw_source": null, "sell": 143.74, "source_type": "pdf"}

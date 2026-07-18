@@ -280,7 +280,77 @@ box-ticking exercise.
 
 ---
 
-## Status: Phase 5 — User Interfaces (Dashboard, Telegram, API) — NOT STARTED
+## Status: Phase 5 — User Interfaces — IN PROGRESS (Dashboard done; Telegram + API not started)
+
+### What was built
+
+```
+core/export.py          Turns validated observations + recommendations
+                          into a plain JSON file (v2_exports/latest.json),
+                          following v1.0's exact zero-server pattern:
+                          Python computes once, writes JSON, a static
+                          page reads it — no paid hosting needed.
+
+site/v2/index.html       A NEW dashboard page (v1.0's site/index.html is
+                          untouched). Shows explained recommendations and
+                          a rate comparison table. Matches v1.0's visual
+                          style (same gold/navy palette, same fonts) so
+                          it doesn't feel like a different product.
+```
+
+### Important architecture decision
+
+v1.0's dashboard is a static site on Cloudflare — deliberately zero
+server cost. Phase 5 follows that same pattern rather than introducing a
+paid backend: `core/export.py` writes a plain JSON file, and
+`site/v2/index.html` fetches it directly from GitHub's raw file server
+(same trick v1.0's own dashboard already uses). No new hosting, no new
+cost, nothing that requires Claude Code or any paid tool to keep running.
+
+### Real data, honestly labeled
+
+`v2_history/` now contains real EUR rates for BRAC, EBL, PRIME, and
+SONALI — but these were **seeded from v1.0's last actual collection**
+(2026-07-16, taken from the live `exports/latest.json`), not from a live
+v2.0 pipeline run. Every seeded observation's metadata says exactly
+this (`"seeded_from": "v1.0 exports/latest.json, 2026-07-16..."`), so
+nobody looking at this data later mistakes it for a confirmed v2.0
+collection. City Bank has no seed data because it wasn't present in
+v1.0's last snapshot either (its collector is the most complex/fragile
+of the five — a known v1.0 characteristic, not something Phase 5 caused).
+
+`v2_exports/latest.json` was generated for real from that seed data —
+it's not a mockup. It correctly shows BRAC as cheapest, a MEDIUM
+confidence (capped because fees aren't verified yet AND the seed data is
+flagged stale), and a full plain-English explanation.
+
+### Not done yet in Phase 5
+
+- **This page isn't live/viewable yet.** It's pushed to `v2-dev`, but
+  Cloudflare only auto-deploys from `main` (confirmed back when we
+  decided to use a branch instead of a separate repo). It'll become
+  viewable once merged, or you can check whether Cloudflare happens to
+  create an automatic preview URL for non-main branches (depends on
+  account settings I can't see from here).
+- **The USD scenario was skipped** in this export — no USD data has
+  actually been collected/seeded yet, only EUR. Once Phase 2's USD
+  collectors run for real, USD will appear automatically (no code
+  change needed).
+- Telegram bot integration and a public API — next up.
+
+### Verified working (all run inside the sandbox before committing)
+
+- `pytest core/tests/` → **79/79 passed** (5 new tests this phase)
+- `core/export.py` run for real against seeded data — output inspected
+  by hand, numbers check out (e.g. BRAC total = 1000 × 142.4326 =
+  142,432.60 BDT, matches exactly)
+- Dashboard's embedded JavaScript syntax-checked with Node
+- Confirmed `git status` shows only new, intended files — nothing in
+  v1.0's `site/`, `exports/`, or `history/` was touched
+
+---
+
+## Status: Phase 5 remaining — Telegram bot integration, Public API — NOT STARTED
 ## Status: Phase 6 — Intelligence Enhancements (Forecasting, AI) — NOT STARTED
 
 ---
