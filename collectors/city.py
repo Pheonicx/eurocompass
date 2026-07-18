@@ -254,3 +254,69 @@ def get_rate():
 
     except Exception as e:
         return _fail(f"unexpected error: {e}")
+
+
+# --- v2.0 multi-currency support --------------------------------------
+#
+# Everything below is ADDITIVE: get_rate() above is completely untouched
+# and still returns exactly what v1.0's main.py expects (EUR only, with
+# its private-API fallback). get_rates() reuses the same browser-fetched
+# PDF, generalized to any currency in it.
+
+def get_rates(currencies=("EUR", "USD")):
+    """
+    Collect rates for multiple currencies from City's PDF in a single
+    browser fetch.
+
+    Note: unlike get_rate(), this does not fall back to City's private
+    API — that fallback is EUR-specific by design (a deliberately narrow
+    reverse-engineered endpoint) and isn't extended here. If the PDF/
+    browser method fails, get_rates() simply returns [] for this run.
+    """
+    try:
+        pdf_url = _get_latest_pdf_via_browser()
+        if pdf_url is None:
+            return []
+
+        try:
+            pdf_bytes = download_pdf(pdf_url)
+        except Exception as e:
+            _fail(f"found a PDF link but couldn't download it (get_rates): {e}")
+            return []
+
+        text = extract_text_from_pdf(pdf_bytes)
+        tables = extract_tables_from_pdf(pdf_bytes)
+        rate_date = extract_rate_date(text, filename_hint=pdf_url)
+
+        results = []
+        for currency in currencies:
+            row = find_currency_row(tables, currency)
+            if row is None:
+                print(f"CITY: {currency} row not found (get_rates).")
+                continue
+
+            buy, sell = extract_buy_sell(row, buy_index=3, sell_index=0)
+            if buy is None or sell is None:
+                print(f"CITY: {currency} row found but values look wrong (get_rates): {row}")
+                continue
+
+            result = {
+                "bank": "CITY",
+                "currency": currency,
+                "buy": buy,
+                "sell": sell,
+                "rate_date": rate_date.isoformat() if rate_date else None,
+                "is_stale": is_stale(rate_date),
+            }
+
+            student = find_student_rate(text, currency)
+            if student and is_plausible_student_rate(student, buy, sell):
+                result["student"] = student
+
+            results.append(result)
+
+        return results
+
+    except Exception as e:
+        print(f"CITY ERROR (get_rates): {e}")
+        return []

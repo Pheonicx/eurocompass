@@ -76,14 +76,74 @@ live collection through the new adapter.
 
 ---
 
-## Status: Phase 2 — Knowledge Acquisition — NOT STARTED
+## Status: Phase 2 — Knowledge Acquisition ✅ COMPLETE (USD support)
 
-Next up, per CLAUDE.md's build order. Planned scope:
-- Decide whether to keep using `collectors/*.py` as-is long-term, or
-  gradually give banks purpose-built v2.0 collectors (spec allows either —
-  "banks as plugins" doesn't require a specific implementation style)
-- Generic PDF/HTML fetching helpers usable by any future bank's collector
-- USD support (currently only EUR is configured — spec requires USD too)
+### What was built
+
+USD support for all 5 banks, added the safest way possible: **every
+change is a pure addition — zero existing lines in any collector file
+were modified.** Verified with `git diff --stat`: 368 insertions, 0
+deletions, across `collectors/brac.py`, `city.py`, `ebl.py`, `prime.py`,
+`sonali.py`.
+
+- Each collector got a new `get_rates(currencies=("EUR","USD"))` function,
+  added *below* the original `get_rate()`. `get_rate()` itself was not
+  touched — v1.0's `main.py` calls it exactly as before and gets exactly
+  what it always got.
+- `get_rates()` reuses the **same already-downloaded PDF/HTML** that
+  `get_rate()` would fetch — extracting an extra currency row costs zero
+  extra requests to any bank's servers. This was possible because all 5
+  banks' documents already contain multiple currencies in one table/page;
+  we're just reading one more row, not fetching a new document.
+- `core/collectors/legacy_adapter.py` now prefers a collector's
+  `get_rates()` when present, and only falls back to the old single-
+  currency `get_rate()` path for a collector that hasn't been upgraded.
+  This means upgrading banks one at a time (already done for all 5 here)
+  never breaks anything for banks that haven't been touched yet.
+- `core/config/banks.json`: all 5 banks now list `["EUR", "USD"]`.
+
+### Known limitations (documented honestly, not hidden)
+
+- **Not yet verified against live bank websites.** This sandbox cannot
+  reach bank domains (only a small safe allowlist). Every extraction
+  helper used is the same one already proven to work for EUR
+  (`find_currency_row`, `extract_buy_sell`, `extract_buy_sell_by_repetition`),
+  now just also being pointed at the USD row — so the *risk* is low, but
+  it is not the same as a confirmed live result. **Before fully trusting
+  USD data**, run collection for real (locally, or via a manual GitHub
+  Actions run) and sanity-check the USD numbers against what each bank's
+  site actually shows.
+- City's `get_rates()` does not fall back to the private reverse-engineered
+  API the way `get_rate()` does — that fallback was written narrowly for
+  EUR only. If City's PDF/browser method fails, `get_rates()` returns `[]`
+  for that run (get_rate() is unaffected either way).
+- Sonali's last-resort plain-text fallback (used only if table extraction
+  fails completely) is written specifically for the word "EURO" and was
+  not generalized to USD. If Sonali's table extraction fails, USD is
+  simply omitted for that run rather than guessed at.
+- All 22 tests pass (`pytest core/tests/`), including new tests that
+  confirm the adapter prefers `get_rates()` when available, falls back
+  correctly when it isn't, survives a crashing collector, and that all 5
+  real collector modules do expose the new function — but these tests
+  use fake/mocked data, not live bank responses, for the reason above.
+
+### Verified working (all run inside the sandbox before committing)
+
+- `pytest core/tests/` → **22/22 passed**
+- `git diff --stat collectors/` → 368 insertions, 0 deletions (provably
+  additive-only change)
+- All 5 collector files + the adapter compile cleanly
+- Config loads correctly with `USD` added to all 5 banks
+
+---
+
+## Status: Phase 2 — remaining scope — NOT STARTED
+- Decide whether to keep using `collectors/*.py` as the long-term home
+  for bank logic, or gradually give banks purpose-built v2.0 collectors
+  (spec allows either — "banks as plugins" doesn't require a specific
+  implementation style)
+- Generic PDF/HTML fetching helpers as a shared utility, if useful beyond
+  what `utils/pdf_utils.py` already provides
 
 ## Status: Phase 3 — Validation & Historical Storage — NOT STARTED
 ## Status: Phase 4 — Core Intelligence (Recommendation Engine, Transfer Calculator) — NOT STARTED

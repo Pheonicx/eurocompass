@@ -159,3 +159,80 @@ def get_rate():
     except Exception as e:
         print(f"SONALI ERROR: {e}")
         return None
+
+
+# --- v2.0 multi-currency support --------------------------------------
+#
+# Everything below is ADDITIVE: get_rate() above is completely untouched
+# and still returns exactly what v1.0's main.py expects (EUR only).
+# get_rates() reuses the same PDF fetch, generalized to any currency in
+# it. Note: Sonali's last-resort text-regex fallback (for when table
+# extraction fails entirely) is written specifically for "EURO" and is
+# not generalized here — if the table method fails, get_rates() simply
+# omits whichever currency couldn't be found via the table, rather than
+# guessing with a currency-specific regex that wasn't built for this.
+
+def get_rates(currencies=("EUR", "USD")):
+    """
+    Collect rates for multiple currencies from Sonali's daily PDF in a
+    single fetch.
+    """
+    try:
+        pdf_bytes = None
+        pdf_url = None
+        rate_date_hint = None
+
+        for url, candidate_date in _candidate_urls_by_date():
+            try:
+                pdf_bytes = download_pdf(url, retries=2)
+                pdf_url = url
+                rate_date_hint = candidate_date.isoformat()
+                break
+            except requests.RequestException:
+                continue
+
+        if pdf_bytes is None:
+            pdf_url = get_latest_pdf_from_homepage()
+            if pdf_url is None:
+                print("SONALI: No PDF found via date pattern or homepage (get_rates).")
+                return []
+            pdf_bytes = download_pdf(pdf_url)
+
+        text = extract_text_from_pdf(pdf_bytes)
+        rate_date = extract_rate_date(text, filename_hint=pdf_url or rate_date_hint)
+        tables = extract_tables_from_pdf(pdf_bytes)
+
+        results = []
+        for currency in currencies:
+            row = find_currency_row(tables, currency)
+
+            if row is None:
+                print(f"SONALI: {currency} row not found (get_rates).")
+                continue
+
+            buy, sell = extract_buy_sell(row, buy_index=3, sell_index=0)
+
+            if buy is None or sell is None:
+                print(f"SONALI: {currency} row found but values look wrong (get_rates): {row}")
+                continue
+
+            result = {
+                "bank": "SONALI",
+                "currency": currency,
+                "buy": buy,
+                "sell": sell,
+                "rate_date": rate_date.isoformat() if rate_date else None,
+                "is_stale": is_stale(rate_date),
+            }
+
+            student = find_student_rate(text, currency)
+            if student and is_plausible_student_rate(student, buy, sell):
+                result["student"] = student
+
+            results.append(result)
+
+        return results
+
+    except Exception as e:
+        print(f"SONALI ERROR (get_rates): {e}")
+        return []

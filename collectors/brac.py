@@ -180,3 +180,89 @@ def get_rate():
     except Exception as e:
         print(f"BRAC ERROR: {e}")
         return None
+
+
+# --- v2.0 multi-currency support --------------------------------------
+#
+# Everything below is ADDITIVE: get_rate() above is completely untouched
+# and still returns exactly what v1.0's main.py expects (EUR only).
+# get_rates() reuses the same PDF fetch and the same proven extraction
+# strategy, generalized to any currency in the PDF, so USD support costs
+# zero extra requests to BRAC's servers.
+
+def _numbers_from_currency_line(text, currency):
+    match = re.search(rf"{re.escape(currency)}\b(.{{0,150}})", text)
+    if not match:
+        return []
+    return [to_float(n) for n in re.findall(r"-?[0-9][0-9,]*\.[0-9]+", match.group(1))]
+
+
+def _extract_currency_buy_sell(row, text, currency):
+    if row:
+        row_numbers = [to_float(c) for c in row]
+        buy, sell = extract_buy_sell_by_repetition(row_numbers)
+        if buy is not None:
+            return buy, sell
+
+    line_numbers = _numbers_from_currency_line(text, currency)
+    buy, sell = extract_buy_sell_by_repetition(line_numbers)
+    if buy is not None:
+        return buy, sell
+
+    if row:
+        return extract_buy_sell(row, buy_index=3, sell_index=0)
+
+    return None, None
+
+
+def get_rates(currencies=("EUR", "USD")):
+    """
+    Collect rates for multiple currencies from BRAC's daily PDF in a
+    single fetch.
+
+    Returns:
+        list[dict] — one entry per currency successfully extracted.
+        A currency BRAC's PDF doesn't contain, or that fails to parse,
+        is simply omitted, not treated as an error (same "prefer false
+        warnings over false confidence" spirit as get_rate() above).
+    """
+    try:
+        pdf_url = _get_pdf_url()
+        if pdf_url is None:
+            print("BRAC: PDF link not found (get_rates).")
+            return []
+
+        pdf_bytes = download_pdf(pdf_url)
+        text = extract_text_from_pdf(pdf_bytes)
+        tables = extract_tables_from_pdf(pdf_bytes)
+        rate_date = extract_rate_date(text, filename_hint=pdf_url)
+
+        results = []
+        for currency in currencies:
+            row = find_currency_row(tables, currency)
+            buy, sell = _extract_currency_buy_sell(row, text, currency)
+
+            if buy is None or sell is None:
+                print(f"BRAC: {currency} row not found or unparsable (get_rates).")
+                continue
+
+            result = {
+                "bank": "BRAC",
+                "currency": currency,
+                "buy": buy,
+                "sell": sell,
+                "rate_date": rate_date.isoformat() if rate_date else None,
+                "is_stale": is_stale(rate_date),
+            }
+
+            student = find_student_rate(text, currency)
+            if student and is_plausible_student_rate(student, buy, sell):
+                result["student"] = student
+
+            results.append(result)
+
+        return results
+
+    except Exception as e:
+        print(f"BRAC ERROR (get_rates): {e}")
+        return []

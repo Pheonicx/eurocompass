@@ -49,9 +49,16 @@ class LegacyCollectorAdapter:
             download_failure(logger, bank.id, f"could not import {bank.collector}: {e}")
             return []
 
+        # Prefer a multi-currency get_rates() when the collector offers one
+        # (added in Phase 2 for USD support) — falls back to the original
+        # single-currency get_rate() for any collector that doesn't have it
+        # yet, so nothing breaks as banks are upgraded one at a time.
+        if hasattr(module, "get_rates"):
+            return self._collect_multi(bank, module)
+
         if not hasattr(module, "get_rate"):
             download_failure(
-                logger, bank.id, f"{bank.collector} has no get_rate() function"
+                logger, bank.id, f"{bank.collector} has no get_rate() or get_rates() function"
             )
             return []
 
@@ -73,6 +80,29 @@ class LegacyCollectorAdapter:
 
         collection_completed(logger, bank.id, 1)
         return [observation]
+
+    def _collect_multi(self, bank: Bank, module) -> list[Observation]:
+        currencies = bank.currencies or ("EUR",)
+
+        try:
+            raw_list = module.get_rates(currencies=currencies)
+        except Exception as e:  # noqa: BLE001 - same reasoning as collect() above
+            collector_crashed(logger, bank.id, e)
+            return []
+
+        if not raw_list:
+            download_failure(logger, bank.id, "get_rates() returned no data")
+            collection_completed(logger, bank.id, 0)
+            return []
+
+        observations = []
+        for raw in raw_list:
+            observation = self._to_observation(bank, raw)
+            if observation is not None:
+                observations.append(observation)
+
+        collection_completed(logger, bank.id, len(observations))
+        return observations
 
     def _to_observation(self, bank: Bank, raw: dict) -> Observation | None:
         """
