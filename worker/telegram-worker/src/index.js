@@ -1,13 +1,35 @@
 const DATA_URL =
   "https://raw.githubusercontent.com/Pheonicx/eurocompass/main/exports/latest.json";
+// v2's export lives on the v2-dev branch until it's merged to main.
+// Once merged, this should be updated to point at main, same as DATA_URL
+// above -- tracked in V2_PROGRESS.md.
+const DATA_URL_V2 =
+  "https://raw.githubusercontent.com/Pheonicx/eurocompass/v2-dev/v2_exports/latest.json";
 // Users waiting to enter EUR amount
 const pendingRecommendations = new Map();
+
+import {
+  formatV2Rates,
+  formatV2Recommendation,
+  findRecommendation,
+  listRecommendationOptions,
+} from "./formatter.js";
 
 async function loadData() {
   const response = await fetch(DATA_URL);
 
   if (!response.ok) {
     throw new Error("Unable to load market data.");
+  }
+
+  return await response.json();
+}
+
+async function loadV2Data() {
+  const response = await fetch(DATA_URL_V2);
+
+  if (!response.ok) {
+    throw new Error("Unable to load v2 market data.");
   }
 
   return await response.json();
@@ -112,6 +134,38 @@ Endpoints
         version: "2.0.0",
         service: "Cloudflare Worker",
         time: new Date().toISOString(),
+      });
+    }
+
+    // v2 routes are checked BEFORE v1's data load below, deliberately:
+    // they use their own data source (loadV2Data) and must not depend on
+    // v1's DATA_URL being reachable, and shouldn't trigger a pointless
+    // v1 fetch for a request that only wants v2 data.
+    if (url.pathname === "/v2/health") {
+      return Response.json({
+        project: "EuroCompass",
+        layer: "v2",
+        status: "preview",
+        note: "v2 data is on the v2-dev branch until merged to main.",
+        time: new Date().toISOString(),
+      });
+    }
+
+    if (url.pathname === "/v2/rates") {
+      const v2data = await loadV2Data();
+      const currency = url.searchParams.get("currency") ?? "EUR";
+      return Response.json({
+        currency,
+        generated_at: v2data.generated_at,
+        rates: v2data.rates_by_currency[currency] ?? [],
+      });
+    }
+
+    if (url.pathname === "/v2/recommendations") {
+      const v2data = await loadV2Data();
+      return Response.json({
+        generated_at: v2data.generated_at,
+        recommendations: v2data.recommendations,
       });
     }
 
@@ -472,6 +526,86 @@ maximumFractionDigits:0
 
 Transfer using ${best.bank} today.`
 );
+
+}
+
+else if (text === "/v2") {
+
+  const v2data = await loadV2Data();
+
+  await sendTelegramMessage(
+    env,
+    chatId,
+`🧭 EuroCompass v2 (preview)
+
+New in v2: fee-aware totals with honest confidence levels, full plain-English
+explanations, and USD support alongside EUR.
+
+📊 /v2rates — current EUR rates
+💶 /v2recommend <currency> <amount> — an explained recommendation
+
+Available example amounts right now:
+
+${listRecommendationOptions(v2data.recommendations)}
+
+v2 is still a preview — not yet the live dashboard.`
+  );
+
+}
+
+else if (text === "/v2rates") {
+
+  const v2data = await loadV2Data();
+  const reply = formatV2Rates(v2data.rates_by_currency["EUR"], "EUR");
+
+  await sendTelegramMessage(env, chatId, reply);
+
+}
+
+else if (text.startsWith("/v2recommend")) {
+
+  const parts = text.split(" ").filter(Boolean);
+
+  if (parts.length !== 3) {
+    await sendTelegramMessage(
+      env,
+      chatId,
+`Usage
+
+/v2recommend EUR 1000
+
+Send /v2 to see which amounts are available right now.`
+    );
+    return new Response("OK");
+  }
+
+  const [, currency, amountText] = parts;
+  const amount = Number(amountText);
+
+  if (isNaN(amount) || amount <= 0) {
+    await sendTelegramMessage(env, chatId, "❌ Invalid amount. Example: /v2recommend EUR 1000");
+    return new Response("OK");
+  }
+
+  const v2data = await loadV2Data();
+  const rec = findRecommendation(v2data.recommendations, currency.toUpperCase(), amount);
+
+  if (!rec) {
+    await sendTelegramMessage(
+      env,
+      chatId,
+`No pre-computed v2 recommendation for ${amount} ${currency.toUpperCase()} yet.
+
+v2 currently only has explained recommendations for a few example amounts, not arbitrary ones (that needs a live compute step not built yet — see V2_PROGRESS.md). Available now:
+
+${listRecommendationOptions(v2data.recommendations)}
+
+For any EUR amount today, /recommend still works using v1's live data.`
+    );
+    return new Response("OK");
+  }
+
+  await sendTelegramMessage(env, chatId, formatV2Recommendation(rec));
 
 }
 

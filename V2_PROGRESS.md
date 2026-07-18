@@ -350,7 +350,78 @@ flagged stale), and a full plain-English explanation.
 
 ---
 
-## Status: Phase 5 remaining — Telegram bot integration, Public API — NOT STARTED
+## Status: Phase 5 — Telegram + API — ✅ COMPLETE (correcting an earlier mistake)
+
+### A correction, stated plainly
+
+The previous entry said "Telegram bot integration, Public API — NOT
+STARTED." That was **wrong** — I hadn't yet looked closely at
+`worker/telegram-worker/`. v1.0 already has a live, working Telegram bot
+AND a public API, both running as a single Cloudflare Worker
+(`worker/telegram-worker/src/index.js`):
+- Telegram commands: `/start`, `/help`, `/rates`, `/status`, `/recommend <amount>`
+- Public HTTP API: `/health`, `/rates`, `/summary`, `/banks`, `/best`
+
+This is genuinely well-built for a zero-cost setup: no server, reads
+straight from `exports/latest.json` on GitHub. Correcting the record
+here rather than quietly moving on, since an inaccurate status entry
+would mislead whoever (including me, next session) reads this file next.
+
+### What was actually built this phase
+
+Rather than building a second bot/API from scratch, extended the
+existing one — same additive discipline as every other phase:
+
+- `worker/telegram-worker/src/formatter.js` (was an empty, unused file):
+  pure formatting functions for v2 data. No business logic — the actual
+  recommendation math still lives only in Python (`core/transfer/`);
+  these functions just turn already-computed JSON into readable text.
+- `worker/telegram-worker/src/index.js`: added three new HTTP routes
+  (`/v2/health`, `/v2/rates`, `/v2/recommendations`) and three new
+  Telegram commands (`/v2`, `/v2rates`, `/v2recommend <currency> <amount>`),
+  reading from `v2_exports/latest.json`. All of v1's existing
+  routes/commands are untouched — confirmed with `git diff --stat`:
+  134 insertions, 0 deletions.
+
+### A real bug my own tests caught here too
+
+My first attempt placed the new `/v2/*` route checks *after* the line
+where v1's code unconditionally loads v1's data (`const data = await
+loadData()`) for any path that isn't `/` or `/health`. That meant a
+request to `/v2/rates` would first try (and could fail on) loading v1
+data it didn't even need. `index.test.js` caught this immediately
+(tests failed with "Unable to load market data" even though the test
+never touched v1's data source). Fixed by moving the v2 route checks
+before that line. Left in here on purpose, same as the fees_verified
+bug in Phase 4 — this is what the tests are for.
+
+### Known, honest limitation
+
+`/v2recommend` only works for the handful of amounts already
+pre-computed into `v2_exports/latest.json` (currently 1,000 EUR, 12,208
+EUR, 1,000 USD) — it can't compute a brand-new arbitrary amount on the
+spot the way v1's `/recommend` can, because the real fee-aware
+recommendation math lives in Python, not in this JavaScript worker, and
+there's no live bridge between them yet. Today this doesn't cost
+anything in practice (no fees exist anywhere yet, so v1's simpler EUR-only
+math and v2's math currently produce identical numbers) — but this is a
+real architectural gap to solve before v2 fully replaces v1's `/recommend`:
+either pre-compute more amounts, or build a proper on-demand compute
+path. Not solved today; flagged honestly instead of papered over.
+
+### Verified working
+
+- `pytest core/tests/` → 79/79 (unchanged this phase, no Python edits)
+- `npx vitest run` in `worker/telegram-worker/` → **16/16 passed**,
+  running in the real Cloudflare Workers test runtime (not a plain Node
+  approximation) — 11 for the pure formatter functions, 5 integration
+  tests hitting the actual routing logic with mocked network calls
+- Confirmed v1's existing routes still behave identically (explicit
+  test: `existing v1 routes are untouched by these additions`)
+- `git diff --stat` on both changed files: purely additive, 0 deletions
+
+---
+
 ## Status: Phase 6 — Intelligence Enhancements (Forecasting, AI) — NOT STARTED
 
 ---
