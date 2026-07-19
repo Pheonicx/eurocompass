@@ -422,7 +422,7 @@ path. Not solved today; flagged honestly instead of papered over.
 
 ---
 
-## Status: Phase 6 — Forecasting (deterministic half) ✅ COMPLETE — AI half: pending a decision
+## Status: Phase 6 — COMPLETE (forecasting built; AI intentionally deferred by choice)
 
 ### What was built
 
@@ -465,13 +465,24 @@ explicit early on about not having premium tooling, this isn't a
 decision to make on your behalf. Asked directly in-conversation rather
 than assumed.
 
+### Decision: AI-assisted explanations — deferred by choice, not by default
+
+Asked directly; you chose to skip AI for now and keep the deterministic,
+template-based explanations (Phase 4's recommendation explanations,
+Phase 6's trend descriptions) rather than take on an API key and its
+cost. That's a complete, working choice, not a placeholder — nothing in
+the platform depends on AI ever being added. If this changes later, the
+hook point is well-defined: `core/transfer/recommender.py`'s
+`_build_explanation()` and `core/forecasting/trend.py`'s
+`describe_trend()` are the two places a natural-language layer would
+plug in, without touching any of the underlying deterministic math.
+
 ### Verified working
 
-- `pytest core/tests/` → **89/89 passed** (8 new trend tests, 2 new
-  export tests)
-- Regenerated the real `v2_exports/latest.json` — confirmed
-  `trends_by_currency` is honestly empty right now (single data point
-  per bank), not fabricated
+- `pytest core/tests/` → **89/89 passed** (10 new trend/export tests)
+- Regenerated the real `v2_exports/latest.json` after the code change —
+  confirmed `trends_by_currency` is honestly empty right now (only 1
+  data point per bank so far), not fabricated
 
 ---
 
