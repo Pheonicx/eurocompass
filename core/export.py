@@ -24,6 +24,7 @@ from pathlib import Path
 from typing import Iterable
 
 from core.config.loader import PlatformConfig, load_config
+from core.forecasting.trend import summarize_trend, describe_trend
 from core.logging_setup import get_logger
 from core.models import Observation, utc_now
 from core.storage import observation_store
@@ -72,6 +73,7 @@ def build_export(
     bank_names = {b.id: b.name for b in cfg.banks.values()}
 
     rates_by_currency: dict[str, list[dict]] = {}
+    trends_by_currency: dict[str, list[dict]] = {}
     recommendations: list[dict] = []
 
     for currency, product_id, amount in scenarios:
@@ -99,6 +101,11 @@ def build_export(
                 }
                 for o in sorted(observations, key=lambda o: o.sell)
             ]
+
+        if currency not in trends_by_currency:
+            trends_by_currency[currency] = _build_trends(
+                cfg.banks.keys(), currency, product_id, storage_dir, bank_names
+            )
 
         rec = recommend_for_amount(observations, amount, bank_names=bank_names)
 
@@ -131,8 +138,49 @@ def build_export(
     return {
         "generated_at": utc_now().isoformat(),
         "rates_by_currency": rates_by_currency,
+        "trends_by_currency": trends_by_currency,
         "recommendations": recommendations,
     }
+
+
+def _build_trends(
+    bank_ids, currency: str, product_id: str, storage_dir: Path, bank_names: dict[str, str]
+) -> list[dict]:
+    """
+    One trend summary per bank that has at least 2 stored observations
+    for this currency/product. Banks with fewer are simply omitted —
+    not reported as "stable" or given a fabricated trend, since there's
+    genuinely nothing yet to base one on (spec: "unknown information
+    should remain unknown").
+    """
+    trends = []
+    for bank_id in bank_ids:
+        history = [
+            o
+            for o in observation_store.load_all(bank_id, storage_dir)
+            if o.currency == currency and o.product_id == product_id
+        ]
+        history.sort(key=lambda o: o.collected_at)
+
+        trend = summarize_trend(history)
+        if trend is None:
+            continue
+
+        trends.append(
+            {
+                "bank_id": trend.bank_id,
+                "bank_name": bank_names.get(trend.bank_id, trend.bank_id),
+                "sample_size": trend.sample_size,
+                "average_sell": trend.average_sell,
+                "lowest_sell": trend.lowest_sell,
+                "highest_sell": trend.highest_sell,
+                "volatility": trend.volatility,
+                "direction": trend.direction,
+                "change_pct": trend.change_pct,
+                "description": describe_trend(trend),
+            }
+        )
+    return trends
 
 
 def write_export(

@@ -422,7 +422,56 @@ path. Not solved today; flagged honestly instead of papered over.
 
 ---
 
-## Status: Phase 6 — Intelligence Enhancements (Forecasting, AI) — NOT STARTED
+## Status: Phase 6 — Forecasting (deterministic half) ✅ COMPLETE — AI half: pending a decision
+
+### What was built
+
+```
+core/forecasting/trend.py   summarize_trend(): moving average, min/max,
+                              volatility (population std dev), and
+                              rising/falling/stable direction, computed
+                              from stored history. describe_trend():
+                              template-based plain English, NOT AI —
+                              a reliable fallback that never depends on
+                              an external AI service being available.
+```
+
+`core/export.py` now includes a `trends_by_currency` section. Wired in
+and tested, but **today's real export shows empty trend lists** — not a
+bug, just honest: trends require at least 2 historical observations per
+bank, and `v2_history/` currently has exactly 1 real (seeded) observation
+per bank. This will start populating automatically, with zero code
+changes needed, once the pipeline has actually run more than once.
+
+### Why forecasting didn't need AI at all
+
+Checked the spec's own language here (Ch.8.13, Ch.12.4): "forecasting"
+in EuroCompass's own definition starts with moving averages, momentum,
+and volatility — plain statistics — with AI listed as a *possible future
+enhancement* on top, not a requirement. Built the deterministic half
+first because it's free, fully testable, and needed regardless of
+whether an AI layer is ever added.
+
+### The AI half — deliberately paused for a decision, not skipped
+
+The spec's AI chapter (Ch.12) is explicit that AI should only ever
+*explain*, never replace, the deterministic numbers — which this project
+already has (Phase 4's recommendation explanations, now this phase's
+trend descriptions). Adding real AI-generated natural-language
+explanations on top would require an Anthropic API key of your own, with
+its own (small, usage-based) cost — a genuinely different category from
+everything built so far, all of which has been free. Given you were
+explicit early on about not having premium tooling, this isn't a
+decision to make on your behalf. Asked directly in-conversation rather
+than assumed.
+
+### Verified working
+
+- `pytest core/tests/` → **89/89 passed** (8 new trend tests, 2 new
+  export tests)
+- Regenerated the real `v2_exports/latest.json` — confirmed
+  `trends_by_currency` is honestly empty right now (single data point
+  per bank), not fabricated
 
 ---
 

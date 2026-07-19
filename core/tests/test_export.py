@@ -63,6 +63,31 @@ def test_scenario_with_no_data_is_skipped_not_errored(tmp_path):
     assert data["recommendations"] == []
 
 
+def test_single_observation_produces_no_trend(tmp_path):
+    """One data point can't show a trend — must not be reported as one."""
+    config = _config()
+    _seed(tmp_path, "BRAC", "EUR", 142.0)
+
+    data = build_export(config, storage_dir=tmp_path, scenarios=(("EUR", "TT", 1000.0),))
+
+    assert data["trends_by_currency"]["EUR"] == []
+
+
+def test_multiple_observations_produce_a_trend(tmp_path):
+    config = _config()
+    _seed(tmp_path, "BRAC", "EUR", 140.0)
+    _seed(tmp_path, "BRAC", "EUR", 142.0)
+    _seed(tmp_path, "BRAC", "EUR", 145.0)
+
+    data = build_export(config, storage_dir=tmp_path, scenarios=(("EUR", "TT", 1000.0),))
+
+    trends = data["trends_by_currency"]["EUR"]
+    assert len(trends) == 1
+    assert trends[0]["bank_id"] == "BRAC"
+    assert trends[0]["direction"] == "rising"
+    assert "description" in trends[0]
+
+
 def test_default_scenarios_cover_eur_and_usd():
     currencies = {s[0] for s in DEFAULT_SCENARIOS}
     assert currencies == {"EUR", "USD"}

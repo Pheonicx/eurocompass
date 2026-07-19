@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-18T18:21:57.725777+00:00",
+  "generated_at": "2026-07-19T05:44:04.980806+00:00",
   "rates_by_currency": {
     "EUR": [
       {
@@ -39,6 +39,9 @@
         "collected_at": "2026-07-16T12:00:00+00:00"
       }
     ]
+  },
+  "trends_by_currency": {
+    "EUR": []
   },
   "recommendations": [
     {
