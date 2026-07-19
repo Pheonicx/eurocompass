@@ -33,6 +33,14 @@ def check_against_recent_history(
     currency, and product — most recent first. Only the single most
     recent one is used.
 
+    Checks BOTH buy and sell against history, not just buy. This matters:
+    core.transfer.calculator's actual cost math is built entirely on
+    `sell` (a student buying EUR pays sell_rate * amount) — a parser bug
+    that corrupts sell while buy happens to look normal would previously
+    have sailed through undetected and directly corrupted every
+    recommendation, since business-rule range checks alone don't catch a
+    wrong-but-still-plausible value.
+
     With no prior history (e.g. this is the very first observation ever
     collected for this bank/currency), there's nothing to compare
     against, so this always passes — a new bank or currency should never
@@ -43,15 +51,23 @@ def check_against_recent_history(
 
     last = recent[0]
 
-    if last.buy <= 0:
+    if last.buy <= 0 or last.sell <= 0:
         return None  # defensive only; Observation forbids this from ever being stored
 
-    change_pct = abs(observation.buy - last.buy) / last.buy * 100
+    buy_change_pct = abs(observation.buy - last.buy) / last.buy * 100
+    sell_change_pct = abs(observation.sell - last.sell) / last.sell * 100
 
-    if change_pct > max_change_pct:
+    if buy_change_pct > max_change_pct:
         return (
-            f"buy rate changed {change_pct:.1f}% since the last accepted "
+            f"buy rate changed {buy_change_pct:.1f}% since the last accepted "
             f"observation ({last.buy} -> {observation.buy}), exceeding the "
+            f"{max_change_pct}% plausibility threshold"
+        )
+
+    if sell_change_pct > max_change_pct:
+        return (
+            f"sell rate changed {sell_change_pct:.1f}% since the last accepted "
+            f"observation ({last.sell} -> {observation.sell}), exceeding the "
             f"{max_change_pct}% plausibility threshold"
         )
 

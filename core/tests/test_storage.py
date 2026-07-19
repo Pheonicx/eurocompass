@@ -73,3 +73,26 @@ def test_different_banks_are_stored_separately(tmp_path):
 
     assert len(observation_store.load_all("BRAC", storage_dir=tmp_path)) == 1
     assert len(observation_store.load_all("CITY", storage_dir=tmp_path)) == 1
+
+
+def test_a_single_corrupted_line_does_not_prevent_loading_the_rest(tmp_path):
+    """
+    Regression test for a real robustness gap: a truncated/corrupted line
+    (as could happen if a process were killed mid-write) previously
+    crashed load_all() entirely, losing access to every good observation
+    in the file. It must now be skipped, logging the problem, while every
+    valid line still loads.
+    """
+    observation_store.append(_obs(buy=139.0), storage_dir=tmp_path)
+
+    # Simulate a crash mid-write: append a truncated/garbage line directly.
+    path = tmp_path / "BRAC.jsonl"
+    with path.open("a", encoding="utf-8") as f:
+        f.write('{"bank_id": "BRAC", "currency": "EUR", "buy": 140.0, "sel\n')  # truncated JSON
+
+    observation_store.append(_obs(buy=141.0), storage_dir=tmp_path)
+
+    loaded = observation_store.load_all("BRAC", storage_dir=tmp_path)
+
+    assert len(loaded) == 2  # the two good lines, corrupted one skipped
+    assert [o.buy for o in loaded] == [139.0, 141.0]

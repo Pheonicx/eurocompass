@@ -152,21 +152,35 @@ Endpoints
     }
 
     if (url.pathname === "/v2/rates") {
-      const v2data = await loadV2Data();
-      const currency = url.searchParams.get("currency") ?? "EUR";
-      return Response.json({
-        currency,
-        generated_at: v2data.generated_at,
-        rates: v2data.rates_by_currency[currency] ?? [],
-      });
+      try {
+        const v2data = await loadV2Data();
+        const currency = url.searchParams.get("currency") ?? "EUR";
+        return Response.json({
+          currency,
+          generated_at: v2data.generated_at,
+          rates: v2data.rates_by_currency[currency] ?? [],
+        });
+      } catch (e) {
+        return Response.json(
+          { error: "v2 rate data is temporarily unavailable.", detail: String(e) },
+          { status: 503 }
+        );
+      }
     }
 
     if (url.pathname === "/v2/recommendations") {
-      const v2data = await loadV2Data();
-      return Response.json({
-        generated_at: v2data.generated_at,
-        recommendations: v2data.recommendations,
-      });
+      try {
+        const v2data = await loadV2Data();
+        return Response.json({
+          generated_at: v2data.generated_at,
+          recommendations: v2data.recommendations,
+        });
+      } catch (e) {
+        return Response.json(
+          { error: "v2 recommendation data is temporarily unavailable.", detail: String(e) },
+          { status: 503 }
+        );
+      }
     }
 
     const data = await loadData();
@@ -531,11 +545,12 @@ Transfer using ${best.bank} today.`
 
 else if (text === "/v2") {
 
-  const v2data = await loadV2Data();
+  try {
+    const v2data = await loadV2Data();
 
-  await sendTelegramMessage(
-    env,
-    chatId,
+    await sendTelegramMessage(
+      env,
+      chatId,
 `🧭 EuroCompass v2 (preview)
 
 New in v2: fee-aware totals with honest confidence levels, full plain-English
@@ -549,16 +564,30 @@ Available example amounts right now:
 ${listRecommendationOptions(v2data.recommendations)}
 
 v2 is still a preview — not yet the live dashboard.`
-  );
+    );
+  } catch (e) {
+    await sendTelegramMessage(
+      env,
+      chatId,
+      "⚠️ v2 data isn't available right now. Please try again shortly, or use /recommend for v1's live data in the meantime."
+    );
+  }
 
 }
 
 else if (text === "/v2rates") {
 
-  const v2data = await loadV2Data();
-  const reply = formatV2Rates(v2data.rates_by_currency["EUR"], "EUR");
-
-  await sendTelegramMessage(env, chatId, reply);
+  try {
+    const v2data = await loadV2Data();
+    const reply = formatV2Rates(v2data.rates_by_currency["EUR"], "EUR");
+    await sendTelegramMessage(env, chatId, reply);
+  } catch (e) {
+    await sendTelegramMessage(
+      env,
+      chatId,
+      "⚠️ v2 rate data isn't available right now. Please try again shortly, or use /rates for v1's live data."
+    );
+  }
 
 }
 
@@ -587,7 +616,18 @@ Send /v2 to see which amounts are available right now.`
     return new Response("OK");
   }
 
-  const v2data = await loadV2Data();
+  let v2data;
+  try {
+    v2data = await loadV2Data();
+  } catch (e) {
+    await sendTelegramMessage(
+      env,
+      chatId,
+      "⚠️ v2 data isn't available right now. Please try again shortly, or use /recommend for v1's live data in the meantime."
+    );
+    return new Response("OK");
+  }
+
   const rec = findRecommendation(v2data.recommendations, currency.toUpperCase(), amount);
 
   if (!rec) {

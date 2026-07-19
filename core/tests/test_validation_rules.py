@@ -64,3 +64,34 @@ def test_missing_rate_date_is_fine():
 def test_malformed_rate_date_is_rejected():
     reason = check_rate_date_not_future(_obs(139.0, 142.0, rate_date="not-a-date"))
     assert reason is not None
+
+
+def test_fresh_dhaka_date_not_wrongly_rejected_during_utc_evening():
+    """
+    Regression test for a real timezone bug: Dhaka (UTC+6) is already on
+    the next calendar day while UTC is still on the previous one, for
+    roughly 6 hours out of every 24 (18:00-23:59 UTC). A rate collected
+    during that window, correctly dated 'today' in Dhaka, must NOT be
+    rejected as being from the future just because the UTC date hadn't
+    rolled over yet.
+    """
+    collected_at_utc = datetime(2026, 7, 16, 20, 0, 0, tzinfo=timezone.utc)  # 2 AM in Dhaka on the 17th
+    fresh_dhaka_rate_date = "2026-07-17"
+
+    obs = _obs(139.0, 142.0, rate_date=fresh_dhaka_rate_date, collected_at=collected_at_utc)
+
+    assert check_rate_date_not_future(obs) is None
+
+
+def test_genuinely_future_rate_date_is_still_rejected_across_the_utc_evening_window():
+    """The Dhaka-local-time fix must not accidentally become too lenient
+    — a rate genuinely dated further ahead than 'today in Dhaka' should
+    still be rejected."""
+    collected_at_utc = datetime(2026, 7, 16, 20, 0, 0, tzinfo=timezone.utc)  # 2 AM in Dhaka on the 17th
+    two_days_ahead = "2026-07-19"
+
+    obs = _obs(139.0, 142.0, rate_date=two_days_ahead, collected_at=collected_at_utc)
+
+    reason = check_rate_date_not_future(obs)
+    assert reason is not None
+    assert "future" in reason

@@ -60,3 +60,18 @@ def test_describe_trend_mentions_bank_and_direction():
     text = describe_trend(trend)
     assert "BRAC" in text
     assert "risen" in text
+
+
+def test_direction_is_correct_regardless_of_input_order():
+    """
+    Regression test for a real bug: the function previously trusted the
+    caller to pass observations oldest-first, and would silently report
+    the OPPOSITE direction if that assumption was ever violated. It must
+    now sort internally and get this right no matter what order it's
+    given.
+    """
+    oldest_first = [_obs(140.0), _obs(142.0), _obs(145.0)]  # genuinely rising
+    newest_first = list(reversed(oldest_first))  # same data, wrong order
+
+    assert summarize_trend(oldest_first).direction == "rising"
+    assert summarize_trend(newest_first).direction == "rising"  # must still be correct

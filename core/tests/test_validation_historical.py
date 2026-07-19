@@ -45,3 +45,34 @@ def test_custom_threshold_is_respected():
     # ~1.4% change: passes a loose 5% threshold, fails a strict 1% one
     assert check_against_recent_history(_obs(141.0), recent, max_change_pct=5.0) is None
     assert check_against_recent_history(_obs(141.0), recent, max_change_pct=1.0) is not None
+
+
+def test_sell_spike_is_caught_even_when_buy_looks_normal():
+    """
+    Regression test for a real coverage gap: the check previously only
+    compared `buy` against history, never `sell` — but the recommendation
+    engine's cost math is built entirely on `sell`. A collector bug that
+    corrupts sell while buy happens to look normal must be caught here,
+    not sail through silently.
+    """
+    recent = [_obs(139.0, sell=142.0)]
+    # buy barely moves (139.0 -> 139.2, ~0.1%), but sell jumps ~13%
+    suspicious = _obs(139.2, sell=160.0)
+
+    reason = check_against_recent_history(suspicious, recent)
+
+    assert reason is not None
+    assert "sell" in reason
+
+
+def test_buy_spike_still_caught_when_sell_looks_normal():
+    """The reverse case, for symmetry: a buy-only spike must still be caught."""
+    recent = [_obs(139.0, sell=142.0)]
+    # buy jumps ~5.4% (139.0 -> 146.5), sell only ~3.5% (142.0 -> 147.0,
+    # still >= buy as Observation requires) — isolates a buy-only spike.
+    suspicious = _obs(146.5, sell=147.0)
+
+    reason = check_against_recent_history(suspicious, recent)
+
+    assert reason is not None
+    assert "buy" in reason

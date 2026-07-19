@@ -132,41 +132,46 @@ def get_rates(currencies=("EUR", "USD")):
     Collect rates for multiple currencies from EBL's HTML rates table in
     a single page fetch.
     """
-    url = "https://www.ebl.com.bd/forexrate"
+    try:
+        url = "https://www.ebl.com.bd/forexrate"
 
-    response = http_client.get(url)
-    if response is None:
+        response = http_client.get(url)
+        if response is None:
+            return []
+
+        soup = BeautifulSoup(response.text, "html.parser")
+        rows = soup.find_all("tr")
+
+        found = {}
+        for row in rows:
+            cells = row.find_all("td")
+            if len(cells) >= 3:
+                currency = cells[0].text.strip()
+                if currency in currencies and currency not in found:
+                    try:
+                        buy = float(cells[1].text.strip())
+                        sell = float(cells[2].text.strip())
+                    except ValueError:
+                        continue
+                    found[currency] = {"bank": "EBL", "currency": currency, "buy": buy, "sell": sell}
+
+        results = []
+        for currency in currencies:
+            result = found.get(currency)
+            if result is None:
+                print(f"EBL: {currency} row not found (get_rates).")
+                continue
+
+            try:
+                extras = _get_student_and_date_for(currency, result["buy"], result["sell"])
+                result.update(extras)
+            except Exception as e:
+                print(f"EBL: student-rate/date bonus fetch failed for {currency} (core rate unaffected): {e}")
+
+            results.append(result)
+
+        return results
+
+    except Exception as e:
+        print(f"EBL ERROR (get_rates): {e}")
         return []
-
-    soup = BeautifulSoup(response.text, "html.parser")
-    rows = soup.find_all("tr")
-
-    found = {}
-    for row in rows:
-        cells = row.find_all("td")
-        if len(cells) >= 3:
-            currency = cells[0].text.strip()
-            if currency in currencies and currency not in found:
-                try:
-                    buy = float(cells[1].text.strip())
-                    sell = float(cells[2].text.strip())
-                except ValueError:
-                    continue
-                found[currency] = {"bank": "EBL", "currency": currency, "buy": buy, "sell": sell}
-
-    results = []
-    for currency in currencies:
-        result = found.get(currency)
-        if result is None:
-            print(f"EBL: {currency} row not found (get_rates).")
-            continue
-
-        try:
-            extras = _get_student_and_date_for(currency, result["buy"], result["sell"])
-            result.update(extras)
-        except Exception as e:
-            print(f"EBL: student-rate/date bonus fetch failed for {currency} (core rate unaffected): {e}")
-
-        results.append(result)
-
-    return results

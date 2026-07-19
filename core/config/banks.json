@@ -39,7 +39,8 @@
       "collector": "collectors.brac",
       "source_type": "pdf",
       "source_urls": {
-        "EUR": "https://www.bracbank.com/en/treasury/foreign-exchange"
+        "EUR": "https://www.bracbank.com/en/treasury/foreign-exchange",
+        "USD": "https://www.bracbank.com/en/treasury/foreign-exchange"
       }
     },
     {
@@ -55,7 +56,8 @@
       "collector": "collectors.city",
       "source_type": "pdf",
       "source_urls": {
-        "EUR": "https://www.citybankplc.com/exchange-rates"
+        "EUR": "https://www.citybankplc.com/exchange-rates",
+        "USD": "https://www.citybankplc.com/exchange-rates"
       }
     },
     {
@@ -71,7 +73,8 @@
       "collector": "collectors.ebl",
       "source_type": "pdf",
       "source_urls": {
-        "EUR": "https://www.ebl.com.bd/forexrate"
+        "EUR": "https://www.ebl.com.bd/forexrate",
+        "USD": "https://www.ebl.com.bd/forexrate"
       }
     },
     {
@@ -87,7 +90,8 @@
       "collector": "collectors.prime",
       "source_type": "pdf",
       "source_urls": {
-        "EUR": "https://www.primebank.com.bd/exchange-rate"
+        "EUR": "https://www.primebank.com.bd/exchange-rate",
+        "USD": "https://www.primebank.com.bd/exchange-rate"
       }
     },
     {
@@ -103,7 +107,8 @@
       "collector": "collectors.sonali",
       "source_type": "pdf",
       "source_urls": {
-        "EUR": "https://www.sonalibank.com.bd/"
+        "EUR": "https://www.sonalibank.com.bd/",
+        "USD": "https://www.sonalibank.com.bd/"
       }
     }
   ]

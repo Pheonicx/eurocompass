@@ -56,20 +56,30 @@ def run_collection_cycle(
     rejections: list[tuple[str, str]] = []
 
     for observation in observations:
-        recent = observation_store.load_recent(
-            observation.bank_id,
-            observation.currency,
-            observation.product_id,
-            storage_dir=storage_dir,
-        )
-        result = validate(observation, cfg, recent_history=recent)
+        try:
+            recent = observation_store.load_recent(
+                observation.bank_id,
+                observation.currency,
+                observation.product_id,
+                storage_dir=storage_dir,
+            )
+            result = validate(observation, cfg, recent_history=recent)
 
-        if result.accepted:
-            observation_store.append(observation, storage_dir=storage_dir)
-            accepted += 1
-        else:
+            if result.accepted:
+                observation_store.append(observation, storage_dir=storage_dir)
+                accepted += 1
+            else:
+                rejected += 1
+                rejections.append((observation.bank_id, result.reason or "unknown reason"))
+        except Exception as e:  # noqa: BLE001 - one observation's failure must not stop the rest of the cycle
+            logger.exception(
+                "OBSERVATION_PROCESSING_FAILED bank=%s currency=%s error=%s",
+                observation.bank_id,
+                observation.currency,
+                e,
+            )
             rejected += 1
-            rejections.append((observation.bank_id, result.reason or "unknown reason"))
+            rejections.append((observation.bank_id, f"unexpected processing error: {e}"))
 
     logger.info(
         "CYCLE_COMPLETE collected=%d accepted=%d rejected=%d",

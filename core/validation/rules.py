@@ -17,10 +17,14 @@ plausible ranges) or on more than one field read together.
 
 from __future__ import annotations
 
-from datetime import date
+from datetime import date, timedelta
 from typing import Optional
 
 from core.models import Currency, Observation
+
+# Bangladesh Standard Time is a fixed UTC+6 offset with no daylight
+# saving — safe to hardcode rather than depend on a timezone database.
+BDT_UTC_OFFSET = timedelta(hours=6)
 
 
 def check_business_rules(observation: Observation, currency: Currency) -> Optional[str]:
@@ -55,6 +59,12 @@ def check_rate_date_not_future(observation: Observation) -> Optional[str]:
     Cross-field check (spec 7.7): the date a bank published a rate for
     should never be in the future relative to when we collected it — a
     reliable sign of a date-parsing bug (e.g. misreading day/month order).
+
+    A bank's rate_date reflects Bangladesh local time (Dhaka, UTC+6), but
+    `collected_at` is stored in UTC. Comparing raw UTC dates would wrongly
+    reject a perfectly valid, fresh same-day rate during the ~6 hours a
+    day (18:00-23:59 UTC) when Dhaka's calendar date has already rolled
+    over but UTC's hasn't — so the comparison is done in Dhaka local time.
     """
     if observation.rate_date is None:
         return None
@@ -64,10 +74,12 @@ def check_rate_date_not_future(observation: Observation) -> Optional[str]:
     except ValueError:
         return f"rate_date '{observation.rate_date}' is not a valid date"
 
-    if rate_date > observation.collected_at.date():
+    collected_at_local_date = (observation.collected_at + BDT_UTC_OFFSET).date()
+
+    if rate_date > collected_at_local_date:
         return (
             f"rate_date {rate_date} is in the future relative to "
-            f"collection time ({observation.collected_at.date()})"
+            f"collection time ({collected_at_local_date} in Bangladesh local time)"
         )
 
     return None

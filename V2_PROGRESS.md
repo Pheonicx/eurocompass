@@ -486,7 +486,87 @@ plug in, without touching any of the underlying deterministic math.
 
 ---
 
-## For the non-technical project owner
+## Full Codebase Audit (requested explicitly: "check every algorithm for bugs")
+
+Went back through every file written across all 6 phases — models,
+config, collectors, validation, storage, pipeline, calculator,
+recommender, export, forecasting, and the JS worker + dashboard —
+looking specifically for logic bugs, not style issues. Found and fixed
+**15 real, concrete bugs**, each with a regression test proving the bug
+was real and is now closed. Full list, worst-impact first:
+
+1. **Timezone bug (real, frequent):** `check_rate_date_not_future`
+   compared a rate's Bangladesh-local publish date against the raw UTC
+   collection date. Since Dhaka is UTC+6, any collection running
+   18:00–23:59 UTC (i.e. every single day, for ~6 hours) would wrongly
+   reject a perfectly fresh, correct rate as "from the future." Proven
+   with a concrete repro before fixing. Fixed by converting to Dhaka
+   local time before comparing.
+2. **Historical validation only checked `buy`, never `sell`** — but
+   `core.transfer.calculator`'s entire cost math runs on `sell`. A
+   corrupted sell value with a normal-looking buy would previously sail
+   through undetected and directly corrupt every recommendation.
+3. **A provable one-cent rounding inconsistency**: `total_cost_bdt` was
+   computed from raw unrounded numbers while the displayed
+   `gross_cost_bdt`/`fees_total_bdt` were rounded separately — found a
+   concrete case (via randomized search) where the three numbers
+   wouldn't add up by a cent. Fixed by summing the already-rounded parts.
+4. **Negative fee amounts were silently applied as discounts** — a
+   data-entry sign error could make a bank look artificially cheapest
+   and corrupt the ranking. Now rejected with a note instead of applied.
+5. **A single corrupted line in a history file could crash loading of
+   that bank's ENTIRE history** (e.g. from a process killed mid-write),
+   which would then crash the whole collection cycle. Now skipped and
+   logged, everything else still loads.
+6. **One observation's unexpected failure (e.g. a storage error) could
+   silently stop every other bank in the same cycle from being
+   processed.** Now isolated per-observation.
+7. **A syntax error in any single bank's collector file would crash the
+   entire collection cycle**, not just that bank — `except ImportError`
+   doesn't catch `SyntaxError`. Proven with an actual broken file before
+   fixing; now catches any import-time exception.
+8. **Trend direction could be silently inverted**: `summarize_trend`
+   trusted the caller to pass observations oldest-first, with no
+   enforcement — proven with a concrete repro (reversed input reported
+   "falling" for a rate that was actually rising). Now sorts internally.
+9. **Explanation notes about a skipped fee were dropped exactly when
+   they mattered most** — only shown when `fees_verified` was True, so a
+   negative-amount or wrong-currency fee's explanatory note silently
+   vanished in the one case (no fee applied) where a user most needed it.
+10. **`source_urls` only had an EUR entry for every bank** — every USD
+    observation was silently losing its audit source URL, even though
+    USD comes from the exact same document as EUR.
+11. **`product_id` always defaulted to a bank's first configured
+    product**, regardless of what was actually collected — harmless
+    today (one product per bank) but a silent mislabeling risk the
+    moment any bank gets a second product.
+12. **`recommend_for_amount` had no protection against a duplicate
+    bank_id** — `breakdowns` and `observations_by_bank` could silently
+    disagree about which copy's data was used.
+13. **Logging setup crashed the entire `core` package at import time**
+    if the working directory wasn't writable (e.g. a restricted CI
+    runner) — for something as non-essential as file logging. Now falls
+    back to console-only logging, verified with a forced failure, not
+    just reasoned about.
+14. **EBL's `get_rates()` was the only one of 5 collectors without a
+    protective try/except**, an inconsistency vs. the other four.
+15. **The dashboard's rates table was hardcoded to show EUR only** —
+    once real USD data starts flowing in, it would never have appeared.
+    Now renders one table per currency actually present in the data.
+16. **None of the new `/v2/*` API routes or Telegram commands handled a
+    v2-data load failure** — an API caller got a bare, unhelpful 500;
+    a Telegram user got total silence. Now both return/send a clear,
+    friendly message instead.
+
+All fixes verified: 105/105 Python tests passing (up from 89 — 16 new
+regression tests added specifically for these bugs), 16/16 JS tests
+passing, both suites run for real, not assumed. `git diff --stat`
+confirms every fix is a targeted, reviewable change — no unrelated
+churn.
+
+---
+
+
 
 Plain-language summary of Phase 1: EuroCompass now has a proper internal
 "vocabulary" (what a Bank is, what a Currency is, what an Observation is)

@@ -79,3 +79,43 @@ def test_breakdown_preserves_bank_and_currency_identity():
     assert result.currency == "USD"
     assert result.product_id == "TT"
     assert result.requested_amount == 500
+
+
+def test_negative_fee_is_rejected_not_applied_as_a_discount():
+    """
+    Regression test: a fee is a charge, never a discount. A negative
+    amount (almost certainly a data-entry sign error) must not silently
+    reduce the total -- that could make a bank look artificially
+    cheapest and corrupt the recommendation ranking.
+    """
+    bad_fee = Fee(id="oops", name="Mistyped fee", amount=-1500.0, currency="BDT")
+    result = calculate_transfer_cost(_obs(sell=142.0), requested_amount=100, fees=(bad_fee,))
+
+    assert bad_fee not in result.fees_applied
+    assert result.fees_total_bdt == 0.0
+    assert result.total_cost_bdt == result.gross_cost_bdt  # unaffected by the bad fee
+    assert any("negative" in note for note in result.notes)
+    assert result.fees_verified is False  # nothing legitimate was actually applied
+
+
+def test_negative_percentage_fee_is_also_rejected():
+    bad_fee = Fee(id="oops", name="Mistyped percent", amount=-5.0, currency="BDT", is_percentage=True)
+    result = calculate_transfer_cost(_obs(sell=142.0), requested_amount=100, fees=(bad_fee,))
+    assert result.fees_total_bdt == 0.0
+    assert result.fees_verified is False
+
+
+def test_total_cost_always_equals_the_sum_of_the_two_displayed_parts():
+    """
+    Regression test for a real (proven-reproducible-with-random-values)
+    rounding inconsistency: total_cost_bdt must always exactly equal
+    gross_cost_bdt + fees_total_bdt as displayed -- never off by a cent
+    from independently rounding the raw, unrounded numbers.
+    """
+    fee = Fee(id="processing", name="Processing", amount=0.602, currency="BDT", is_percentage=True)
+    flat = Fee(id="flat", name="Flat charge", amount=1206.70, currency="BDT")
+
+    obs = _obs(sell=155.4456)
+    result = calculate_transfer_cost(obs, requested_amount=8448.98, fees=(fee, flat))
+
+    assert result.total_cost_bdt == round(result.gross_cost_bdt + result.fees_total_bdt, 2)

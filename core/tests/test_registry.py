@@ -106,3 +106,44 @@ def test_collect_all_continues_after_one_bank_fails(monkeypatch):
 
     assert len(observations) == 1
     assert observations[0].bank_id == "GOOD"
+
+
+def test_collect_all_survives_a_syntax_error_in_one_banks_collector_file(monkeypatch):
+    """
+    Regression test for a real gap: a SyntaxError (e.g. from a typo in a
+    bank's collector file) is NOT a subclass of ImportError, and would
+    previously crash straight out of collect_all() -- taking down every
+    bank queued after the broken one too, not just the broken bank.
+    """
+    good_bank = Bank(id="GOOD", name="Good Bank", currencies=("EUR",), products=("TT",),
+                      collector="good_module", source_type="pdf")
+    broken_bank = Bank(id="BROKEN", name="Broken Bank", currencies=("EUR",), products=("TT",),
+                        collector="broken_module", source_type="pdf")
+    # A third bank queued AFTER the broken one -- must still be processed.
+    also_good_bank = Bank(id="ALSO_GOOD", name="Also Good Bank", currencies=("EUR",), products=("TT",),
+                           collector="also_good_module", source_type="pdf")
+
+    config = PlatformConfig(
+        currencies={"EUR": Currency(code="EUR", name="Euro")},
+        products={"TT": Product(id="TT", name="Telegraphic Transfer")},
+        banks={"GOOD": good_bank, "BROKEN": broken_bank, "ALSO_GOOD": also_good_bank},
+    )
+
+    good_module = _fake_module(lambda: {"bank": "GOOD", "currency": "EUR", "buy": 130.0, "sell": 133.0})
+    also_good_module = _fake_module(lambda: {"bank": "ALSO_GOOD", "currency": "EUR", "buy": 131.0, "sell": 134.0})
+
+    def fake_import(name):
+        if name == "good_module":
+            return good_module
+        if name == "also_good_module":
+            return also_good_module
+        if name == "broken_module":
+            raise SyntaxError("invalid syntax (simulated typo in the collector file)")
+        raise ImportError("unexpected module")
+
+    monkeypatch.setattr(legacy_adapter.importlib, "import_module", fake_import)
+
+    observations = registry.collect_all(config)
+
+    bank_ids = {o.bank_id for o in observations}
+    assert bank_ids == {"GOOD", "ALSO_GOOD"}  # BROKEN failed, but didn't take the others down

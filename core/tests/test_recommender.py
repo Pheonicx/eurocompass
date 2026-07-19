@@ -81,6 +81,27 @@ def test_explanation_discloses_unverified_fees():
     assert "No verified fee data" in rec.explanation
 
 
+def test_skipped_fee_notes_survive_even_when_no_fee_was_applied():
+    """
+    Regression test: notes explaining why a fee was skipped (e.g. a
+    negative amount, or an unsupported currency) were previously dropped
+    silently whenever fees_verified was False -- exactly the situation
+    where that context matters most to a user trying to understand why
+    the total looks the way it does.
+    """
+    from core.transfer.calculator import calculate_transfer_cost
+
+    bad_fee = Fee(id="oops", name="Mistyped fee", amount=-500.0, currency="BDT")
+    obs = _obs("CITY", 140.0)
+    breakdown = calculate_transfer_cost(obs, requested_amount=100, fees=(bad_fee,))
+
+    rec = generate_recommendation([breakdown], {"CITY": obs})
+
+    assert breakdown.fees_verified is False
+    assert "Mistyped fee" in rec.explanation
+    assert "negative" in rec.explanation
+
+
 def test_explanation_mentions_runner_up_gap():
     breakdowns, observations = _breakdowns_and_obs({"BRAC": 142.0, "CITY": 140.0})
     rec = generate_recommendation(breakdowns, observations)

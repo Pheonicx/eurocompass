@@ -23,6 +23,7 @@ from core.logging_setup import (
     collector_crashed,
     download_failure,
     get_logger,
+    unexpected_value,
 )
 from core.models import Bank, Confidence, Observation, SourceType, utc_now
 
@@ -45,7 +46,13 @@ class LegacyCollectorAdapter:
 
         try:
             module = importlib.import_module(bank.collector)
-        except ImportError as e:
+        except Exception as e:  # noqa: BLE001 - a bug in one bank's collector file (e.g. a
+            # syntax error) must only fail that bank, never crash the whole
+            # collection cycle. `except ImportError` alone doesn't cover this:
+            # a SyntaxError or other import-time exception in the target
+            # module isn't an ImportError and would previously propagate
+            # straight out of collect_all(), taking down every bank queued
+            # after this one too.
             download_failure(logger, bank.id, f"could not import {bank.collector}: {e}")
             return []
 
@@ -96,10 +103,18 @@ class LegacyCollectorAdapter:
             return []
 
         observations = []
+        seen_currencies: set[str] = set()
         for raw in raw_list:
+            currency = raw.get("currency")
+            if currency in seen_currencies:
+                unexpected_value(
+                    logger, bank.id, f"get_rates() returned '{currency}' more than once; ignoring the duplicate"
+                )
+                continue
             observation = self._to_observation(bank, raw)
             if observation is not None:
                 observations.append(observation)
+                seen_currencies.add(currency)
 
         collection_completed(logger, bank.id, len(observations))
         return observations
@@ -123,7 +138,13 @@ class LegacyCollectorAdapter:
             )
             return None
 
-        product_id = bank.products[0] if bank.products else "TT"
+        # Prefer a product_id the collector itself specifies (for a future
+        # collector that distinguishes multiple products); fall back to the
+        # bank's first configured product otherwise. No current collector
+        # sets "product_id" in its result, so this doesn't change today's
+        # behaviour — it only prevents multi-product banks from silently
+        # having every observation mislabeled as the first product.
+        product_id = raw.get("product_id") or (bank.products[0] if bank.products else "TT")
 
         try:
             source_type = SourceType(bank.source_type)

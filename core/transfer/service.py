@@ -43,6 +43,20 @@ def recommend_for_amount(
             f"currencies={currencies}, products={products}"
         )
 
+    bank_ids = [o.bank_id for o in observations]
+    if len(bank_ids) != len(set(bank_ids)):
+        # Without this check, a caller accidentally including the same
+        # bank twice would silently corrupt the recommendation: the
+        # breakdowns list below would rank both copies, but
+        # observations_by_bank (a dict keyed by bank_id) would silently
+        # keep only the last one's confidence/staleness data — the two
+        # could disagree without any error ever being raised.
+        duplicates = {b for b in bank_ids if bank_ids.count(b) > 1}
+        raise ValueError(
+            f"observations contains the same bank more than once: {duplicates}. "
+            f"Pass at most one observation per bank."
+        )
+
     fees_by_bank = fees_by_bank or {}
 
     breakdowns = [

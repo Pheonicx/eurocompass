@@ -160,7 +160,6 @@ def _build_trends(
             for o in observation_store.load_all(bank_id, storage_dir)
             if o.currency == currency and o.product_id == product_id
         ]
-        history.sort(key=lambda o: o.collected_at)
 
         trend = summarize_trend(history)
         if trend is None:

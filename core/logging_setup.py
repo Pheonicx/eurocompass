@@ -23,23 +23,34 @@ from datetime import datetime
 from pathlib import Path
 
 LOG_DIR = Path("logs")
-LOG_DIR.mkdir(exist_ok=True)
-
-_LOG_FILE = LOG_DIR / f"v2-{datetime.now().strftime('%Y-%m-%d')}.log"
-
-_handler = logging.FileHandler(_LOG_FILE)
-_handler.setFormatter(
-    logging.Formatter("%(asctime)s | %(levelname)-8s | %(name)s | %(message)s")
-)
-
-_console_handler = logging.StreamHandler()
-_console_handler.setFormatter(logging.Formatter("%(levelname)-8s | %(message)s"))
 
 _logger = logging.getLogger("eurocompass.v2")
 _logger.setLevel(logging.INFO)
+
 if not _logger.handlers:
-    _logger.addHandler(_handler)
+    _console_handler = logging.StreamHandler()
+    _console_handler.setFormatter(logging.Formatter("%(levelname)-8s | %(message)s"))
     _logger.addHandler(_console_handler)
+
+    # File logging is a nice-to-have, not essential — if the working
+    # directory isn't writable (a read-only filesystem, a restricted CI
+    # runner, etc.), fall back to console-only rather than letting the
+    # entire core package fail to import over a logging convenience.
+    # Without this, `import core.anything` could crash the whole
+    # platform before it even starts, for a reason with nothing to do
+    # with its actual job.
+    try:
+        LOG_DIR.mkdir(exist_ok=True)
+        _log_file = LOG_DIR / f"v2-{datetime.now().strftime('%Y-%m-%d')}.log"
+        _file_handler = logging.FileHandler(_log_file)
+        _file_handler.setFormatter(
+            logging.Formatter("%(asctime)s | %(levelname)-8s | %(name)s | %(message)s")
+        )
+        _logger.addHandler(_file_handler)
+    except OSError as e:
+        _logger.warning(
+            "Could not set up file logging (%s) — continuing with console logging only.", e
+        )
 
 
 def get_logger(component: str) -> logging.Logger:

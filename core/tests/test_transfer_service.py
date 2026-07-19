@@ -55,3 +55,14 @@ def test_mismatched_product_is_rejected():
 def test_requires_at_least_one_observation():
     with pytest.raises(ValueError):
         recommend_for_amount([], requested_amount=100)
+
+
+def test_duplicate_bank_id_is_rejected():
+    """
+    Regression test for a latent bug: passing the same bank twice would
+    previously be silently accepted, with breakdowns and
+    observations_by_bank disagreeing about which copy's data was used.
+    """
+    observations = [_obs("BRAC", 142.0), _obs("BRAC", 140.0)]
+    with pytest.raises(ValueError, match="more than once"):
+        recommend_for_amount(observations, requested_amount=100)

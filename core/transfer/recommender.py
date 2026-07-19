@@ -134,14 +134,15 @@ def _build_explanation(
         + ")."
     )
 
+    if best.notes:
+        parts.append("Note: " + " ".join(best.notes))
+
     if not best.fees_verified:
         parts.append(
             "No verified fee data (SWIFT charge, processing fee, VAT, etc.) is "
             "available yet for this bank, so this total reflects the exchange "
             "cost only — the real total may be somewhat higher once fees are added."
         )
-    elif best.notes:
-        parts.append("Note: " + " ".join(best.notes))
 
     if len(ranked) > 1:
         runner_up = ranked[1]

@@ -98,3 +98,52 @@ def test_second_cycle_sees_first_cycles_history(monkeypatch, tmp_path):
     stored = observation_store.load_all("BRAC", storage_dir=tmp_path)
     assert len(stored) == 1
     assert stored[0].buy == 139.0
+
+
+def test_one_banks_processing_failure_does_not_stop_the_rest_of_the_cycle(monkeypatch, tmp_path):
+    """
+    Regression test for a real robustness gap: an unexpected error while
+    processing ONE observation (e.g. a storage failure) previously
+    crashed the whole loop, silently skipping every other bank in the
+    same cycle -- even ones that would have succeeded fine. It must now
+    be isolated: the bad one is counted as rejected, everything else
+    still gets processed and stored normally.
+    """
+    good_bank = Bank(id="GOOD", name="Good Bank", currencies=("EUR",), products=("TT",),
+                      collector="good_pipeline_module", source_type="pdf")
+    bad_bank = Bank(id="BAD", name="Bad Bank", currencies=("EUR",), products=("TT",),
+                     collector="bad_pipeline_module", source_type="pdf")
+    config = _config_with_banks(good_bank, bad_bank)
+
+    good_module = _fake_module(
+        lambda currencies: [{"bank": "GOOD", "currency": "EUR", "buy": 139.0, "sell": 142.0}]
+    )
+    bad_module = _fake_module(
+        lambda currencies: [{"bank": "BAD", "currency": "EUR", "buy": 140.0, "sell": 143.0}]
+    )
+
+    def fake_import(name):
+        return good_module if name == "good_pipeline_module" else bad_module
+
+    monkeypatch.setattr(legacy_adapter.importlib, "import_module", fake_import)
+
+    # Make storage explode specifically for BAD's observation, simulating
+    # something like a disk-write failure.
+    real_append = observation_store.append
+
+    def flaky_append(observation, storage_dir=None):
+        if observation.bank_id == "BAD":
+            raise OSError("simulated disk failure")
+        return real_append(observation, storage_dir=storage_dir)
+
+    monkeypatch.setattr(observation_store, "append", flaky_append)
+
+    summary = run_collection_cycle(config, storage_dir=tmp_path)
+
+    assert summary.collected == 2
+    assert summary.accepted == 1  # GOOD still succeeded
+    assert summary.rejected == 1  # BAD failed, but didn't take GOOD down with it
+    assert summary.rejections[0][0] == "BAD"
+
+    stored_good = observation_store.load_all("GOOD", storage_dir=tmp_path)
+    assert len(stored_good) == 1

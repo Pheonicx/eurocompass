@@ -25,7 +25,10 @@ import json
 from datetime import datetime
 from pathlib import Path
 
+from core.logging_setup import get_logger, unexpected_value
 from core.models import Confidence, Observation, SourceType
+
+logger = get_logger("storage.observation_store")
 
 DEFAULT_STORAGE_DIR = Path("v2_history")
 
@@ -87,17 +90,36 @@ def append(observation: Observation, storage_dir: Path = DEFAULT_STORAGE_DIR) ->
 
 
 def load_all(bank_id: str, storage_dir: Path = DEFAULT_STORAGE_DIR) -> list[Observation]:
-    """Load every stored observation for a bank, oldest first (file order)."""
+    """
+    Load every stored observation for a bank, oldest first (file order).
+
+    A single malformed line — e.g. from a process being killed mid-write
+    during a crash or power loss, leaving a truncated final line — is
+    skipped and logged, not allowed to fail the entire load. Without
+    this, one bad line would silently take down historical validation
+    (and, transitively, the whole collection cycle) for every bank, not
+    just the affected one — exactly what CLAUDE.md's "one failure
+    should never stop the platform" principle rules out.
+    """
     path = _file_for(bank_id, storage_dir)
     if not path.exists():
         return []
 
     observations = []
     with path.open("r", encoding="utf-8") as f:
-        for line in f:
+        for line_number, line in enumerate(f, start=1):
             line = line.strip()
-            if line:
+            if not line:
+                continue
+            try:
                 observations.append(_from_json_line(line))
+            except (json.JSONDecodeError, ValueError, KeyError) as e:
+                unexpected_value(
+                    logger,
+                    bank_id,
+                    f"skipping corrupted line {line_number} in {path}: {e}",
+                )
+                continue
     return observations
 
 

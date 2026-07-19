@@ -72,16 +72,26 @@ def calculate_transfer_cost(
 
     fees_total, applied, notes = _apply_fees(gross_cost, fees)
 
+    # Round each displayed part first, then sum the rounded parts for the
+    # total — not the other way around. Summing raw, unrounded numbers and
+    # rounding only the total can produce a total that's a cent off from
+    # what a user gets by adding the two displayed numbers themselves,
+    # which is exactly the kind of "the math doesn't quite add up"
+    # inconsistency this platform can't afford (proven reproducible with
+    # realistic values, not just a theoretical concern).
+    gross_cost_bdt = round(gross_cost, 2)
+    fees_total_bdt = round(fees_total, 2)
+
     return TransferCostBreakdown(
         bank_id=observation.bank_id,
         product_id=observation.product_id,
         currency=observation.currency,
         requested_amount=requested_amount,
         exchange_rate=observation.sell,
-        gross_cost_bdt=round(gross_cost, 2),
+        gross_cost_bdt=gross_cost_bdt,
         fees_applied=applied,
-        fees_total_bdt=round(fees_total, 2),
-        total_cost_bdt=round(gross_cost + fees_total, 2),
+        fees_total_bdt=fees_total_bdt,
+        total_cost_bdt=round(gross_cost_bdt + fees_total_bdt, 2),
         fees_verified=len(applied) > 0,
         notes=notes,
     )
@@ -93,6 +103,14 @@ def _apply_fees(
     """
     Sums applicable fees against a gross BDT cost.
 
+    - A negative fee.amount is rejected (skipped, with a note) rather
+      than applied — a fee is a charge, never a discount, so a negative
+      value is almost certainly a data-entry sign error. Applying it
+      silently would reduce a bank's total cost, potentially making it
+      look artificially cheapest and directly corrupting the
+      recommendation ranking. Per "prefer false warnings over false
+      confidence," this is treated as suspicious data to flag, not a
+      valid discount to honour.
     - Flat fees must be stated in BDT to be summed directly; a flat fee
       in another currency is skipped with a note rather than silently
       guessed at (no currency conversion is performed for fees — that
@@ -107,7 +125,12 @@ def _apply_fees(
     notes: list[str] = []
 
     for fee in fees:
-        if fee.is_percentage:
+        if fee.amount < 0:
+            notes.append(
+                f"Skipped fee '{fee.name}': amount is negative ({fee.amount}), "
+                f"which looks like a data error rather than a real charge."
+            )
+        elif fee.is_percentage:
             amount = gross_cost_bdt * (fee.amount / 100.0)
             total += amount
             applied.append(fee)

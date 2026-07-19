@@ -113,3 +113,61 @@ def test_real_collectors_all_expose_get_rates():
         module = real_importlib.import_module(bank.collector)
         assert hasattr(module, "get_rates"), f"{bank.collector} is missing get_rates()"
         assert hasattr(module, "get_rate"), f"{bank.collector} lost its original get_rate()"
+
+
+def test_duplicate_currency_from_get_rates_is_deduplicated(monkeypatch):
+    """A buggy collector returning the same currency twice must not
+    produce two stored observations for it."""
+    bank = Bank(id="FAKE", name="Fake Bank", currencies=("EUR",), products=("TT",),
+                collector="fake_dup_module", source_type="pdf")
+    config = _config_with_one_bank(bank)
+
+    fake = _fake_module_with_get_rates(
+        lambda currencies: [
+            {"bank": "FAKE", "currency": "EUR", "buy": 139.0, "sell": 142.0},
+            {"bank": "FAKE", "currency": "EUR", "buy": 999.0, "sell": 999.0},  # duplicate, should be ignored
+        ]
+    )
+    monkeypatch.setattr(legacy_adapter.importlib, "import_module", lambda name: fake)
+
+    observations = registry.collect_one("FAKE", config)
+
+    assert len(observations) == 1
+    assert observations[0].buy == 139.0  # the first one wins, not the duplicate
+
+
+def test_explicit_product_id_from_collector_is_respected(monkeypatch):
+    """A future collector that specifies which product it collected
+    should not be overridden by the bank's default first product."""
+    bank = Bank(id="FAKE", name="Fake Bank", currencies=("EUR",), products=("TT", "STUDENT_FILE"),
+                collector="fake_product_module", source_type="pdf")
+    config = _config_with_one_bank(bank)
+
+    fake = _fake_module_with_get_rates(
+        lambda currencies: [
+            {"bank": "FAKE", "currency": "EUR", "buy": 139.0, "sell": 142.0, "product_id": "STUDENT_FILE"},
+        ]
+    )
+    monkeypatch.setattr(legacy_adapter.importlib, "import_module", lambda name: fake)
+
+    observations = registry.collect_one("FAKE", config)
+
+    assert len(observations) == 1
+    assert observations[0].product_id == "STUDENT_FILE"
+
+
+def test_missing_product_id_still_falls_back_to_first_configured_product(monkeypatch):
+    """Preserves current behaviour for every existing collector, which
+    never specifies product_id."""
+    bank = Bank(id="FAKE", name="Fake Bank", currencies=("EUR",), products=("TT", "STUDENT_FILE"),
+                collector="fake_no_product_module", source_type="pdf")
+    config = _config_with_one_bank(bank)
+
+    fake = _fake_module_with_get_rates(
+        lambda currencies: [{"bank": "FAKE", "currency": "EUR", "buy": 139.0, "sell": 142.0}]
+    )
+    monkeypatch.setattr(legacy_adapter.importlib, "import_module", lambda name: fake)
+
+    observations = registry.collect_one("FAKE", config)
+
+    assert observations[0].product_id == "TT"  # first configured product, unchanged behaviour

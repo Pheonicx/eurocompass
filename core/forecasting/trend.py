@@ -46,9 +46,12 @@ class TrendSummary:
 
 def summarize_trend(observations: Sequence[Observation]) -> Optional[TrendSummary]:
     """
-    observations: prior observations for ONE bank/currency/product.
-    Direction and change_pct compare the first and last items as given —
-    callers should pass them oldest-first for a meaningful "direction".
+    observations: prior observations for ONE bank/currency/product, in
+    any order — this function sorts by collected_at itself, so callers
+    don't need to get the ordering right (a prior version relied on the
+    caller passing them oldest-first, which would silently invert the
+    reported direction if ever violated; sorting here removes that
+    hidden assumption entirely rather than just documenting it).
 
     Returns None with fewer than 2 observations: a single data point has
     no trend to report, and reporting one anyway would be a false signal
@@ -58,11 +61,13 @@ def summarize_trend(observations: Sequence[Observation]) -> Optional[TrendSummar
     if len(observations) < 2:
         return None
 
-    sells = [o.sell for o in observations]
+    ordered = sorted(observations, key=lambda o: o.collected_at)
+
+    sells = [o.sell for o in ordered]
     average = statistics.mean(sells)
     volatility = statistics.pstdev(sells)
 
-    oldest, newest = observations[0], observations[-1]
+    oldest, newest = ordered[0], ordered[-1]
     change_pct = ((newest.sell - oldest.sell) / oldest.sell) * 100 if oldest.sell else 0.0
 
     if abs(change_pct) < STABLE_THRESHOLD_PCT:
@@ -76,7 +81,7 @@ def summarize_trend(observations: Sequence[Observation]) -> Optional[TrendSummar
         bank_id=oldest.bank_id,
         currency=oldest.currency,
         product_id=oldest.product_id,
-        sample_size=len(observations),
+        sample_size=len(ordered),
         average_sell=round(average, 4),
         lowest_sell=round(min(sells), 4),
         highest_sell=round(max(sells), 4),
