@@ -1,0 +1,45 @@
+name: Test v2 Live Collection (manual, diagnostic only)
+
+# This workflow ONLY runs when someone clicks the button — never on a
+# schedule, never automatically. It does not write to v2_history/, does
+# not commit or push anything, and does not touch v1.0's data or site in
+# any way. It exists purely to answer "does live collection actually
+# work right now, against real bank websites?" — a question that can
+# only be answered from an environment with real internet access and
+# (for City Bank specifically) a real browser.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-collection:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 📥 Checkout v2-dev branch
+        uses: actions/checkout@v4
+        with:
+          ref: v2-dev
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: 📦 Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🌐 Install Playwright browser (needed for City Bank)
+        run: |
+          playwright install --with-deps chromium
+
+      - name: 🧪 Run live collection test
+        run: |
+          python scripts/test_live_collection.py
