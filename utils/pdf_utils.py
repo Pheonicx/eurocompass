@@ -58,13 +58,34 @@ def extract_tables_from_pdf(pdf_bytes):
     return tables
 
 
+def _normalize_currency_label(text: str) -> str:
+    """
+    Strip everything except letters, then uppercase — so "U.S. Dollar",
+    "U.S-DOLLAR", "u.s DoLLAR", and "USDOLLAR" all normalize to the same
+    "USDOLLAR". This absorbs the kind of font-encoding/OCR noise seen in
+    some banks' PDFs (confirmed in Sonali's: real extracted text showed
+    variants like "u.s DoLLAR" and "u.s.DOLl-AR" for what should read
+    "USD"), without needing to hand-enumerate every punctuation variant.
+
+    This can only make matching MORE permissive than a plain string
+    comparison — anything that matched before still matches (normalizing
+    both sides the same way is idempotent for already-clean text like
+    "EUR" or "USD"), and some things that previously failed to match now
+    correctly will.
+    """
+    return re.sub(r"[^A-Za-z]", "", text).upper()
+
+
 def find_currency_row(tables, currency):
     """
     Search all extracted tables for a currency row.
 
     Matches against every known label for the given currency (e.g. "EUR"
     also matches a cell that literally says "EURO"), not just the exact
-    ISO code, since banks are inconsistent about which they print.
+    ISO code, since banks are inconsistent about which they print — and
+    matches after normalizing away punctuation/spacing noise, since some
+    banks' PDFs render labels with inconsistent OCR-style formatting
+    (e.g. "u.s DoLLAR" instead of a clean "USD").
 
     Example:
         currency = "EUR"
@@ -72,7 +93,10 @@ def find_currency_row(tables, currency):
     Returns:
         row | None
     """
-    aliases = set(a.upper() for a in CURRENCY_ALIASES.get(currency.upper(), [currency.upper()]))
+    aliases = set(
+        _normalize_currency_label(a)
+        for a in CURRENCY_ALIASES.get(currency.upper(), [currency.upper()])
+    )
 
     for table in tables:
         for row in table:
@@ -80,7 +104,7 @@ def find_currency_row(tables, currency):
                 continue
 
             for cell in row:
-                if cell and str(cell).strip().upper() in aliases:
+                if cell and _normalize_currency_label(str(cell)) in aliases:
                     return row
 
     return None
