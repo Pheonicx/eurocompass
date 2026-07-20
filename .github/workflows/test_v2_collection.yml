@@ -41,5 +41,7 @@ jobs:
           playwright install --with-deps chromium
 
       - name: 🧪 Run live collection test
+        env:
+          PYTHONPATH: .
         run: |
           python scripts/test_live_collection.py
