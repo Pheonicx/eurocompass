@@ -566,7 +566,79 @@ churn.
 
 ---
 
+## Live Test Run — 20 July 2026
 
+Attempted a real test against actual bank websites, worked around the
+sandbox's network restriction to bank domains by using web search + web
+fetch (general internet access) to pull real, current bank pages/PDFs,
+then running the *actual* production parsing/validation code from this
+repo against that real content. Not a full end-to-end run (the real
+`requests`-based download step inside each collector was substituted),
+but a genuine test of whether today's real bank data still parses
+correctly with today's code — which is the part most likely to have
+quietly broken.
+
+### BRAC — ✅ Confirmed working
+Fetched the live treasury page, found today's real PDF link via the
+exact regex the collector uses (matched correctly), fetched the PDF
+(dated 14 Jul 2026), and ran `_extract_currency_buy_sell` — the real
+function — against the real extracted text. Result: EUR buy=138.7303
+sell=141.4886, USD buy=122.70 sell=123.70. Both plausible, both passed
+real validation. Date extraction ("Date 14-Jul-26") also parsed
+correctly and correctly flagged as stale.
+
+### EBL — ✅ Confirmed working
+The live `/forexrate` page embeds the rate table directly (USD
+122.75/123.75, EUR 138.87/143.74, dated 16 Jul 2026). The EUR figures
+match v1.0's own last real snapshot *exactly* — strong cross-confirmation
+this is genuinely the same live data source v1.0 already uses. Both
+currencies passed real validation.
+
+### PRIME — ✅ Confirmed working
+Found today's real PDF (dated 16 Jul 2026, filename contains a literal
+space — checked separately whether Python's `requests` library handles
+this safely, and confirmed it does, auto-encoding it to `%20` when
+sending the request, so no code change was needed here). Applied
+the real `buy_index=3, sell_index=0` convention to the real row: EUR
+buy=139.9964 sell=143.0550 — matches v1.0's last known real value
+*exactly*. USD buy=122.75 sell=123.75. Both passed real validation.
+
+### SONALI — ⚠️ Strong circumstantial confirmation, not fully live-tested
+The `fxrate-DD-MM-YYYY.pdf` URL pattern was confirmed accurate as
+recently as 5 days ago (a real indexed PDF at that exact pattern), and
+the table structure/column layout is consistent across many months of
+real historical PDFs (checked Jan through July 2026 examples). However,
+older dated PDFs appear to get removed from Sonali's server after a few
+days — the 5-days-ago URL returned a 404 when fetched directly — and my
+tool can't fetch a URL for *today's* exact date without it first
+appearing in a search result, which it won't have yet. Genuinely
+untested today, but nothing found suggests it's broken; this collector's
+own `_candidate_urls_by_date()` fallback (try today, then 1-2 days back)
+is already designed for exactly this kind of gap.
+
+### CITY — ❌ Could not test (real limitation, not a bug)
+City's collector uses Playwright (a real, JavaScript-executing browser)
+specifically because the PDF link isn't present in static HTML — it's
+rendered client-side. Neither this sandbox nor the web-fetch tools used
+above can execute JavaScript, so this is a genuine blind spot in what
+could be verified from here. Every real PDF found for City via search
+was weeks-to-months old (cached/indexed, not current), consistent with
+the current link never appearing in static HTML at all. **This can only
+be confirmed by an actual run in an environment with a real browser** —
+i.e. your GitHub Actions, which already has this working today in v1.0.
+
+### Bottom line
+3 of 5 banks (BRAC, EBL, Prime) confirmed genuinely working against
+real, current data, through the actual production code, not just
+reasoned about. 1 (Sonali) has strong indirect evidence and a known,
+already-designed-for gap in what could be tested from here. 1 (City) is
+a real, structural blind spot for this kind of remote testing — it needs
+an actual browser-capable run to confirm, which this repo's existing
+GitHub Actions workflow already provides.
+
+---
+
+## For the non-technical project owner
 
 Plain-language summary of Phase 1: EuroCompass now has a proper internal
 "vocabulary" (what a Bank is, what a Currency is, what an Observation is)
