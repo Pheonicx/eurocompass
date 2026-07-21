@@ -638,6 +638,64 @@ GitHub Actions workflow already provides.
 
 ---
 
+## Investigating the two live production failures (City, Sonali)
+
+The live test run above surfaced something important beyond just
+testing v2: **v1.0's actual live production system currently has two
+real, active failures.** Checked `history/CITY.csv` and
+`history/SONALI.csv` directly:
+- **City Bank**: last successful collection was **13 July** — over a
+  week of silent failures, invisible because nothing alerts on this.
+- **Sonali Bank**: last successful collection was **1:18 AM on 20 July**
+  — a fresh break, only hours old at the time of investigation.
+
+### Sonali — attempted fix, HONESTLY DID NOT WORK, second attempt in progress
+First hypothesis: researched real, current Sonali PDFs directly (not
+guessed) and found genuinely garbled currency labels in the extracted
+text — e.g. "u.s DoLLAR" and "u.s.DOLl-AR" instead of a clean "USD".
+Fixed `find_currency_row()` in `utils/pdf_utils.py` to normalize away
+punctuation before matching, provably backward-compatible (can only
+match MORE, never less). 9 new tests using the exact real garbled text.
+
+**Re-ran the live workflow after this fix — Sonali still failed
+identically** ("EUR row not found", "USD row not found"). Being honest
+about this rather than treating the first attempt as done: the text I
+researched came from web-fetch's own PDF-to-text conversion, which is
+not necessarily what `pdfplumber` (the actual library the collector
+uses) extracts from the same raw bytes — those can genuinely differ.
+Rather than guess a third time, added real diagnostics
+(`_print_extraction_diagnostics` in `collectors/sonali.py`) that will
+print exactly what pdfplumber actually found (table count, row
+previews, or a raw text preview if no tables at all) the next time this
+runs and a row is still missing — so the next attempt is grounded in
+real evidence, not another hypothesis. The punctuation-normalization fix
+itself is still a legitimate, low-risk improvement (proven correct
+against realistic text via its own tests) and stays in either way.
+
+### City — attempted fix, confidence NOT claimed, still failing as of last test
+Investigated whether City's PDF URL pattern
+(`/uploads/files/currency_files/...`) had changed, since it changed
+once before historically. Found real examples of that exact pattern
+still in use as recently as 11 June 2026 — fairly close to the 13 July
+last-success date, weakening the "pattern changed" theory. Fetched the
+raw (non-JS) page directly and confirmed it's genuinely just a
+near-empty client-rendered shell, not a bot-detection wall — no new
+smoking gun there either.
+
+Added one well-reasoned, standard mitigation: masked
+`navigator.webdriver` (a common, well-documented automation "tell" that
+Playwright sets by default and that many sites specifically check,
+regardless of how realistic the user-agent looks) — something the
+existing code's own comments already suspected as a cause but never
+fully addressed. **Re-ran the live workflow — City still failed with
+the same timeout.** This fix may still be worth keeping (low-risk,
+standard practice), but it did not resolve the issue, and that's being
+stated plainly rather than glossed over. City's root cause remains
+genuinely undiagnosed — properly debugging a client-rendered site's
+automation failure really needs to watch an actual browser session
+(e.g. Playwright's own trace/screenshot tooling), which isn't something
+achievable through this chat-based workflow.
+
 ## For the non-technical project owner
 
 Plain-language summary of Phase 1: EuroCompass now has a proper internal

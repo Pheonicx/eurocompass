@@ -172,6 +172,27 @@ def get_rate():
 # omits whichever currency couldn't be found via the table, rather than
 # guessing with a currency-specific regex that wasn't built for this.
 
+def _print_extraction_diagnostics(pdf_url, tables, text):
+    """
+    Prints real, concrete diagnostic info when a currency row can't be
+    found — instead of guessing at the cause again, this shows exactly
+    what pdfplumber actually extracted from the real PDF, so the next
+    live run reveals the ground truth rather than another hypothesis.
+    Only called on failure, so successful runs stay clean.
+    """
+    print(f"SONALI DIAGNOSTIC: pdf_url={pdf_url}")
+    print(f"SONALI DIAGNOSTIC: extract_tables_from_pdf found {len(tables)} table(s)")
+
+    for i, table in enumerate(tables[:3]):  # cap at 3 tables to keep output readable
+        print(f"SONALI DIAGNOSTIC: table {i} has {len(table)} row(s)")
+        for row in table[:15]:  # cap at 15 rows per table
+            print(f"SONALI DIAGNOSTIC:   row: {row}")
+
+    if not tables:
+        preview = text[:1500].replace("\n", " | ")
+        print(f"SONALI DIAGNOSTIC: no tables at all — raw text preview: {preview}")
+
+
 def get_rates(currencies=("EUR", "USD")):
     """
     Collect rates for multiple currencies from Sonali's daily PDF in a
@@ -203,11 +224,14 @@ def get_rates(currencies=("EUR", "USD")):
         tables = extract_tables_from_pdf(pdf_bytes)
 
         results = []
+        any_row_missing = False
+
         for currency in currencies:
             row = find_currency_row(tables, currency)
 
             if row is None:
                 print(f"SONALI: {currency} row not found (get_rates).")
+                any_row_missing = True
                 continue
 
             buy, sell = extract_buy_sell(row, buy_index=3, sell_index=0)
@@ -230,6 +254,9 @@ def get_rates(currencies=("EUR", "USD")):
                 result["student"] = student
 
             results.append(result)
+
+        if any_row_missing:
+            _print_extraction_diagnostics(pdf_url, tables, text)
 
         return results
 
