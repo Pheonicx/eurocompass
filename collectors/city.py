@@ -75,6 +75,24 @@ def _get_latest_pdf_via_browser():
                     user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
                     viewport={"width": 1366, "height": 900},
                 )
+
+                # A realistic user-agent alone doesn't fool most bot
+                # detection — the more common, more definitive signal is
+                # the `navigator.webdriver` flag, which Playwright (and
+                # Selenium) set to True by default and which many sites
+                # specifically check for, even when everything else about
+                # the request looks like a normal browser. This runs
+                # before any of the page's own scripts, masking it for
+                # the whole session. A standard, well-documented
+                # mitigation — not a guess specific to City.
+                context.add_init_script(
+                    """
+                    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+                    Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3, 4, 5] });
+                    Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] });
+                    """
+                )
+
                 page = context.new_page()
                 page.goto(EXCHANGE_RATES_PAGE, timeout=60000, wait_until="domcontentloaded")
 
