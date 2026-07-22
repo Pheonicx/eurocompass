@@ -649,28 +649,46 @@ real, active failures.** Checked `history/CITY.csv` and
 - **Sonali Bank**: last successful collection was **1:18 AM on 20 July**
   — a fresh break, only hours old at the time of investigation.
 
-### Sonali — attempted fix, HONESTLY DID NOT WORK, second attempt in progress
-First hypothesis: researched real, current Sonali PDFs directly (not
-guessed) and found genuinely garbled currency labels in the extracted
-text — e.g. "u.s DoLLAR" and "u.s.DOLl-AR" instead of a clean "USD".
-Fixed `find_currency_row()` in `utils/pdf_utils.py` to normalize away
-punctuation before matching, provably backward-compatible (can only
-match MORE, never less). 9 new tests using the exact real garbled text.
+### Sonali — second attempt, grounded in real diagnostic data
+The diagnostic output revealed the real cause: `extract_tables_from_pdf`
+finds **zero tables** in Sonali's PDF at all — pdfplumber's line-based
+table detector doesn't recognize any structure in it, despite the PDF
+clearly containing a rate table visually. This meant the first fix
+(normalizing currency-label punctuation) never even got a chance to run
+— there were no table cells to search. The real fix needed to work on
+raw text instead, the same approach BRAC already uses, which Sonali's
+`get_rates()` had deliberately been built without.
 
-**Re-ran the live workflow after this fix — Sonali still failed
-identically** ("EUR row not found", "USD row not found"). Being honest
-about this rather than treating the first attempt as done: the text I
-researched came from web-fetch's own PDF-to-text conversion, which is
-not necessarily what `pdfplumber` (the actual library the collector
-uses) extracts from the same raw bytes — those can genuinely differ.
-Rather than guess a third time, added real diagnostics
-(`_print_extraction_diagnostics` in `collectors/sonali.py`) that will
-print exactly what pdfplumber actually found (table count, row
-previews, or a raw text preview if no tables at all) the next time this
-runs and a row is still missing — so the next attempt is grounded in
-real evidence, not another hypothesis. The punctuation-normalization fix
-itself is still a legitimate, low-risk improvement (proven correct
-against realistic text via its own tests) and stays in either way.
+Built from the actual real text captured in the diagnostic dump, not
+guessed:
+- `utils/pdf_utils.py`: `find_all_currency_token_windows()` — a generic
+  text-based currency-label finder (the free-text equivalent of
+  `find_currency_row`), returning every occurrence with its surrounding
+  tokens, since a currency code can legitimately appear more than once
+  in a document for unrelated reasons (Sonali's PDF has an earlier
+  "cross rates" reference section that also uses "EUR" as a mere unit
+  label). Caught and fixed a real bug in this function before it
+  shipped: normalization strips digits along with punctuation, which let
+  pure numeric tokens silently vanish into a multi-token label match
+  ("123.7500 123.7500 u.s.DoLLAR" collapsing into one 3-token match) —
+  fixed by excluding numeric tokens from multi-token combining.
+- `collectors/sonali.py`: `_extract_via_text_fallback()` — Sonali-
+  specific interpretation of the real confirmed row structure
+  (`sell, sell, LABEL, buy, ...` — the sell rate appears twice
+  immediately before the label), used to disambiguate the real dealing-
+  rate row from the unrelated cross-rates section.
+
+Verified against the actual real text from the live failing run (not
+synthetic examples): correctly extracts EUR buy=140.07 sell=142.6482,
+USD buy=122.75 sell=123.75 — both pass real validation. 8 new tests
+using this real fixture text, including a specific regression test for
+the numeric-token-swallowing bug caught during development.
+
+122/122 tests passing. **Not yet re-verified against another live
+run** — that's the next step, and the honest confirmation this actually
+works in production, not just against the one captured sample.
+
+
 
 ### City — attempted fix, confidence NOT claimed, still failing as of last test
 Investigated whether City's PDF URL pattern

@@ -9,6 +9,7 @@ from utils.pdf_utils import (
     extract_text_from_pdf,
     extract_buy_sell,
     extract_rate_date,
+    find_all_currency_token_windows,
     find_currency_row,
     find_student_rate,
     is_plausible_student_rate,
@@ -193,6 +194,60 @@ def _print_extraction_diagnostics(pdf_url, tables, text):
         print(f"SONALI DIAGNOSTIC: no tables at all — raw text preview: {preview}")
 
 
+def _to_float(token):
+    try:
+        return float(token.replace(",", ""))
+    except (ValueError, AttributeError):
+        return None
+
+
+def _extract_via_text_fallback(text, currency):
+    """
+    Fallback for when extract_tables_from_pdf() finds no structured
+    tables at all — a confirmed real situation for Sonali's PDFs (their
+    line-based table detector finds zero tables despite the PDF clearly
+    containing a rate table visually).
+
+    Sonali's real layout, confirmed by direct inspection of an actual
+    live PDF via a diagnostic run, places the selling rate TWICE
+    (repeated) immediately before the currency label, and the buying
+    rate as the first number after it — e.g. the real text reads
+    "142.6482 142.6482 EURO 140.0700 139.9331 139.7619", where 142.6482
+    is the sell rate (appearing twice) and 140.0700 is the buy rate.
+
+    A currency code can appear more than once in the document for
+    unrelated reasons (Sonali's PDFs also have an earlier "cross rates"
+    reference section that uses "EUR" merely as a unit label) — this
+    disambiguates by requiring the specific repeated-pair signature,
+    rather than just taking the first occurrence found.
+    """
+    matches = find_all_currency_token_windows(text, currency, before=4, after=4)
+
+    for tokens_before, tokens_after in matches:
+        if len(tokens_before) < 2:
+            continue
+
+        second_last = _to_float(tokens_before[-1])
+        third_last = _to_float(tokens_before[-2])
+
+        if second_last is None or third_last is None:
+            continue
+
+        # The real signature: the two tokens immediately before the
+        # label are (near-)identical — that's the repeated sell rate.
+        if abs(second_last - third_last) > 0.01:
+            continue
+
+        buy = next((_to_float(t) for t in tokens_after if _to_float(t) is not None), None)
+        if buy is None:
+            continue
+
+        sell = second_last
+        return buy, sell
+
+    return None, None
+
+
 def get_rates(currencies=("EUR", "USD")):
     """
     Collect rates for multiple currencies from Sonali's daily PDF in a
@@ -229,16 +284,21 @@ def get_rates(currencies=("EUR", "USD")):
         for currency in currencies:
             row = find_currency_row(tables, currency)
 
-            if row is None:
-                print(f"SONALI: {currency} row not found (get_rates).")
-                any_row_missing = True
-                continue
-
-            buy, sell = extract_buy_sell(row, buy_index=3, sell_index=0)
-
-            if buy is None or sell is None:
-                print(f"SONALI: {currency} row found but values look wrong (get_rates): {row}")
-                continue
+            if row is not None:
+                buy, sell = extract_buy_sell(row, buy_index=3, sell_index=0)
+                if buy is None or sell is None:
+                    print(f"SONALI: {currency} row found but values look wrong (get_rates): {row}")
+                    any_row_missing = True
+                    continue
+            else:
+                # extract_tables_from_pdf() found no structured tables at
+                # all for this document (a confirmed real situation for
+                # Sonali) — fall back to scanning the raw text directly.
+                buy, sell = _extract_via_text_fallback(text, currency)
+                if buy is None or sell is None:
+                    print(f"SONALI: {currency} row not found via tables or text fallback (get_rates).")
+                    any_row_missing = True
+                    continue
 
             result = {
                 "bank": "SONALI",
