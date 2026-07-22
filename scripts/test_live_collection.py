@@ -61,6 +61,20 @@ def main() -> None:
 
     print()
     print("=" * 70)
+    print("Extra check: does v1.0's ORIGINAL get_rate() work for Sonali right now?")
+    print("(Answers whether production is actually affected by the same issue")
+    print(" get_rates() had, before deciding what needs to change on main.)")
+    print("=" * 70)
+    try:
+        import collectors.sonali as sonali_module
+
+        v1_result = sonali_module.get_rate()
+        print(f"SONALI v1.0 get_rate() result: {v1_result}")
+    except Exception as e:
+        print(f"SONALI v1.0 get_rate() raised an exception: {e}")
+
+    print()
+    print("=" * 70)
     if all_ok:
         print("✅ ALL BANKS: data collected and validated successfully.")
     else:
