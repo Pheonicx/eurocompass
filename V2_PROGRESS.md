@@ -684,9 +684,13 @@ USD buy=122.75 sell=123.75 — both pass real validation. 8 new tests
 using this real fixture text, including a specific regression test for
 the numeric-token-swallowing bug caught during development.
 
-122/122 tests passing. **Not yet re-verified against another live
-run** — that's the next step, and the honest confirmation this actually
-works in production, not just against the one captured sample.
+122/122 tests passing. **Re-ran the live workflow after this fix —
+Sonali succeeded**: EUR buy=140.07 sell=142.6482, USD buy=122.75
+sell=123.75, both ACCEPTED — exactly matching what the fix predicted
+from the real captured text, now confirmed in an actual live run, not
+just against the saved sample. Prime also succeeded on this run
+(confirming its earlier timeout was transient, not a code bug). Sonali
+is now considered genuinely fixed, not just theorized.
 
 
 
@@ -713,6 +717,16 @@ genuinely undiagnosed — properly debugging a client-rendered site's
 automation failure really needs to watch an actual browser session
 (e.g. Playwright's own trace/screenshot tooling), which isn't something
 achievable through this chat-based workflow.
+
+### Session summary: 4 of 5 banks now confirmed genuinely working live
+Before this investigation: BRAC, EBL, Prime confirmed; Sonali and City
+both actively broken in production (Sonali for hours, City for over a
+week). After: **BRAC, EBL, Prime, and Sonali all confirmed working
+against real, live data** — Sonali specifically because of a real fix
+built from real diagnostic evidence, not a lucky guess (first attempt
+failed, was admitted honestly, and a second attempt grounded in actual
+captured data succeeded). City remains the one unresolved gap, clearly
+documented rather than glossed over.
 
 ## For the non-technical project owner
 
