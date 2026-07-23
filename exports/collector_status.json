@@ -1,42 +1,42 @@
 {
   "EBL": {
-    "last_checked_at": "2026-07-23T04:59:52.070298+00:00",
-    "last_status": "failed",
-    "last_success_at": "2026-07-23T01:19:59.045796+00:00",
-    "last_buy": 138.21,
-    "last_sell": 143.07,
-    "last_failure_reason": "Collector returned no data"
+    "last_checked_at": "2026-07-23T07:31:30.008950+00:00",
+    "last_status": "ok",
+    "last_success_at": "2026-07-23T07:31:30.008950+00:00",
+    "last_buy": 138.58,
+    "last_sell": 143.44,
+    "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-07-23T05:01:21.157023+00:00",
+    "last_checked_at": "2026-07-23T07:33:03.848651+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
     "last_sell": 143.31882,
-    "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed (Authentication request failed.)"
+    "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-07-23T05:01:23.344334+00:00",
+    "last_checked_at": "2026-07-23T07:33:06.114734+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-07-23T05:01:23.344334+00:00",
-    "last_buy": 140.9701,
-    "last_sell": 143.3802
+    "last_success_at": "2026-07-23T07:33:06.114734+00:00",
+    "last_buy": 139.6746,
+    "last_sell": 142.4427
   },
   "PRIME": {
-    "last_checked_at": "2026-07-23T05:01:30.230081+00:00",
+    "last_checked_at": "2026-07-23T07:33:12.700885+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-23T05:01:30.230081+00:00",
+    "last_success_at": "2026-07-23T07:33:12.700885+00:00",
     "last_buy": 139.619,
     "last_sell": 142.6752,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-07-23T05:01:41.878276+00:00",
+    "last_checked_at": "2026-07-23T07:33:14.481487+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-23T05:01:41.878276+00:00",
-    "last_buy": 140.0534,
-    "last_sell": 142.6308,
+    "last_success_at": "2026-07-23T07:33:14.481487+00:00",
+    "last_buy": 140.393,
+    "last_sell": 142.9762,
     "last_failure_reason": null
   }
 }
