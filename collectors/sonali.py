@@ -9,6 +9,7 @@ from utils.pdf_utils import (
     extract_text_from_pdf,
     extract_buy_sell,
     extract_rate_date,
+    find_all_currency_token_windows,
     find_currency_row,
     find_student_rate,
     is_plausible_student_rate,
@@ -159,3 +160,166 @@ def get_rate():
     except Exception as e:
         print(f"SONALI ERROR: {e}")
         return None
+
+
+# --- v2.0 multi-currency support --------------------------------------
+#
+# Everything below is ADDITIVE: get_rate() above is completely untouched
+# and still returns exactly what v1.0's main.py expects (EUR only).
+# get_rates() reuses the same PDF fetch, generalized to any currency in
+# it. Note: Sonali's last-resort text-regex fallback (for when table
+# extraction fails entirely) is written specifically for "EURO" and is
+# not generalized here — if the table method fails, get_rates() simply
+# omits whichever currency couldn't be found via the table, rather than
+# guessing with a currency-specific regex that wasn't built for this.
+
+def _print_extraction_diagnostics(pdf_url, tables, text):
+    """
+    Prints real, concrete diagnostic info when a currency row can't be
+    found — instead of guessing at the cause again, this shows exactly
+    what pdfplumber actually extracted from the real PDF, so the next
+    live run reveals the ground truth rather than another hypothesis.
+    Only called on failure, so successful runs stay clean.
+    """
+    print(f"SONALI DIAGNOSTIC: pdf_url={pdf_url}")
+    print(f"SONALI DIAGNOSTIC: extract_tables_from_pdf found {len(tables)} table(s)")
+
+    for i, table in enumerate(tables[:3]):  # cap at 3 tables to keep output readable
+        print(f"SONALI DIAGNOSTIC: table {i} has {len(table)} row(s)")
+        for row in table[:15]:  # cap at 15 rows per table
+            print(f"SONALI DIAGNOSTIC:   row: {row}")
+
+    if not tables:
+        preview = text[:1500].replace("\n", " | ")
+        print(f"SONALI DIAGNOSTIC: no tables at all — raw text preview: {preview}")
+
+
+def _to_float(token):
+    try:
+        return float(token.replace(",", ""))
+    except (ValueError, AttributeError):
+        return None
+
+
+def _extract_via_text_fallback(text, currency):
+    """
+    Fallback for when extract_tables_from_pdf() finds no structured
+    tables at all — a confirmed real situation for Sonali's PDFs (their
+    line-based table detector finds zero tables despite the PDF clearly
+    containing a rate table visually).
+
+    Sonali's real layout, confirmed by direct inspection of an actual
+    live PDF via a diagnostic run, places the selling rate TWICE
+    (repeated) immediately before the currency label, and the buying
+    rate as the first number after it — e.g. the real text reads
+    "142.6482 142.6482 EURO 140.0700 139.9331 139.7619", where 142.6482
+    is the sell rate (appearing twice) and 140.0700 is the buy rate.
+
+    A currency code can appear more than once in the document for
+    unrelated reasons (Sonali's PDFs also have an earlier "cross rates"
+    reference section that uses "EUR" merely as a unit label) — this
+    disambiguates by requiring the specific repeated-pair signature,
+    rather than just taking the first occurrence found.
+    """
+    matches = find_all_currency_token_windows(text, currency, before=4, after=4)
+
+    for tokens_before, tokens_after in matches:
+        if len(tokens_before) < 2:
+            continue
+
+        second_last = _to_float(tokens_before[-1])
+        third_last = _to_float(tokens_before[-2])
+
+        if second_last is None or third_last is None:
+            continue
+
+        # The real signature: the two tokens immediately before the
+        # label are (near-)identical — that's the repeated sell rate.
+        if abs(second_last - third_last) > 0.01:
+            continue
+
+        buy = next((_to_float(t) for t in tokens_after if _to_float(t) is not None), None)
+        if buy is None:
+            continue
+
+        sell = second_last
+        return buy, sell
+
+    return None, None
+
+
+def get_rates(currencies=("EUR", "USD")):
+    """
+    Collect rates for multiple currencies from Sonali's daily PDF in a
+    single fetch.
+    """
+    try:
+        pdf_bytes = None
+        pdf_url = None
+        rate_date_hint = None
+
+        for url, candidate_date in _candidate_urls_by_date():
+            try:
+                pdf_bytes = download_pdf(url, retries=2)
+                pdf_url = url
+                rate_date_hint = candidate_date.isoformat()
+                break
+            except requests.RequestException:
+                continue
+
+        if pdf_bytes is None:
+            pdf_url = get_latest_pdf_from_homepage()
+            if pdf_url is None:
+                print("SONALI: No PDF found via date pattern or homepage (get_rates).")
+                return []
+            pdf_bytes = download_pdf(pdf_url)
+
+        text = extract_text_from_pdf(pdf_bytes)
+        rate_date = extract_rate_date(text, filename_hint=pdf_url or rate_date_hint)
+        tables = extract_tables_from_pdf(pdf_bytes)
+
+        results = []
+        any_row_missing = False
+
+        for currency in currencies:
+            row = find_currency_row(tables, currency)
+
+            if row is not None:
+                buy, sell = extract_buy_sell(row, buy_index=3, sell_index=0)
+                if buy is None or sell is None:
+                    print(f"SONALI: {currency} row found but values look wrong (get_rates): {row}")
+                    any_row_missing = True
+                    continue
+            else:
+                # extract_tables_from_pdf() found no structured tables at
+                # all for this document (a confirmed real situation for
+                # Sonali) — fall back to scanning the raw text directly.
+                buy, sell = _extract_via_text_fallback(text, currency)
+                if buy is None or sell is None:
+                    print(f"SONALI: {currency} row not found via tables or text fallback (get_rates).")
+                    any_row_missing = True
+                    continue
+
+            result = {
+                "bank": "SONALI",
+                "currency": currency,
+                "buy": buy,
+                "sell": sell,
+                "rate_date": rate_date.isoformat() if rate_date else None,
+                "is_stale": is_stale(rate_date),
+            }
+
+            student = find_student_rate(text, currency)
+            if student and is_plausible_student_rate(student, buy, sell):
+                result["student"] = student
+
+            results.append(result)
+
+        if any_row_missing:
+            _print_extraction_diagnostics(pdf_url, tables, text)
+
+        return results
+
+    except Exception as e:
+        print(f"SONALI ERROR (get_rates): {e}")
+        return []

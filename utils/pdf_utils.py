@@ -58,13 +58,106 @@ def extract_tables_from_pdf(pdf_bytes):
     return tables
 
 
+def _normalize_currency_label(text: str) -> str:
+    """
+    Strip everything except letters, then uppercase — so "U.S. Dollar",
+    "U.S-DOLLAR", "u.s DoLLAR", and "USDOLLAR" all normalize to the same
+    "USDOLLAR". This absorbs the kind of font-encoding/OCR noise seen in
+    some banks' PDFs (confirmed in Sonali's: real extracted text showed
+    variants like "u.s DoLLAR" and "u.s.DOLl-AR" for what should read
+    "USD"), without needing to hand-enumerate every punctuation variant.
+
+    This can only make matching MORE permissive than a plain string
+    comparison — anything that matched before still matches (normalizing
+    both sides the same way is idempotent for already-clean text like
+    "EUR" or "USD"), and some things that previously failed to match now
+    correctly will.
+    """
+    return re.sub(r"[^A-Za-z]", "", text).upper()
+
+
+def _looks_numeric(token: str) -> bool:
+    """True if a token is (or is almost entirely) digits/punctuation —
+    used to stop a multi-token currency-label match from silently
+    swallowing adjacent numbers, since normalization strips digits along
+    with punctuation and a purely numeric token would otherwise
+    normalize to an empty string and disappear into the match instead of
+    correctly blocking it."""
+    return not any(c.isalpha() for c in token)
+
+
+def find_all_currency_token_windows(text, currency, before=4, after=8):
+    """
+    Finds EVERY occurrence of a currency label within free text (not
+    table cells), each with its surrounding tokens — for PDFs where
+    extract_tables_from_pdf() finds no structured tables at all despite
+    clearly containing a rate table visually (confirmed real case:
+    Sonali Bank's PDFs, where pdfplumber's line-based table detector
+    finds zero tables).
+
+    Returns every match, not just the first, because a currency code can
+    legitimately appear more than once in a document for unrelated
+    reasons (e.g. Sonali's PDFs also have a "cross rates" reference
+    section earlier in the document using "EUR" merely as a unit label,
+    not an actual dealing rate) — picking the *right* one among several
+    real matches requires bank-specific knowledge of that PDF's layout,
+    which deliberately isn't decided here; callers should apply their
+    own disambiguation (e.g. Sonali's collector looks for the occurrence
+    whose two preceding tokens are a repeated numeric pair, matching its
+    real "sell, sell, LABEL, buy..." row structure).
+
+    Tolerates the same punctuation/OCR noise find_currency_row() handles
+    for table cells (e.g. "u.s.DoLLAR" for what should read "USD"), and
+    handles a garbled label split across multiple whitespace-separated
+    tokens (checks 1-, 2-, and 3-token windows) — but never combines a
+    numeric token into that window, since a real label never contains a
+    number and treating one as part of a match would incorrectly
+    swallow adjacent rate figures.
+
+    Returns a list of (tokens_before, tokens_after) tuples, possibly empty.
+    """
+    aliases = set(
+        _normalize_currency_label(a)
+        for a in CURRENCY_ALIASES.get(currency.upper(), [currency.upper()])
+    )
+    tokens = text.split()
+    matches = []
+
+    i = 0
+    while i < len(tokens):
+        matched_span = None
+        for span in (1, 2, 3):
+            if i + span > len(tokens):
+                continue
+            span_tokens = tokens[i : i + span]
+            if any(_looks_numeric(t) for t in span_tokens):
+                continue
+            candidate = "".join(span_tokens)
+            if _normalize_currency_label(candidate) in aliases:
+                matched_span = span
+                break
+
+        if matched_span:
+            tokens_before = tokens[max(0, i - before) : i]
+            tokens_after = tokens[i + matched_span : i + matched_span + after]
+            matches.append((tokens_before, tokens_after))
+            i += matched_span
+        else:
+            i += 1
+
+    return matches
+
+
 def find_currency_row(tables, currency):
     """
     Search all extracted tables for a currency row.
 
     Matches against every known label for the given currency (e.g. "EUR"
     also matches a cell that literally says "EURO"), not just the exact
-    ISO code, since banks are inconsistent about which they print.
+    ISO code, since banks are inconsistent about which they print — and
+    matches after normalizing away punctuation/spacing noise, since some
+    banks' PDFs render labels with inconsistent OCR-style formatting
+    (e.g. "u.s DoLLAR" instead of a clean "USD").
 
     Example:
         currency = "EUR"
@@ -72,7 +165,10 @@ def find_currency_row(tables, currency):
     Returns:
         row | None
     """
-    aliases = set(a.upper() for a in CURRENCY_ALIASES.get(currency.upper(), [currency.upper()]))
+    aliases = set(
+        _normalize_currency_label(a)
+        for a in CURRENCY_ALIASES.get(currency.upper(), [currency.upper()])
+    )
 
     for table in tables:
         for row in table:
@@ -80,7 +176,7 @@ def find_currency_row(tables, currency):
                 continue
 
             for cell in row:
-                if cell and str(cell).strip().upper() in aliases:
+                if cell and _normalize_currency_label(str(cell)) in aliases:
                     return row
 
     return None
