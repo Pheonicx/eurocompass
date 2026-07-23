@@ -44,4 +44,12 @@ jobs:
         env:
           PYTHONPATH: .
         run: |
-          python scripts/test_live_collection.py
+          set -o pipefail
+          python scripts/test_live_collection.py 2>&1 | tee /tmp/test_output.log
+
+      - name: 📤 Publish result to a Gist (so it can be checked via the API)
+        if: always()
+        env:
+          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+        run: |
+          python scripts/publish_result_gist.py /tmp/test_output.log
