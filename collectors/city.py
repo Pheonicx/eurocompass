@@ -32,6 +32,61 @@ def _fail(reason):
     return None
 
 
+# Fixed, predictable paths so a workflow can find and publish these
+# after a failure, without City's collector needing to know anything
+# about how results get surfaced (kept fully decoupled from the Gist
+# publishing mechanism — this just writes files if it can).
+DIAGNOSTIC_DIR = "/tmp/city_diagnostics"
+
+
+def _save_failure_diagnostics(page, html, console_messages):
+    """
+    Captures the actual state of the page at the moment City's collector
+    gives up — a screenshot, the full rendered HTML, and any browser
+    console/JS errors — so the real cause can be inspected afterward
+    instead of guessed at again. Every capture is independently wrapped
+    so a failure in one (e.g. the page already being in a bad state)
+    doesn't prevent capturing the others, and none of this can ever
+    affect the collector's actual return value — diagnostics are a
+    nice-to-have, never the point.
+    """
+    import os
+
+    try:
+        os.makedirs(DIAGNOSTIC_DIR, exist_ok=True)
+    except OSError as e:
+        print(f"CITY DIAGNOSTIC: could not create diagnostic directory: {e}")
+        return
+
+    try:
+        page.screenshot(path=f"{DIAGNOSTIC_DIR}/screenshot.png", full_page=True)
+        print(f"CITY DIAGNOSTIC: screenshot saved ({DIAGNOSTIC_DIR}/screenshot.png)")
+    except Exception as e:
+        print(f"CITY DIAGNOSTIC: screenshot capture failed: {e}")
+
+    try:
+        with open(f"{DIAGNOSTIC_DIR}/page.html", "w", encoding="utf-8") as f:
+            f.write(html or "(no HTML captured)")
+        print(f"CITY DIAGNOSTIC: page HTML saved ({len(html) if html else 0} chars)")
+    except Exception as e:
+        print(f"CITY DIAGNOSTIC: HTML save failed: {e}")
+
+    try:
+        with open(f"{DIAGNOSTIC_DIR}/console.txt", "w", encoding="utf-8") as f:
+            if console_messages:
+                f.write("\n".join(console_messages))
+            else:
+                f.write("(no console messages captured)")
+        print(f"CITY DIAGNOSTIC: {len(console_messages)} console message(s) saved")
+    except Exception as e:
+        print(f"CITY DIAGNOSTIC: console log save failed: {e}")
+
+    try:
+        print(f"CITY DIAGNOSTIC: current page URL at failure: {page.url}")
+    except Exception:
+        pass
+
+
 def _get_latest_pdf_via_browser():
     """
     City's exchange-rates page is entirely client-side rendered — a
@@ -94,6 +149,16 @@ def _get_latest_pdf_via_browser():
                 )
 
                 page = context.new_page()
+
+                # Capture the browser's own console output and any
+                # uncaught JS errors — if the page's data-loading script
+                # is failing silently (a common cause of "the link never
+                # appears"), this is the most direct way to see why,
+                # short of watching the session live.
+                console_messages = []
+                page.on("console", lambda msg: console_messages.append(f"[{msg.type}] {msg.text}"))
+                page.on("pageerror", lambda exc: console_messages.append(f"[pageerror] {exc}"))
+
                 page.goto(EXCHANGE_RATES_PAGE, timeout=60000, wait_until="domcontentloaded")
 
                 # The reports list is populated by a client-side API
@@ -147,6 +212,7 @@ def _get_latest_pdf_via_browser():
             # HTML for the link pattern. If the data is genuinely present
             # in the page by now but some element-state check is still
             # being finicky, this still finds it.
+            html = None
             if not links:
                 try:
                     html = page.content()
@@ -154,6 +220,11 @@ def _get_latest_pdf_via_browser():
                     links = [f if f.startswith("http") else "https://citybankplc.com" + f for f in found]
                 except Exception:
                     pass
+
+            if not links:
+                # Capture diagnostics BEFORE closing the browser — the
+                # page must still be alive to screenshot it.
+                _save_failure_diagnostics(page, html, console_messages)
 
             browser.close()
 

@@ -18,10 +18,55 @@ Usage:
 
 from __future__ import annotations
 
+import base64
 import json
 import os
 import sys
 import urllib.request
+
+# Where collectors/city.py saves diagnostics on failure, if it does.
+CITY_DIAGNOSTIC_DIR = "/tmp/city_diagnostics"
+
+# Gist files are text-only and this keeps individual files a reasonable
+# size to fetch back — truncate anything larger rather than fail outright.
+MAX_FILE_CHARS = 300_000
+
+
+def _read_truncated(path: str) -> str | None:
+    if not os.path.exists(path):
+        return None
+    with open(path, "r", encoding="utf-8", errors="replace") as f:
+        content = f.read()
+    if len(content) > MAX_FILE_CHARS:
+        content = content[:MAX_FILE_CHARS] + "\n\n...(truncated)"
+    return content
+
+
+def _collect_city_diagnostic_files() -> dict:
+    """
+    Picks up City's diagnostic files if collectors/city.py saved any
+    (only happens on an actual failure) — a screenshot (base64-encoded,
+    since Gist files are text-only), the page HTML, and any browser
+    console messages. Silently returns nothing if City didn't fail this
+    run, since there'd be nothing to pick up.
+    """
+    files = {}
+
+    screenshot_path = f"{CITY_DIAGNOSTIC_DIR}/screenshot.png"
+    if os.path.exists(screenshot_path):
+        with open(screenshot_path, "rb") as f:
+            encoded = base64.b64encode(f.read()).decode("ascii")
+        files["city_screenshot_base64.txt"] = {"content": encoded}
+
+    html = _read_truncated(f"{CITY_DIAGNOSTIC_DIR}/page.html")
+    if html is not None:
+        files["city_page.html"] = {"content": html}
+
+    console_log = _read_truncated(f"{CITY_DIAGNOSTIC_DIR}/console.txt")
+    if console_log is not None:
+        files["city_console.txt"] = {"content": console_log}
+
+    return files
 
 
 def main() -> None:
@@ -42,10 +87,13 @@ def main() -> None:
     if not content.strip():
         content = "(no output captured)"
 
+    files = {"result.txt": {"content": content}}
+    files.update(_collect_city_diagnostic_files())
+
     payload = {
         "description": "EuroCompass v2 live collection test result",
         "public": False,
-        "files": {"result.txt": {"content": content}},
+        "files": files,
     }
 
     request = urllib.request.Request(
