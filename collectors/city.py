@@ -32,6 +32,61 @@ def _fail(reason):
     return None
 
 
+# Fixed, predictable paths so a workflow can find and publish these
+# after a failure, without City's collector needing to know anything
+# about how results get surfaced (kept fully decoupled from the Gist
+# publishing mechanism — this just writes files if it can).
+DIAGNOSTIC_DIR = "/tmp/city_diagnostics"
+
+
+def _save_failure_diagnostics(page, html, console_messages):
+    """
+    Captures the actual state of the page at the moment City's collector
+    gives up — a screenshot, the full rendered HTML, and any browser
+    console/JS errors — so the real cause can be inspected afterward
+    instead of guessed at again. Every capture is independently wrapped
+    so a failure in one (e.g. the page already being in a bad state)
+    doesn't prevent capturing the others, and none of this can ever
+    affect the collector's actual return value — diagnostics are a
+    nice-to-have, never the point.
+    """
+    import os
+
+    try:
+        os.makedirs(DIAGNOSTIC_DIR, exist_ok=True)
+    except OSError as e:
+        print(f"CITY DIAGNOSTIC: could not create diagnostic directory: {e}")
+        return
+
+    try:
+        page.screenshot(path=f"{DIAGNOSTIC_DIR}/screenshot.png", full_page=True)
+        print(f"CITY DIAGNOSTIC: screenshot saved ({DIAGNOSTIC_DIR}/screenshot.png)")
+    except Exception as e:
+        print(f"CITY DIAGNOSTIC: screenshot capture failed: {e}")
+
+    try:
+        with open(f"{DIAGNOSTIC_DIR}/page.html", "w", encoding="utf-8") as f:
+            f.write(html or "(no HTML captured)")
+        print(f"CITY DIAGNOSTIC: page HTML saved ({len(html) if html else 0} chars)")
+    except Exception as e:
+        print(f"CITY DIAGNOSTIC: HTML save failed: {e}")
+
+    try:
+        with open(f"{DIAGNOSTIC_DIR}/console.txt", "w", encoding="utf-8") as f:
+            if console_messages:
+                f.write("\n".join(console_messages))
+            else:
+                f.write("(no console messages captured)")
+        print(f"CITY DIAGNOSTIC: {len(console_messages)} console message(s) saved")
+    except Exception as e:
+        print(f"CITY DIAGNOSTIC: console log save failed: {e}")
+
+    try:
+        print(f"CITY DIAGNOSTIC: current page URL at failure: {page.url}")
+    except Exception:
+        pass
+
+
 def _get_latest_pdf_via_browser():
     """
     City's exchange-rates page is entirely client-side rendered — a
@@ -75,7 +130,35 @@ def _get_latest_pdf_via_browser():
                     user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
                     viewport={"width": 1366, "height": 900},
                 )
+
+                # A realistic user-agent alone doesn't fool most bot
+                # detection — the more common, more definitive signal is
+                # the `navigator.webdriver` flag, which Playwright (and
+                # Selenium) set to True by default and which many sites
+                # specifically check for, even when everything else about
+                # the request looks like a normal browser. This runs
+                # before any of the page's own scripts, masking it for
+                # the whole session. A standard, well-documented
+                # mitigation — not a guess specific to City.
+                context.add_init_script(
+                    """
+                    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+                    Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3, 4, 5] });
+                    Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] });
+                    """
+                )
+
                 page = context.new_page()
+
+                # Capture the browser's own console output and any
+                # uncaught JS errors — if the page's data-loading script
+                # is failing silently (a common cause of "the link never
+                # appears"), this is the most direct way to see why,
+                # short of watching the session live.
+                console_messages = []
+                page.on("console", lambda msg: console_messages.append(f"[{msg.type}] {msg.text}"))
+                page.on("pageerror", lambda exc: console_messages.append(f"[pageerror] {exc}"))
+
                 page.goto(EXCHANGE_RATES_PAGE, timeout=60000, wait_until="domcontentloaded")
 
                 # The reports list is populated by a client-side API
@@ -95,10 +178,43 @@ def _get_latest_pdf_via_browser():
             links = []
             last_selector_error = None
 
-            # One retry via a full page reload — CI environments can be
-            # slower and less consistent than a normal desktop browser,
-            # so a single transient slow load shouldn't be treated the
-            # same as the page genuinely being broken.
+            # PRIMARY method, confirmed against a real captured page
+            # (24 July 2026): City's PDF links are NOT plain <a href>
+            # anchor tags at all — they're embedded as JSON data inside
+            # the page (a "file":"https://...currency_files/....pdf"
+            # property, part of the data driving an Ant Design table
+            # component), which is exactly why waiting for an anchor
+            # element, and the old href="..."-anchored regex fallback,
+            # were both destined to never match: neither was looking for
+            # the right thing. This matches the raw URL directly,
+            # wherever it appears in the page (script tag, table data,
+            # or an actual anchor, if the site ever changes back).
+            #
+            # This data loads asynchronously — confirmed via two live
+            # runs: checking once right after "networkidle" found
+            # nothing; a 24-second polling window (12 x 2s) STILL found
+            # nothing; but the same regex against a page fetched later
+            # (during the old fallback's own ~100+ second wait) found it
+            # both times. So this polls for up to ~90 seconds — matching
+            # the real observed delay rather than guessing at a shorter
+            # one a third time — while still returning as soon as the
+            # data actually appears, rather than always waiting the full
+            # amount.
+            city_pdf_pattern = r"https://citybankplc\.com/uploads/files/+currency_files/[^\s\"'\\]+\.pdf"
+            try:
+                for _ in range(45):  # ~90 seconds total, checking every 2s
+                    html = page.content()
+                    found = re.findall(city_pdf_pattern, html)
+                    if found:
+                        browser.close()
+                        return found[0]  # the data lists newest first, confirmed against real content
+                    page.wait_for_timeout(2000)
+            except Exception as e:
+                last_selector_error = e
+
+            # FALLBACK: the old anchor-tag-based approach, kept in case
+            # City's site structure changes again in the future and PDF
+            # links become real <a href> elements once more.
             for attempt in range(2):
                 try:
                     # state="attached" only requires the element to exist
@@ -129,6 +245,7 @@ def _get_latest_pdf_via_browser():
             # HTML for the link pattern. If the data is genuinely present
             # in the page by now but some element-state check is still
             # being finicky, this still finds it.
+            html = None
             if not links:
                 try:
                     html = page.content()
@@ -136,6 +253,11 @@ def _get_latest_pdf_via_browser():
                     links = [f if f.startswith("http") else "https://citybankplc.com" + f for f in found]
                 except Exception:
                     pass
+
+            if not links:
+                # Capture diagnostics BEFORE closing the browser — the
+                # page must still be alive to screenshot it.
+                _save_failure_diagnostics(page, html, console_messages)
 
             browser.close()
 
@@ -254,3 +376,69 @@ def get_rate():
 
     except Exception as e:
         return _fail(f"unexpected error: {e}")
+
+
+# --- v2.0 multi-currency support --------------------------------------
+#
+# Everything below is ADDITIVE: get_rate() above is completely untouched
+# and still returns exactly what v1.0's main.py expects (EUR only, with
+# its private-API fallback). get_rates() reuses the same browser-fetched
+# PDF, generalized to any currency in it.
+
+def get_rates(currencies=("EUR", "USD")):
+    """
+    Collect rates for multiple currencies from City's PDF in a single
+    browser fetch.
+
+    Note: unlike get_rate(), this does not fall back to City's private
+    API — that fallback is EUR-specific by design (a deliberately narrow
+    reverse-engineered endpoint) and isn't extended here. If the PDF/
+    browser method fails, get_rates() simply returns [] for this run.
+    """
+    try:
+        pdf_url = _get_latest_pdf_via_browser()
+        if pdf_url is None:
+            return []
+
+        try:
+            pdf_bytes = download_pdf(pdf_url)
+        except Exception as e:
+            _fail(f"found a PDF link but couldn't download it (get_rates): {e}")
+            return []
+
+        text = extract_text_from_pdf(pdf_bytes)
+        tables = extract_tables_from_pdf(pdf_bytes)
+        rate_date = extract_rate_date(text, filename_hint=pdf_url)
+
+        results = []
+        for currency in currencies:
+            row = find_currency_row(tables, currency)
+            if row is None:
+                print(f"CITY: {currency} row not found (get_rates).")
+                continue
+
+            buy, sell = extract_buy_sell(row, buy_index=3, sell_index=0)
+            if buy is None or sell is None:
+                print(f"CITY: {currency} row found but values look wrong (get_rates): {row}")
+                continue
+
+            result = {
+                "bank": "CITY",
+                "currency": currency,
+                "buy": buy,
+                "sell": sell,
+                "rate_date": rate_date.isoformat() if rate_date else None,
+                "is_stale": is_stale(rate_date),
+            }
+
+            student = find_student_rate(text, currency)
+            if student and is_plausible_student_rate(student, buy, sell):
+                result["student"] = student
+
+            results.append(result)
+
+        return results
+
+    except Exception as e:
+        print(f"CITY ERROR (get_rates): {e}")
+        return []
