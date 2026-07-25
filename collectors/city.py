@@ -190,17 +190,19 @@ def _get_latest_pdf_via_browser():
             # wherever it appears in the page (script tag, table data,
             # or an actual anchor, if the site ever changes back).
             #
-            # This data loads asynchronously — confirmed via a live run
-            # where checking exactly once right after "networkidle"
-            # found nothing, but the SAME regex against a page fetched
-            # ~80 seconds later (during the old fallback's retry wait)
-            # found it immediately. So this polls for a while rather
-            # than checking once — still far faster than the old
-            # 100+ second selector-wait approach in the common case
-            # where the data arrives promptly.
+            # This data loads asynchronously — confirmed via two live
+            # runs: checking once right after "networkidle" found
+            # nothing; a 24-second polling window (12 x 2s) STILL found
+            # nothing; but the same regex against a page fetched later
+            # (during the old fallback's own ~100+ second wait) found it
+            # both times. So this polls for up to ~90 seconds — matching
+            # the real observed delay rather than guessing at a shorter
+            # one a third time — while still returning as soon as the
+            # data actually appears, rather than always waiting the full
+            # amount.
             city_pdf_pattern = r"https://citybankplc\.com/uploads/files/+currency_files/[^\s\"'\\]+\.pdf"
             try:
-                for _ in range(12):  # ~24 seconds total, checking every 2s
+                for _ in range(45):  # ~90 seconds total, checking every 2s
                     html = page.content()
                     found = re.findall(city_pdf_pattern, html)
                     if found:
