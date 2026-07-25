@@ -51,3 +51,19 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.EUROCOMPASS_TELEGRAM_BOT_TOKEN }}
         run: |
           python main.py
+
+      - name: 🚨 Check for stale banks and alert if needed
+        # Runs even if the collection step above had trouble with one
+        # bank -- a partial failure is exactly the situation this needs
+        # to still check. Only fails the whole job if something is
+        # actually wrong with the alerting step itself, which is worth
+        # knowing about, but never silently skipped.
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.EUROCOMPASS_GITHUB_TOKEN }}
+          GITHUB_USERNAME: ${{ secrets.EUROCOMPASS_GITHUB_USERNAME }}
+          GITHUB_REPO: ${{ secrets.EUROCOMPASS_GITHUB_REPO }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.EUROCOMPASS_TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.EUROCOMPASS_TELEGRAM_CHAT_ID }}
+        run: |
+          python scripts/check_bank_staleness.py
