@@ -178,10 +178,32 @@ def _get_latest_pdf_via_browser():
             links = []
             last_selector_error = None
 
-            # One retry via a full page reload — CI environments can be
-            # slower and less consistent than a normal desktop browser,
-            # so a single transient slow load shouldn't be treated the
-            # same as the page genuinely being broken.
+            # PRIMARY method, confirmed against a real captured page
+            # (24 July 2026): City's PDF links are NOT plain <a href>
+            # anchor tags at all — they're embedded as JSON data inside
+            # the page (a "file":"https://...currency_files/....pdf"
+            # property, part of the data driving an Ant Design table
+            # component), which is exactly why waiting for an anchor
+            # element, and the old href="..."-anchored regex fallback,
+            # were both destined to never match: neither was looking for
+            # the right thing. This matches the raw URL directly,
+            # wherever it appears in the page (script tag, table data,
+            # or an actual anchor, if the site ever changes back).
+            try:
+                html = page.content()
+                found = re.findall(
+                    r"https://citybankplc\.com/uploads/files/+currency_files/[^\s\"'\\]+\.pdf",
+                    html,
+                )
+                if found:
+                    browser.close()
+                    return found[0]  # the data lists newest first, confirmed against real content
+            except Exception as e:
+                last_selector_error = e
+
+            # FALLBACK: the old anchor-tag-based approach, kept in case
+            # City's site structure changes again in the future and PDF
+            # links become real <a href> elements once more.
             for attempt in range(2):
                 try:
                     # state="attached" only requires the element to exist
