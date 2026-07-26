@@ -157,3 +157,44 @@ def test_multiple_simultaneous_failures_combine_into_one_message():
     assert "CITY" in notifier.messages[0]
     assert "SONALI" in notifier.messages[0]
     assert "BRAC" not in notifier.messages[0]
+
+
+def test_malformed_timestamp_is_treated_as_stale_not_silently_healthy():
+    """
+    Regression test for a real bug: a bank with a last_success_at that
+    exists but can't be parsed previously fell through to being treated
+    as healthy (no alert), since neither the 'is None' check nor the
+    'hours_down > threshold' check caught it. Must now be treated as
+    stale -- prefer a false warning over false confidence.
+    """
+    status = {
+        "BRAC": {"last_success_at": "not-a-valid-timestamp", "last_status": "ok"},
+    }
+    notifier = FakeNotifier()
+
+    new_state = check_and_alert(status, {}, notifier)
+
+    assert len(notifier.messages) == 1
+    assert "BRAC" in new_state
+
+
+def test_one_malformed_entry_does_not_prevent_checking_other_banks():
+    """
+    Regression test for a real bug: status.items() iteration had no
+    per-bank error handling, so a single malformed entry (e.g. not a
+    dict at all) would raise uncaught and prevent every other bank from
+    being checked that cycle -- defeating the entire purpose of the
+    alerting script over something it should just skip past.
+    """
+    status = {
+        "BROKEN": "this is not a dict, .get() would raise AttributeError",
+        "CITY": {"last_success_at": _iso(STALE_THRESHOLD_HOURS + 1), "last_status": "failed", "last_failure_reason": "x"},
+    }
+    notifier = FakeNotifier()
+
+    new_state = check_and_alert(status, {}, notifier)
+
+    # CITY must still be caught and alerted on, despite BROKEN's bad data
+    assert len(notifier.messages) == 1
+    assert "CITY" in notifier.messages[0]
+    assert "BROKEN" not in new_state

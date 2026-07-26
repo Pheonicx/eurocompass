@@ -79,23 +79,41 @@ def check_and_alert(status: dict, alert_state: dict, send_notification) -> dict:
     recoveries = []
 
     for bank, entry in status.items():
-        last_success_at = entry.get("last_success_at")
-        hours_down = _hours_since(last_success_at)
-        # last_success_at is None only if a bank has NEVER once
-        # succeeded (e.g. brand new) — treat that as maximally stale too.
-        is_stale = last_success_at is None or (hours_down is not None and hours_down > STALE_THRESHOLD_HOURS)
+        try:
+            last_success_at = entry.get("last_success_at")
+            hours_down = _hours_since(last_success_at)
 
-        never_alerted_before = bank not in new_state
-        previously_alerted_for = new_state.get(bank, {}).get("alerted_for_last_success_at")
+            if last_success_at is None:
+                # Never once succeeded (e.g. brand new) — maximally stale.
+                is_stale = True
+            elif hours_down is None:
+                # A timestamp is present but couldn't be parsed — treat
+                # as suspicious and worth flagging, not silently assumed
+                # healthy just because the staleness math didn't apply
+                # cleanly. Prefer a false warning over false confidence.
+                is_stale = True
+                print(f"WARNING: {bank}: last_success_at {last_success_at!r} could not be parsed")
+            else:
+                is_stale = hours_down > STALE_THRESHOLD_HOURS
 
-        if is_stale:
-            if never_alerted_before or previously_alerted_for != last_success_at:
-                new_alerts.append((bank, entry, hours_down))
-                new_state[bank] = {"alerted_for_last_success_at": last_success_at}
-        else:
-            if bank in new_state:
-                recoveries.append(bank)
-                del new_state[bank]
+            never_alerted_before = bank not in new_state
+            previously_alerted_for = new_state.get(bank, {}).get("alerted_for_last_success_at")
+
+            if is_stale:
+                if never_alerted_before or previously_alerted_for != last_success_at:
+                    new_alerts.append((bank, entry, hours_down))
+                    new_state[bank] = {"alerted_for_last_success_at": last_success_at}
+            else:
+                if bank in new_state:
+                    recoveries.append(bank)
+                    del new_state[bank]
+        except Exception as e:
+            # One bank's malformed status entry must not prevent
+            # checking every other bank — the whole point of this
+            # script is to catch problems, so it can't itself become a
+            # single point of failure for that.
+            print(f"WARNING: {bank}: skipping staleness check due to unexpected error: {e}")
+            continue
 
     if new_alerts:
         lines = ["🚨 EuroCompass — collection problem detected", ""]

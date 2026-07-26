@@ -61,17 +61,43 @@ def main() -> None:
 
     print()
     print("=" * 70)
-    print("Extra check: does v1.0's ORIGINAL get_rate() work for Sonali right now?")
-    print("(Answers whether production is actually affected by the same issue")
-    print(" get_rates() had, before deciding what needs to change on main.)")
+    print("Cross-check: does v1.0's ORIGINAL get_rate() agree with get_rates()?")
+    print("(Catches cases where the new multi-currency path has a problem")
+    print(" that the original, still-relied-upon function doesn't — this is")
+    print(" exactly how Sonali's real production status was discovered.)")
     print("=" * 70)
-    try:
-        import collectors.sonali as sonali_module
+    import importlib
 
-        v1_result = sonali_module.get_rate()
-        print(f"SONALI v1.0 get_rate() result: {v1_result}")
-    except Exception as e:
-        print(f"SONALI v1.0 get_rate() raised an exception: {e}")
+    # Skipped here deliberately, not an oversight: a bank whose get_rate()
+    # and get_rates() share the same slow, expensive fetch step (City's
+    # browser automation, already run once via get_rates() above) gains
+    # little from being re-run a second time just for this cross-check —
+    # there's no meaningful divergence risk between two functions built
+    # on the identical underlying fetch, only doubled runtime and a real
+    # risk of pushing the whole workflow toward its timeout.
+    SKIP_CROSS_CHECK = {"CITY"}
+
+    for bank_id, bank in config.banks.items():
+        if bank_id in SKIP_CROSS_CHECK:
+            print(f"{bank_id}: cross-check skipped (shares get_rates()'s slow fetch step, see comment)")
+            continue
+
+        if not bank.collector:
+            continue
+        try:
+            module = importlib.import_module(bank.collector)
+        except Exception as e:
+            print(f"{bank_id}: could not import {bank.collector}: {e}")
+            continue
+
+        if not hasattr(module, "get_rate"):
+            continue  # nothing to cross-check for a bank without a v1 function
+
+        try:
+            v1_result = module.get_rate()
+            print(f"{bank_id} v1.0 get_rate(): {v1_result}")
+        except Exception as e:
+            print(f"{bank_id} v1.0 get_rate() raised an exception: {e}")
 
     print()
     print("=" * 70)
