@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-07-26T11:17:45.189126+00:00",
+    "last_checked_at": "2026-07-26T12:48:31.036412+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-26T11:17:45.189126+00:00",
+    "last_success_at": "2026-07-26T12:48:31.036412+00:00",
     "last_buy": 137.85,
     "last_sell": 142.72,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-07-26T11:20:43.042844+00:00",
+    "last_checked_at": "2026-07-26T12:51:29.589563+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,25 +16,25 @@
     "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-07-26T11:20:46.065759+00:00",
+    "last_checked_at": "2026-07-26T12:51:31.960141+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-07-26T11:20:46.065759+00:00",
+    "last_success_at": "2026-07-26T12:51:31.960141+00:00",
     "last_buy": 138.9047,
     "last_sell": 141.6577
   },
   "PRIME": {
-    "last_checked_at": "2026-07-26T11:20:51.654979+00:00",
+    "last_checked_at": "2026-07-26T12:51:38.284975+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-26T11:20:51.654979+00:00",
+    "last_success_at": "2026-07-26T12:51:38.284975+00:00",
     "last_buy": 138.9262,
     "last_sell": 141.977,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-07-26T11:20:54.098100+00:00",
+    "last_checked_at": "2026-07-26T12:51:40.041024+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-26T11:20:54.098100+00:00",
+    "last_success_at": "2026-07-26T12:51:40.041024+00:00",
     "last_buy": 139.6436,
     "last_sell": 142.2131,
     "last_failure_reason": null
