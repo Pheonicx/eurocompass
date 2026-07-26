@@ -1,46 +1,35 @@
 {
-    "generated_at": "2026-07-26T17:52:45.461041+00:00",
+    "generated_at": "2026-07-26T18:51:24.377808+00:00",
     "currency": "EUR",
     "summary": {
-        "banks_processed": 4,
+        "banks_processed": 2,
         "lowest_buy": {
-            "bank": "EBL",
-            "value": 137.85
+            "bank": "BRAC",
+            "value": 138.9047
         },
         "highest_buy": {
-            "bank": "SONALI",
-            "value": 139.6436
+            "bank": "PRIME",
+            "value": 138.9262
         },
         "lowest_sell": {
             "bank": "BRAC",
             "value": 141.6577
         },
         "highest_sell": {
-            "bank": "EBL",
-            "value": 142.72
+            "bank": "PRIME",
+            "value": 141.977
         },
-        "average_buy": 138.831125,
-        "average_sell": 142.14195
+        "average_buy": 138.91545,
+        "average_sell": 141.81735
     },
     "banks": [
-        {
-            "bank": "EBL",
-            "currency": "EUR",
-            "buy": 137.85,
-            "sell": 142.72,
-            "rate_date": "2026-07-26",
-            "is_stale": false,
-            "student": {
-                "rate": 141.7204
-            }
-        },
         {
             "bank": "BRAC",
             "currency": "EUR",
             "buy": 138.9047,
             "sell": 141.6577,
             "rate_date": "2026-07-26",
-            "is_stale": false,
+            "is_stale": true,
             "student": {
                 "rate": 141.6009
             }
@@ -51,18 +40,10 @@
             "buy": 138.9262,
             "sell": 141.977,
             "rate_date": "2026-07-26",
-            "is_stale": false,
+            "is_stale": true,
             "student": {
                 "rate": 140.9858
             }
-        },
-        {
-            "bank": "SONALI",
-            "currency": "EUR",
-            "buy": 139.6436,
-            "sell": 142.2131,
-            "rate_date": "2026-07-26",
-            "is_stale": false
         }
     ]
 }
