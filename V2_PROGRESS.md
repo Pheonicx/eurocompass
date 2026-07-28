@@ -738,3 +738,85 @@ into this new structure without changing what they actually do — think of
 it as building a proper filing cabinet around documents that already
 existed, not rewriting the documents. Everything was tested and confirmed
 working before being pushed. Your live site was not touched.
+
+---
+
+## Full-Codebase Audit #3 (requested explicitly: "audit all and fix")
+
+Went through every remaining source file not covered by the two earlier
+audit passes — telegram_bot/*, services/*, utils/*, config/*, the
+worker's original v1 routes, and collectors/template.py — specifically
+hunting for logic bugs, not style. Found and fixed **7 real bugs**, each
+with a regression test proving the bug was real before it was fixed.
+Every fix was pushed individually to `v2-dev` as its own commit.
+
+1. **`telegram_bot/daily_report.py`** — `banks[0]`/`banks[-1]` crashed
+   with `IndexError` if every bank failed to collect that cycle,
+   silently killing the whole daily report with no message sent at
+   all. Now sends a clear warning instead.
+2. **`telegram_bot/sender.py`** — hardcoded `parse_mode="Markdown"`,
+   but its real caller sends raw exception text as the message body.
+   Real exception messages routinely contain unbalanced Markdown
+   special characters, which Telegram's parser rejects with a 400 —
+   crashing the entire staleness-alert run during a real outage. Now
+   falls back to plain text on a Markdown-parse-specific 400.
+3. **`services/calculator.py`** — the identical empty-banks
+   `IndexError`, but in the **live production bot's `/recommend`
+   command**. `get_rates()` returns `[]` (not `None`) when all banks
+   fail, so the existing `None` guard never caught it. Fixed both
+   `calculate_transfer_cost([])` and `get_best_bank([])`.
+4. **`utils/history_sync.py`** — `sync_history()` looped over every
+   bank's CSV with zero error isolation; one bank's GitHub upload
+   failure (rate limit, transient 5xx) crashed the loop and skipped
+   every remaining bank's sync that cycle, violating the project's own
+   fault-isolation principle. `sync_latest()` had the same issue and,
+   since it runs immediately before `sync_history()`, would have
+   blocked it entirely. Both now isolated with try/except + warning.
+5. **`utils/exporter.py`** — `EXPORT_DIR.mkdir()` ran at *module import
+   time*, crashing on any read-only/restricted filesystem before any
+   function was even called. Identical bug class already fixed in
+   `core/logging_setup.py`; applied the same fix (lazy, guarded
+   directory creation).
+6. **`worker/telegram-worker/src/index.js`** — v1's *original* HTTP
+   routes (`/rates`, `/summary`, `/banks`, `/best`) and Telegram
+   commands (`/rates`, `/status`, `/recommend`) had an unguarded
+   `loadData()` call. A previous pass fixed this for the newer `/v2/*`
+   routes only; the original v1 routes — the ones actually serving
+   live traffic — were never backported. A data-load failure crashed
+   HTTP callers with a bare 500 and left Telegram users in total
+   silence. Also fixed the JS equivalent of bug #3
+   (`calculateTransferCost` crashing on an empty banks array). Caught
+   and fixed a real ordering bug in my own first attempt at this fix
+   (the new guard initially intercepted `/telegram` webhook requests
+   too) via the test suite before it was ever pushed.
+7. **`utils/logger.py`** — same import-time crash pattern as #5
+   (`LOG_DIR.mkdir()` and `logging.basicConfig()` both at import time).
+   Confirmed dead code (nothing currently imports it) but fixed anyway
+   for hygiene — cheap, safe, and removes a landmine for whoever
+   revives this file later.
+
+### Notable pattern across this pass
+Bugs #1, #3, and #6 are the same underlying class: code that silently
+assumed `exports/latest.json` always has a non-empty `banks` list. Worth
+treating this as systemic — any future code touching that file's `banks`
+field should be written assuming it can legitimately be empty.
+
+### Investigated but NOT a bug (worth recording so it isn't re-investigated)
+`utils/city_api.py` contains a from-scratch AES-256-CBC implementation
+(City Bank's private-API auth). Given this project's history of
+City-specific failures, this looked like a strong candidate — cross-
+checked it against `pycryptodome` across 21 random trials (varying
+plaintext lengths, including the block-aligned edge case) and it
+produced byte-for-byte identical ciphertext every time. The crypto is
+correct; City's genuinely undiagnosed root cause (documented earlier in
+this file) remains the JS-rendered page needing a real browser, not
+this.
+
+### Verified working
+- `pytest core/tests/` → **159/159 passed** (28 new tests this pass)
+- `npx vitest run` (worker/telegram-worker) → **23/23 passed** (7 new
+  tests), run in the real Cloudflare Workers test runtime
+- Every fix committed and pushed to `v2-dev` individually, with the
+  regression test proving the bug shown failing against the unfixed
+  code before the fix was applied, per this project's established
+  test-before-fix habit
