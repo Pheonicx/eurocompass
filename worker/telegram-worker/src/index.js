@@ -43,6 +43,10 @@ function calculateTransferCost(banks, euroAmount) {
     total_cost: bank.sell * euroAmount,
   }));
 
+  if (results.length === 0) {
+    return results;
+  }
+
   results.sort((a, b) => a.total_cost - b.total_cost);
 
   const cheapest = results[0].total_cost;
@@ -183,26 +187,36 @@ Endpoints
       }
     }
 
-    const data = await loadData();
+    if (url.pathname !== "/telegram") {
+      let data;
+      try {
+        data = await loadData();
+      } catch (e) {
+        return Response.json(
+          { error: "Market data is temporarily unavailable.", detail: String(e) },
+          { status: 503 }
+        );
+      }
 
-    if (url.pathname === "/rates") {
-      return Response.json(data);
-    }
+      if (url.pathname === "/rates") {
+        return Response.json(data);
+      }
 
-    if (url.pathname === "/summary") {
-      return Response.json(data.summary);
-    }
+      if (url.pathname === "/summary") {
+        return Response.json(data.summary);
+      }
 
-    if (url.pathname === "/banks") {
-      return Response.json(data.banks);
-    }
+      if (url.pathname === "/banks") {
+        return Response.json(data.banks);
+      }
 
-    if (url.pathname === "/best") {
-      return Response.json({
-        generated_at: data.generated_at,
-        bank: data.summary.lowest_sell.bank,
-        tt_selling: data.summary.lowest_sell.value,
-      });
+      if (url.pathname === "/best") {
+        return Response.json({
+          generated_at: data.generated_at,
+          bank: data.summary.lowest_sell.bank,
+          tt_selling: data.summary.lowest_sell.value,
+        });
+      }
     }
 
     if (url.pathname === "/telegram") {
@@ -302,11 +316,30 @@ else if (
   text === "📊 Rates"
 ) {
 
-  const data = await loadData();
+  let data;
+  try {
+    data = await loadData();
+  } catch (e) {
+    await sendTelegramMessage(
+      env,
+      chatId,
+      "⚠️ Rate data is temporarily unavailable. Please try again shortly."
+    );
+    return new Response("OK");
+  }
 
   const banks = [...data.banks].sort(
     (a, b) => a.sell - b.sell
   );
+
+  if (banks.length === 0) {
+    await sendTelegramMessage(
+      env,
+      chatId,
+      "⚠️ Rate data is temporarily unavailable. Please try again shortly."
+    );
+    return new Response("OK");
+  }
 
   const best = banks[0];
   const worst = banks[banks.length - 1];
@@ -373,7 +406,17 @@ else if (
   text === "🟢 Status"
 ) {
 
-  const data = await loadData();
+  let data;
+  try {
+    data = await loadData();
+  } catch (e) {
+    await sendTelegramMessage(
+      env,
+      chatId,
+      "⚠️ Status data is temporarily unavailable. Please try again shortly."
+    );
+    return new Response("OK");
+  }
 
   const updated = new Date(data.generated_at);
 
@@ -491,12 +534,31 @@ if (parts.length !== 2) {
 // valid amount
 pendingRecommendations.delete(chatId);
 
-  const data = await loadData();
+  let data;
+  try {
+    data = await loadData();
+  } catch (e) {
+    await sendTelegramMessage(
+      env,
+      chatId,
+      "⚠️ Rate data is temporarily unavailable. Please try again shortly."
+    );
+    return new Response("OK");
+  }
 
   const results = calculateTransferCost(
     data.banks,
     euroAmount
   );
+
+  if (results.length === 0) {
+    await sendTelegramMessage(
+      env,
+      chatId,
+      "⚠️ Rate data is temporarily unavailable. Please try again shortly."
+    );
+    return new Response("OK");
+  }
 
   const best = results[0];
 
