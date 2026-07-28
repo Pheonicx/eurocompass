@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-07-28T21:52:44.086490+00:00",
-    "last_status": "ok",
+    "last_checked_at": "2026-07-28T22:46:27.160858+00:00",
+    "last_status": "failed",
     "last_success_at": "2026-07-28T21:52:44.086490+00:00",
     "last_buy": 137.94,
     "last_sell": 142.81,
-    "last_failure_reason": null
+    "last_failure_reason": "Collector returned no data"
   },
   "CITY": {
-    "last_checked_at": "2026-07-28T21:55:40.283919+00:00",
+    "last_checked_at": "2026-07-28T22:49:20.701662+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,27 +16,27 @@
     "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-07-28T21:55:43.546205+00:00",
+    "last_checked_at": "2026-07-28T22:49:23.177427+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-07-28T21:55:43.546205+00:00",
+    "last_success_at": "2026-07-28T22:49:23.177427+00:00",
     "last_buy": 138.9984,
     "last_sell": 141.7395
   },
   "PRIME": {
-    "last_checked_at": "2026-07-28T21:55:50.874398+00:00",
+    "last_checked_at": "2026-07-28T22:49:30.454680+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-28T21:55:50.874398+00:00",
+    "last_success_at": "2026-07-28T22:49:30.454680+00:00",
     "last_buy": 139.0933,
     "last_sell": 142.1459,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-07-28T21:55:56.652366+00:00",
-    "last_status": "ok",
+    "last_checked_at": "2026-07-28T22:50:30.855989+00:00",
+    "last_status": "failed",
     "last_success_at": "2026-07-28T21:55:56.652366+00:00",
     "last_buy": 139.7496,
     "last_sell": 142.3081,
-    "last_failure_reason": null
+    "last_failure_reason": "Collector returned no data"
   }
 }
