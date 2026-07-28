@@ -46,6 +46,17 @@ def main():
         key=lambda x: x["sell"],
     )
 
+    if not banks:
+        send_message(
+            token,
+            chat_id,
+            "🧭 EuroCompass Daily Brief\n\n"
+            "⚠️ No bank data available today — every collector "
+            "appears to have failed this cycle. Please check the "
+            "dashboard or collector_status.json directly.",
+        )
+        return
+
     best = banks[0]
     worst = banks[-1]
 

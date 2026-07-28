@@ -19,6 +19,13 @@ def calculate_transfer_cost(banks, euro_amount):
             }
         )
 
+    if not results:
+        # No banks to compare (e.g. every collector failed this cycle).
+        # Return an empty list rather than crashing on results[0] below,
+        # so callers' existing "no market data" handling can run instead
+        # of surfacing a raw IndexError.
+        return results
+
     results.sort(key=lambda x: x["total_cost"])
 
     cheapest = results[0]["total_cost"]
@@ -31,4 +38,6 @@ def calculate_transfer_cost(banks, euro_amount):
 
 
 def get_best_bank(results):
+    if not results:
+        return None
     return results[0]
