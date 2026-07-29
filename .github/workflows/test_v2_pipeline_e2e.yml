@@ -1,0 +1,57 @@
+name: Test v2 Full Pipeline End-to-End (manual, diagnostic only)
+
+# This workflow ONLY runs when someone clicks the button — never on a
+# schedule, never automatically. It runs the FULL v2 pipeline (collect
+# -> validate -> store -> export) against real bank websites, but writes
+# only to a temporary directory (see scripts/test_v2_pipeline_e2e.py) --
+# it does not write to v2_history/, does not touch v2_exports/latest.json,
+# does not commit or push anything, and does not touch v1.0's data or
+# site in any way. It exists purely to answer "does the whole v2 chain
+# actually work end-to-end, against real data?" -- distinct from
+# test_v2_collection.yml, which only proves collection itself works.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 📥 Checkout v2-dev branch
+        uses: actions/checkout@v4
+        with:
+          ref: v2-dev
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: 📦 Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🌐 Install Playwright browser (needed for City Bank)
+        run: |
+          playwright install --with-deps chromium
+
+      - name: 🧪 Run full pipeline end-to-end test
+        env:
+          PYTHONPATH: .
+        run: |
+          set -o pipefail
+          python scripts/test_v2_pipeline_e2e.py 2>&1 | tee /tmp/test_output.log
+
+      - name: 📤 Publish result to a Gist (so it can be checked via the API)
+        if: always()
+        env:
+          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+        run: |
+          python scripts/publish_result_gist.py /tmp/test_output.log
