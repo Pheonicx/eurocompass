@@ -99,6 +99,82 @@ def test_looks_numeric():
     assert _looks_numeric("u.s.DoLLAR") is False
 
 
+# The exact real text extracted from Sonali's actual PDF on 30 July 2026,
+# captured via a live GitHub Actions diagnostic run
+# (scripts/test_v2_pipeline_e2e.py). This run revealed a DIFFERENT
+# garbling pattern than REAL_SONALI_TEXT above: rather than just
+# mangling punctuation between otherwise-intact letters ("u.s.DoLLAR"),
+# this PDF's font encoding dropped a letter entirely --
+# "U.S.DOL|-AR" normalizes to "USDOLAR" (one letter short of
+# "USDOLLAR") -- which the exact-match-after-normalization logic didn't
+# tolerate. Fixed with a small edit-distance allowance for longer
+# aliases (utils.pdf_utils._label_matches_any_alias).
+REAL_SONALI_TEXT_DROPPED_LETTER = (
+    "SONALI BANK PLC | TREASURY MANAGEMENT OIVISION (FRONT OFFICE) | HEAD OFFICE. DHAKA | "
+    "www.sonalibank.com,bd (lNDlcATlvE oNLY : Raes may very ln ttre same day) | "
+    "E-mail: dgmtmd@sonalibank.com.bd, fxdealing@sonalibank.com.bd | No: | "
+    "Daily Foreign Exchange Rate Circular 20261136 | : 30.07.2026 | "
+    "DATED EFFECTIVE DATE: 3OU JULY TO lST AUGUST, 2026 | "
+    "NOTE;'FROM ISTJULY 2023, LIBOR IS BEING REPI.AGED BY SOFR, SONIA, ESTR ETC. | "
+    "1. CROSS RATES lN TOKYO, HONGKONG EXCHANGE MARKET AS ON 30/07/2026 AT 10:07 A.M. (LOCAL) | "
+    "US$ PER US$ PER CAD PER CHF PER JPY PER AED PER | "
+    "GBP 1.00 EUR 1.00 US$ 1.00 US$ 1.00 US$ 1.00 US$ 1.00 | "
+    "SELL|NG 1.3348 1.1452 1.4051 0.8155 16i:i.5100 3.6725 | "
+    "BUYTNG 1.3v4 1.1450 'r.40s4 0.8156 163.5200 3.6727 | "
+    "2.a) SONALI BANK PLC oEALING RATES TO PUBLIC (8.TAKA FOR ONE UNIT OF FOREIGN CURRENCY) | "
+    "SPOTSELLING | SPOTBUYING | O.D. SIGHT O. D. | TT/OD B . C . CURRENCY TT CLEAN EXPORT BILLS TRANSFER | "
+    "123.9500 123.9500 U.S.DOL|-AR 122.9500 122.8300 | 122.6800 | "
+    "'t67.',t029 167.1029 G.B.POUND 164.0645 163.9044 163.7U2 | "
+    "143.3670 143.3670 EURo 140.7778 140.6404 ',140.4686 | "
+    "88.6554 88.6554 CANAD|AN DOL|-AR 87.0466 86.9616 86.8554"
+)
+
+
+def test_usd_dropped_letter_variant_now_matches():
+    """
+    The specific bug found in the 30 July 2026 live run: "U.S.DOL|-AR"
+    (one letter short of "USDOLLAR" after normalization) previously
+    failed to match at all.
+    """
+    matches = find_all_currency_token_windows(REAL_SONALI_TEXT_DROPPED_LETTER, "USD")
+    assert len(matches) >= 1
+
+
+def test_usd_extracted_correctly_from_dropped_letter_variant():
+    buy, sell = _extract_via_text_fallback(REAL_SONALI_TEXT_DROPPED_LETTER, "USD")
+    assert buy == 122.95
+    assert sell == 123.95
+
+
+def test_eur_still_extracted_correctly_from_dropped_letter_variant():
+    # EUR wasn't broken by this particular PDF's corruption ("EURo" is
+    # still an exact match after normalization) -- confirms the fix
+    # didn't regress the currency that was already working.
+    buy, sell = _extract_via_text_fallback(REAL_SONALI_TEXT_DROPPED_LETTER, "EUR")
+    assert buy == 140.7778
+    assert sell == 143.367
+
+
+def test_fuzzy_matching_does_not_cross_match_different_currencies():
+    """
+    Safety check for the new edit-distance tolerance: short aliases
+    ("EUR", "USD", "GBP") must still require an exact match -- a 1-edit
+    tolerance on a 3-letter code would be far too permissive. This text
+    contains "CANAD|AN DOL|-AR" (Canadian Dollar, an unrelated currency
+    Sonali also lists) right next to the real USD row; confirms it's
+    never picked up as a false USD or EUR match.
+    """
+    usd_matches = find_all_currency_token_windows(REAL_SONALI_TEXT_DROPPED_LETTER, "USD")
+    # Every match's surrounding numbers should trace back to the real
+    # USD row (122.95xx / 123.95xx), never the Canadian Dollar row
+    # (86.xx / 87.xx / 88.xx).
+    for tokens_before, _ in usd_matches:
+        floats = [_to_float(t) for t in tokens_before if _to_float(t) is not None]
+        assert all(f > 100 for f in floats), (
+            f"USD match unexpectedly picked up Canadian Dollar-range numbers: {floats}"
+        )
+
+
 def test_to_float_handles_commas():
     assert _to_float("1,234.56") == 1234.56
     assert _to_float("123.75") == 123.75

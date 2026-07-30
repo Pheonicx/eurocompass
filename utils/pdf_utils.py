@@ -86,6 +86,60 @@ def _looks_numeric(token: str) -> bool:
     return not any(c.isalpha() for c in token)
 
 
+def _levenshtein(a: str, b: str) -> int:
+    """
+    Standard edit distance (insertions/deletions/substitutions). Both
+    inputs here are always short currency-label strings (at most ~15
+    characters), so the simple O(len(a)*len(b)) DP table is more than
+    fast enough -- no need for anything cleverer.
+    """
+    if len(a) < len(b):
+        a, b = b, a
+
+    previous_row = list(range(len(b) + 1))
+    for i, ca in enumerate(a, 1):
+        current_row = [i]
+        for j, cb in enumerate(b, 1):
+            insertions = previous_row[j] + 1
+            deletions = current_row[j - 1] + 1
+            substitutions = previous_row[j - 1] + (ca != cb)
+            current_row.append(min(insertions, deletions, substitutions))
+        previous_row = current_row
+    return previous_row[-1]
+
+
+# Below this length, fuzzy matching is too permissive to be safe -- a
+# 1-character edit distance against a 3-letter code like "EUR" or "USD"
+# could match all kinds of unrelated noise. Longer aliases (e.g.
+# "USDOLLAR", "STERLING") are long enough that tolerating a single
+# dropped/substituted letter is safe and specific.
+_MIN_LENGTH_FOR_FUZZY_MATCH = 6
+_MAX_FUZZY_EDIT_DISTANCE = 1
+
+
+def _label_matches_any_alias(candidate: str, aliases: set) -> bool:
+    """
+    True if `candidate` (already normalized) exactly matches one of
+    `aliases`, or -- for longer aliases only -- is within a small edit
+    distance of one. Exists because PDF font-encoding corruption doesn't
+    always just mangle punctuation between intact letters (which
+    normalization already handles); confirmed via a real live run that
+    it can also drop a letter entirely, e.g. Sonali's "U.S.DOL|-AR" for
+    "USDOLLAR" normalizes to "USDOLAR" -- one letter short, which used
+    to silently fail to match at all.
+    """
+    if candidate in aliases:
+        return True
+
+    for alias in aliases:
+        if len(alias) < _MIN_LENGTH_FOR_FUZZY_MATCH:
+            continue
+        if _levenshtein(candidate, alias) <= _MAX_FUZZY_EDIT_DISTANCE:
+            return True
+
+    return False
+
+
 def find_all_currency_token_windows(text, currency, before=4, after=8):
     """
     Finds EVERY occurrence of a currency label within free text (not
@@ -133,7 +187,7 @@ def find_all_currency_token_windows(text, currency, before=4, after=8):
             if any(_looks_numeric(t) for t in span_tokens):
                 continue
             candidate = "".join(span_tokens)
-            if _normalize_currency_label(candidate) in aliases:
+            if _label_matches_any_alias(_normalize_currency_label(candidate), aliases):
                 matched_span = span
                 break
 
@@ -176,7 +230,7 @@ def find_currency_row(tables, currency):
                 continue
 
             for cell in row:
-                if cell and _normalize_currency_label(str(cell)) in aliases:
+                if cell and _label_matches_any_alias(_normalize_currency_label(str(cell)), aliases):
                     return row
 
     return None
