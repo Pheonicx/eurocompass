@@ -190,19 +190,21 @@ def _get_latest_pdf_via_browser():
             # wherever it appears in the page (script tag, table data,
             # or an actual anchor, if the site ever changes back).
             #
-            # This data loads asynchronously — confirmed via two live
-            # runs: checking once right after "networkidle" found
-            # nothing; a 24-second polling window (12 x 2s) STILL found
-            # nothing; but the same regex against a page fetched later
-            # (during the old fallback's own ~100+ second wait) found it
-            # both times. So this polls for up to ~90 seconds — matching
-            # the real observed delay rather than guessing at a shorter
-            # one a third time — while still returning as soon as the
-            # data actually appears, rather than always waiting the full
-            # amount.
+            # This data loads asynchronously, and can take longer than
+            # first estimated — reconfirmed via a live run on 30 July
+            # 2026: this exact regex was tested directly against the
+            # page's own final captured HTML from that run's diagnostic
+            # capture and matched PERFECTLY (85/85 occurrences found),
+            # proving the pattern itself is correct and the failure was
+            # purely about not waiting long enough for the data to
+            # appear — not a pattern/logic bug. That run's total job
+            # time (243s) left substantial headroom under the 10-minute
+            # workflow timeout even after everything else, so this now
+            # polls for up to ~240 seconds (up from the previous ~90s)
+            # rather than guessing at another short window a third time.
             city_pdf_pattern = r"https://citybankplc\.com/uploads/files/+currency_files/[^\s\"'\\]+\.pdf"
             try:
-                for _ in range(45):  # ~90 seconds total, checking every 2s
+                for _ in range(120):  # ~240 seconds total, checking every 2s
                     html = page.content()
                     found = re.findall(city_pdf_pattern, html)
                     if found:
@@ -212,9 +214,19 @@ def _get_latest_pdf_via_browser():
             except Exception as e:
                 last_selector_error = e
 
-            # FALLBACK: the old anchor-tag-based approach, kept in case
-            # City's site structure changes again in the future and PDF
-            # links become real <a href> elements once more.
+            # FALLBACK: the old anchor-tag-based approach. Kept as a
+            # lightweight safety net in case City's site structure
+            # changes again in the future and PDF links become real
+            # <a href> elements once more — but NOT given a large time
+            # budget, since two separate live diagnostic runs (24 July
+            # and 30 July 2026) have now confirmed the current page never
+            # renders them that way, only as the JSON data the primary
+            # method above already handles. Spending 80+ seconds here
+            # (the previous 2×40s) was wasting most of a run's time
+            # budget on a method proven not to apply to the current page
+            # at all; a short timeout still catches a hypothetical quick
+            # anchor-based render without meaningfully affecting the
+            # overall time budget.
             for attempt in range(2):
                 try:
                     # state="attached" only requires the element to exist
@@ -223,7 +235,7 @@ def _get_latest_pdf_via_browser():
                     # has loaded, if it's rendered behind a loading
                     # overlay or off-screen momentarily, which fits City
                     # having succeeded before with no code change since.
-                    page.wait_for_selector('a[href*="currency_files"]', timeout=40000, state="attached")
+                    page.wait_for_selector('a[href*="currency_files"]', timeout=8000, state="attached")
                     links = page.eval_on_selector_all(
                         'a[href*="currency_files"]',
                         "els => els.map(e => e.href)",

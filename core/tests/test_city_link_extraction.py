@@ -77,3 +77,37 @@ def test_old_href_anchored_regex_would_have_found_nothing():
 def test_pattern_does_not_match_unrelated_urls():
     text = 'some other link "file":"https://example.com/not-relevant.pdf"'
     assert re.findall(CITY_PDF_URL_PATTERN, text) == []
+
+
+# A second real excerpt, captured via a live diagnostic run on 30 July
+# 2026 -- the run that revealed the REAL remaining bug wasn't the regex
+# at all (this exact pattern was tested directly against this exact real
+# HTML and matched perfectly), but purely a timing issue: the polling
+# window gave up too early, then wasted most of its remaining time
+# budget on the anchor-tag fallback proven futile by the 24 July
+# fixture above. Note the escaping is even deeper here
+# (\\\" instead of \") than the 24 July excerpt -- confirms the regex
+# is robust to that variation too, since it only matches the URL itself.
+REAL_CITY_HTML_EXCERPT_30_JULY = (
+    r'\",\\\"buying\\\":\\\"122.95\\\",\\\"selling\\\":\\\"123.95\\\"}],'
+    r'\\\"forex_rates_report\\\":[{\\\"id\\\":1,\\\"title\\\":\\\"Daily Exchange Rate '
+    r'Sheet 30-07-2026\\\",\\\"file\\\":\\\"https://citybankplc.com/uploads/files//'
+    r'currency_files/17853877808172122.pdf\\\"},{\\\"id\\\":2,\\\"title\\\":\\\"Daily '
+    r'Exchange Rate Sheet 29-07-2026\\\",\\\"file\\\":\\\"https://citybankplc.com/'
+    r'uploads/files//currency_files/17852983516558022.pdf\\\"},{\\\"id\\\":3,'
+    r'\\\"title\\\":\\\"Daily Exchange Rate Sheet 28-07-2026\\\",\\\"file\\\":\\\"'
+    r'https://citybankplc.com/uploads/files//currency_files/17852136843842122.pdf\\\"}'
+)
+
+
+def test_regex_confirmed_correct_against_30_july_real_failure_capture():
+    """
+    The concrete evidence behind the timing fix: this exact production
+    regex, run against the exact real HTML captured at the moment
+    City's collector gave up on 30 July 2026, DOES find the links --
+    proving that run's failure was never about the pattern being wrong,
+    only about not having waited long enough for this data to appear.
+    """
+    found = re.findall(CITY_PDF_URL_PATTERN, REAL_CITY_HTML_EXCERPT_30_JULY)
+    assert len(found) == 3
+    assert found[0] == "https://citybankplc.com/uploads/files//currency_files/17853877808172122.pdf"
