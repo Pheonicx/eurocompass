@@ -432,6 +432,16 @@ def get_rates(currencies=("EUR", "USD")):
             buy, sell = extract_buy_sell(row, buy_index=3, sell_index=0)
             if buy is None or sell is None:
                 print(f"CITY: {currency} row found but values look wrong (get_rates): {row}")
+                # TEMPORARY DIAGNOSTIC (see V2_PROGRESS.md, City investigation
+                # 31 July 2026): dump the full table structure so the real
+                # layout can be inspected via a live run's gist output,
+                # instead of guessed at. Remove once City's table layout is
+                # understood and a proper fix is in place.
+                print(f"CITY DIAGNOSTIC: dumping full table structure ({len(tables)} table(s) total)")
+                for t_idx, table in enumerate(tables):
+                    print(f"CITY DIAGNOSTIC: --- table {t_idx} ({len(table)} rows) ---")
+                    for r_idx, table_row in enumerate(table):
+                        print(f"CITY DIAGNOSTIC: row {r_idx}: {table_row}")
                 continue
 
             result = {
