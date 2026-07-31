@@ -189,30 +189,50 @@ def _get_latest_pdf_via_browser():
             # the right thing. This matches the raw URL directly,
             # wherever it appears in the page (script tag, table data,
             # or an actual anchor, if the site ever changes back).
-            #
-            # This data loads asynchronously, and can take longer than
-            # first estimated — reconfirmed via a live run on 30 July
-            # 2026: this exact regex was tested directly against the
-            # page's own final captured HTML from that run's diagnostic
-            # capture and matched PERFECTLY (85/85 occurrences found),
-            # proving the pattern itself is correct and the failure was
-            # purely about not waiting long enough for the data to
-            # appear — not a pattern/logic bug. That run's total job
-            # time (243s) left substantial headroom under the 10-minute
-            # workflow timeout even after everything else, so this now
-            # polls for up to ~240 seconds (up from the previous ~90s)
-            # rather than guessing at another short window a third time.
             city_pdf_pattern = r"https://citybankplc\.com/uploads/files/+currency_files/[^\s\"'\\]+\.pdf"
-            try:
-                for _ in range(120):  # ~240 seconds total, checking every 2s
+
+            def _poll_for_links(seconds):
+                """Regex-poll the current page's content for up to
+                `seconds`, checking every 2s. Returns the found links
+                (newest-first) or [] if the window elapses first."""
+                for _ in range(seconds // 2):
                     html = page.content()
                     found = re.findall(city_pdf_pattern, html)
                     if found:
-                        browser.close()
-                        return found[0]  # the data lists newest first, confirmed against real content
+                        return found
                     page.wait_for_timeout(2000)
-            except Exception as e:
-                last_selector_error = e
+                return []
+
+            # First attempt: confirmed via a live run on 30 July 2026
+            # that this regex is correct (tested directly against that
+            # run's own captured HTML — matched 85/85 times) — so a
+            # failure here is about timing, not the pattern. ~90s
+            # matches the originally observed typical load time.
+            links = _poll_for_links(90)
+
+            # Second attempt, after a reload: a LATER same-day run (30
+            # July 2026, second verification) revealed something the
+            # first fix missed — even after polling for a full 240
+            # seconds, the data still hadn't appeared on the original
+            # page load, yet WAS present in the final diagnostic capture,
+            # which happens after the old fallback's one page.reload().
+            # That fallback only ever re-checked for anchor tags after
+            # reloading, never re-ran the (proven-correct) regex against
+            # the reloaded page — so it's genuinely unknown whether the
+            # first attempt would have succeeded sooner on a fresh load.
+            # This tests that directly: if City's client-side data fetch
+            # can stall on the original page load, a reload — not just
+            # waiting longer on the same stuck load — may be the actual
+            # fix, and it's cheap to find out using the method already
+            # proven correct rather than switching to one proven futile.
+            if not links:
+                try:
+                    page.reload(timeout=60000, wait_until="domcontentloaded")
+                    page.wait_for_load_state("networkidle", timeout=20000)
+                except Exception as e:
+                    last_selector_error = e
+
+                links = _poll_for_links(90)
 
             # FALLBACK: the old anchor-tag-based approach. Kept as a
             # lightweight safety net in case City's site structure
@@ -221,36 +241,16 @@ def _get_latest_pdf_via_browser():
             # budget, since two separate live diagnostic runs (24 July
             # and 30 July 2026) have now confirmed the current page never
             # renders them that way, only as the JSON data the primary
-            # method above already handles. Spending 80+ seconds here
-            # (the previous 2×40s) was wasting most of a run's time
-            # budget on a method proven not to apply to the current page
-            # at all; a short timeout still catches a hypothetical quick
-            # anchor-based render without meaningfully affecting the
-            # overall time budget.
-            for attempt in range(2):
+            # method above already handles.
+            if not links:
                 try:
-                    # state="attached" only requires the element to exist
-                    # in the DOM, not to be visually on-screen — the
-                    # default ("visible") can time out even once the data
-                    # has loaded, if it's rendered behind a loading
-                    # overlay or off-screen momentarily, which fits City
-                    # having succeeded before with no code change since.
                     page.wait_for_selector('a[href*="currency_files"]', timeout=8000, state="attached")
                     links = page.eval_on_selector_all(
                         'a[href*="currency_files"]',
                         "els => els.map(e => e.href)",
                     )
-                    if links:
-                        break
                 except Exception as e:
                     last_selector_error = e
-
-                if attempt == 0:
-                    try:
-                        page.reload(timeout=60000, wait_until="domcontentloaded")
-                        page.wait_for_load_state("networkidle", timeout=20000)
-                    except Exception:
-                        pass
 
             # Last-resort fallback: bypass Playwright's element-query
             # mechanics entirely and just regex-search the raw rendered
