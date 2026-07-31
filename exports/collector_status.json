@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-07-31T20:49:09.527540+00:00",
-    "last_status": "ok",
+    "last_checked_at": "2026-07-31T21:53:37.721174+00:00",
+    "last_status": "failed",
     "last_success_at": "2026-07-31T20:49:09.527540+00:00",
     "last_buy": 138.98,
     "last_sell": 143.85,
-    "last_failure_reason": null
+    "last_failure_reason": "Collector returned no data"
   },
   "CITY": {
-    "last_checked_at": "2026-07-31T20:52:05.908612+00:00",
+    "last_checked_at": "2026-07-31T21:56:30.783299+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,25 +16,25 @@
     "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-07-31T20:52:08.826226+00:00",
+    "last_checked_at": "2026-07-31T21:56:33.873100+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-07-31T20:52:08.826226+00:00",
+    "last_success_at": "2026-07-31T21:56:33.873100+00:00",
     "last_buy": 140.2282,
     "last_sell": 143.0011
   },
   "PRIME": {
-    "last_checked_at": "2026-07-31T20:52:15.816406+00:00",
+    "last_checked_at": "2026-07-31T21:56:41.040190+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-31T20:52:15.816406+00:00",
+    "last_success_at": "2026-07-31T21:56:41.040190+00:00",
     "last_buy": 140.0865,
     "last_sell": 143.1473,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-07-31T20:52:25.462550+00:00",
+    "last_checked_at": "2026-07-31T21:56:50.123683+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-07-31T20:52:25.462550+00:00",
+    "last_success_at": "2026-07-31T21:56:50.123683+00:00",
     "last_buy": 140.7778,
     "last_sell": 143.367,
     "last_failure_reason": null
