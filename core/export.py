@@ -107,6 +107,7 @@ def build_export(
                     "confidence": o.confidence.value,
                     "is_stale": o.is_stale,
                     "collected_at": o.collected_at.isoformat(),
+                    "student_rate": o.metadata.get("student_rate"),
                 }
                 for o in sorted(observations, key=lambda o: o.sell)
             ]

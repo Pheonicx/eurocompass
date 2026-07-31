@@ -181,3 +181,37 @@ def test_history_capped_at_max_points():
             h for h in data["history_by_currency"]["EUR"] if h["bank_id"] == "BRAC"
         )
         assert len(brac_history["points"]) == MAX_HISTORY_POINTS_FOR_CHART
+
+
+def test_student_rate_included_when_present():
+    import tempfile
+
+    config = _config()
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_path = Path(tmp)
+        obs = Observation(
+            bank_id="BRAC", currency="EUR", product_id="TT",
+            buy=139.0, sell=142.0, collected_at=utc_now(),
+            source_type=SourceType.PDF, confidence=Confidence.HIGH,
+            metadata={"student_rate": 140.5},
+        )
+        observation_store.append(obs, storage_dir=tmp_path)
+
+        data = build_export(config, storage_dir=tmp_path, scenarios=(("EUR", "TT", 1000.0),))
+
+        brac_rate = next(r for r in data["rates_by_currency"]["EUR"] if r["bank_id"] == "BRAC")
+        assert brac_rate["student_rate"] == 140.5
+
+
+def test_student_rate_is_none_when_not_published():
+    import tempfile
+
+    config = _config()
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_path = Path(tmp)
+        _seed(tmp_path, "BRAC", "EUR", 142.0)  # no metadata at all
+
+        data = build_export(config, storage_dir=tmp_path, scenarios=(("EUR", "TT", 1000.0),))
+
+        brac_rate = next(r for r in data["rates_by_currency"]["EUR"] if r["bank_id"] == "BRAC")
+        assert brac_rate["student_rate"] is None
