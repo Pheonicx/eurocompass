@@ -194,12 +194,20 @@ def _get_latest_pdf_via_browser():
             def _poll_for_links(seconds):
                 """Regex-poll the current page's content for up to
                 `seconds`, checking every 2s. Returns the found links
-                (newest-first) or [] if the window elapses first."""
+                (newest-first) or [] if the window elapses first.
+                page.content() can transiently raise if called exactly
+                while the page is mid-navigation (confirmed live, 31
+                July 2026, right after a reload) -- caught per-iteration
+                here so one bad-timing moment doesn't abort the whole
+                poll, rather than letting it propagate out."""
                 for _ in range(seconds // 2):
-                    html = page.content()
-                    found = re.findall(city_pdf_pattern, html)
-                    if found:
-                        return found
+                    try:
+                        html = page.content()
+                        found = re.findall(city_pdf_pattern, html)
+                        if found:
+                            return found
+                    except Exception:
+                        pass
                     page.wait_for_timeout(2000)
                 return []
 
