@@ -213,6 +213,17 @@ def find_currency_row(tables, currency):
     banks' PDFs render labels with inconsistent OCR-style formatting
     (e.g. "u.s DoLLAR" instead of a clean "USD").
 
+    A candidate row is only accepted if it also contains at least two
+    numeric-looking cells — otherwise it's almost certainly a HEADER row
+    rather than actual rate data. Confirmed via a real live run (31 July
+    2026): City's PDF has an earlier "cash rates" section whose header
+    row lists full currency names as column labels
+    (['', 'US Dollar', 'GB Pound', 'Euro', ...]) — without this check,
+    that row matched and was returned immediately, well before the
+    correct TT-rates table further down the page that actually has
+    numeric buy/sell values. Any bank's PDF could plausibly have a
+    similar collision, so this isn't a City-specific special case.
+
     Example:
         currency = "EUR"
 
@@ -231,7 +242,12 @@ def find_currency_row(tables, currency):
 
             for cell in row:
                 if cell and _label_matches_any_alias(_normalize_currency_label(str(cell)), aliases):
-                    return row
+                    numeric_cells = sum(1 for c in row if c and _looks_numeric(str(c)))
+                    if numeric_cells >= 2:
+                        return row
+                    # Looks like a header/label row, not actual rate
+                    # data — keep searching rather than giving up here.
+                    break
 
     return None
 
