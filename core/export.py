@@ -46,6 +46,14 @@ DEFAULT_SCENARIOS: tuple[tuple[str, str, float], ...] = (
 )
 
 
+# Cap on how many historical points to include per bank/currency in the
+# export. This is for charting, not analysis (summarize_trend already
+# covers analysis using the FULL history, unaffected by this cap) --
+# a chart doesn't benefit from thousands of points, and capping keeps
+# the export file size reasonable as v2_history/ grows indefinitely.
+MAX_HISTORY_POINTS_FOR_CHART = 90
+
+
 def _latest_observation_per_bank(
     bank_ids: Iterable[str], currency: str, product_id: str, storage_dir: Path
 ) -> list[Observation]:
@@ -74,6 +82,7 @@ def build_export(
 
     rates_by_currency: dict[str, list[dict]] = {}
     trends_by_currency: dict[str, list[dict]] = {}
+    history_by_currency: dict[str, list[dict]] = {}
     recommendations: list[dict] = []
 
     for currency, product_id, amount in scenarios:
@@ -104,6 +113,11 @@ def build_export(
 
         if currency not in trends_by_currency:
             trends_by_currency[currency] = _build_trends(
+                cfg.banks.keys(), currency, product_id, storage_dir, bank_names
+            )
+
+        if currency not in history_by_currency:
+            history_by_currency[currency] = _build_history(
                 cfg.banks.keys(), currency, product_id, storage_dir, bank_names
             )
 
@@ -139,6 +153,7 @@ def build_export(
         "generated_at": utc_now().isoformat(),
         "rates_by_currency": rates_by_currency,
         "trends_by_currency": trends_by_currency,
+        "history_by_currency": history_by_currency,
         "recommendations": recommendations,
     }
 
@@ -180,6 +195,40 @@ def _build_trends(
             }
         )
     return trends
+
+
+def _build_history(
+    bank_ids, currency: str, product_id: str, storage_dir: Path, bank_names: dict[str, str]
+) -> list[dict]:
+    """
+    One compact time series per bank that has at least 1 stored
+    observation for this currency/product — a list of {date, sell}
+    points, oldest first (the natural order for a line chart to draw
+    left-to-right), capped at MAX_HISTORY_POINTS_FOR_CHART most-recent
+    points. Banks with zero history simply don't appear, same "don't
+    fabricate what isn't there" reasoning as _build_trends.
+    """
+    history = []
+    for bank_id in bank_ids:
+        points = observation_store.load_recent(
+            bank_id, currency, product_id, limit=MAX_HISTORY_POINTS_FOR_CHART, storage_dir=storage_dir
+        )
+        if not points:
+            continue
+
+        points = list(reversed(points))  # load_recent is newest-first; charts want oldest-first
+
+        history.append(
+            {
+                "bank_id": bank_id,
+                "bank_name": bank_names.get(bank_id, bank_id),
+                "points": [
+                    {"collected_at": o.collected_at.isoformat(), "sell": o.sell}
+                    for o in points
+                ],
+            }
+        )
+    return history
 
 
 def write_export(

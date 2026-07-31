@@ -21,14 +21,14 @@ def _config():
     )
 
 
-def _seed(storage_dir, bank_id, currency, sell):
+def _seed(storage_dir, bank_id, currency, sell, collected_at=None):
     obs = Observation(
         bank_id=bank_id,
         currency=currency,
         product_id="TT",
         buy=sell - 3,
         sell=sell,
-        collected_at=utc_now(),
+        collected_at=collected_at or utc_now(),
         source_type=SourceType.PDF,
         confidence=Confidence.HIGH,
     )
@@ -124,3 +124,60 @@ def test_write_export_does_not_touch_v1_exports_file(tmp_path):
 
     v1_path = tmp_path / "exports" / "latest.json"
     assert not v1_path.exists()
+
+
+def test_history_by_currency_included_and_ordered_oldest_first():
+    import tempfile
+    from datetime import timedelta
+
+    config = _config()
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_path = Path(tmp)
+        now = utc_now()
+        _seed(tmp_path, "BRAC", "EUR", 140.0, collected_at=now - timedelta(days=2))
+        _seed(tmp_path, "BRAC", "EUR", 141.0, collected_at=now - timedelta(days=1))
+        _seed(tmp_path, "BRAC", "EUR", 142.0, collected_at=now)
+
+        data = build_export(config, storage_dir=tmp_path, scenarios=(("EUR", "TT", 1000.0),))
+
+        assert "EUR" in data["history_by_currency"]
+        brac_history = next(
+            h for h in data["history_by_currency"]["EUR"] if h["bank_id"] == "BRAC"
+        )
+        sells = [p["sell"] for p in brac_history["points"]]
+        assert sells == [140.0, 141.0, 142.0]  # oldest first, for left-to-right charting
+
+
+def test_history_omits_banks_with_no_observations():
+    config = _config()
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_path = Path(tmp)
+        _seed(tmp_path, "BRAC", "EUR", 142.0)
+        # CITY has no EUR observations at all.
+
+        data = build_export(config, storage_dir=tmp_path, scenarios=(("EUR", "TT", 1000.0),))
+
+        bank_ids_with_history = {h["bank_id"] for h in data["history_by_currency"]["EUR"]}
+        assert bank_ids_with_history == {"BRAC"}
+
+
+def test_history_capped_at_max_points():
+    from datetime import timedelta
+    import tempfile
+    from core.export import MAX_HISTORY_POINTS_FOR_CHART
+
+    config = _config()
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_path = Path(tmp)
+        now = utc_now()
+        for i in range(MAX_HISTORY_POINTS_FOR_CHART + 20):
+            _seed(tmp_path, "BRAC", "EUR", 140.0 + i * 0.01, collected_at=now - timedelta(hours=i))
+
+        data = build_export(config, storage_dir=tmp_path, scenarios=(("EUR", "TT", 1000.0),))
+
+        brac_history = next(
+            h for h in data["history_by_currency"]["EUR"] if h["bank_id"] == "BRAC"
+        )
+        assert len(brac_history["points"]) == MAX_HISTORY_POINTS_FOR_CHART
