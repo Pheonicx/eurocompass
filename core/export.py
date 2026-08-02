@@ -224,7 +224,7 @@ def _build_history(
                 "bank_id": bank_id,
                 "bank_name": bank_names.get(bank_id, bank_id),
                 "points": [
-                    {"collected_at": o.collected_at.isoformat(), "sell": o.sell}
+                    {"collected_at": o.collected_at.isoformat(), "buy": o.buy, "sell": o.sell}
                     for o in points
                 ],
             }

@@ -126,13 +126,22 @@ def _build_explanation(
     parts: list[str] = []
 
     best_label = _bank_label(best.bank_id, names)
-    parts.append(
-        f"{best_label} is recommended for {best.requested_amount:,.2f} {best.currency}: "
-        f"total estimated cost of {best.total_cost_bdt:,.2f} BDT "
-        f"(exchange rate {best.exchange_rate:.4f}, gross cost {best.gross_cost_bdt:,.2f} BDT"
-        + (f", plus {best.fees_total_bdt:,.2f} BDT in known fees" if best.fees_verified else "")
-        + ")."
-    )
+    if best.fees_verified and best.fees_total_bdt:
+        parts.append(
+            f"{best_label} is recommended for {best.requested_amount:,.2f} {best.currency}: "
+            f"total estimated cost of {best.total_cost_bdt:,.2f} BDT "
+            f"(exchange rate {best.exchange_rate:.4f}, {best.gross_cost_bdt:,.2f} BDT exchanged "
+            f"plus {best.fees_total_bdt:,.2f} BDT in known fees)."
+        )
+    else:
+        # No fees to break out -- gross cost and total cost are the same
+        # number here, so stating both would just repeat the same figure
+        # under two different names for no reason.
+        parts.append(
+            f"{best_label} is recommended for {best.requested_amount:,.2f} {best.currency}: "
+            f"total estimated cost of {best.total_cost_bdt:,.2f} BDT "
+            f"(exchange rate {best.exchange_rate:.4f})."
+        )
 
     if best.notes:
         parts.append("Note: " + " ".join(best.notes))

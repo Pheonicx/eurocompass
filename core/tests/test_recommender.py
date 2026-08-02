@@ -124,3 +124,34 @@ def test_bank_names_are_used_in_explanation_when_provided():
 def test_requires_at_least_one_breakdown():
     with pytest.raises(ValueError):
         generate_recommendation([], {})
+
+
+def test_explanation_does_not_repeat_the_same_number_twice_when_no_fees():
+    """
+    Regression test: when fees aren't verified (currently always the
+    case), gross cost and total cost are the same number -- the
+    explanation previously stated it twice under two different names
+    ("total estimated cost of X BDT ... gross cost X BDT"), which read
+    as redundant, template-like text rather than something genuinely
+    written to explain the number.
+    """
+    breakdowns, observations = _breakdowns_and_obs({"CITY": 140.0, "BRAC": 142.0})
+    rec = generate_recommendation(breakdowns, observations)
+    assert "gross cost" not in rec.explanation
+    # The actual total should still appear exactly once.
+    assert rec.explanation.count("14,000.00 BDT") == 1
+
+
+def test_explanation_breaks_out_fees_separately_when_verified():
+    """
+    When fees ARE verified and non-zero, gross cost and total cost
+    genuinely differ -- here it's correct and useful to show both, so
+    the fee breakdown should still appear.
+    """
+    fee = Fee(id="swift", name="SWIFT", amount=1000.0, currency="BDT")
+    breakdowns, observations = _breakdowns_and_obs(
+        {"CITY": 140.0}, fees_by_bank={"CITY": (fee,)}
+    )
+    rec = generate_recommendation(breakdowns, observations)
+    assert "BDT exchanged" in rec.explanation
+    assert "1,000.00 BDT in known fees" in rec.explanation

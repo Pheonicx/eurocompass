@@ -215,3 +215,18 @@ def test_student_rate_is_none_when_not_published():
 
         brac_rate = next(r for r in data["rates_by_currency"]["EUR"] if r["bank_id"] == "BRAC")
         assert brac_rate["student_rate"] is None
+
+
+def test_history_points_include_buy_rate_too():
+    import tempfile
+
+    config = _config()
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_path = Path(tmp)
+        _seed(tmp_path, "BRAC", "EUR", 142.0)  # _seed sets buy = sell - 3
+
+        data = build_export(config, storage_dir=tmp_path, scenarios=(("EUR", "TT", 1000.0),))
+
+        brac_history = next(h for h in data["history_by_currency"]["EUR"] if h["bank_id"] == "BRAC")
+        assert brac_history["points"][0]["buy"] == 139.0
+        assert brac_history["points"][0]["sell"] == 142.0
