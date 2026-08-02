@@ -1,0 +1,236 @@
+/* site/v2/styles.css
+   Extends ../styles.css (v1's design tokens and shared components are
+   loaded first). Structural typography, the ink/cream base palette,
+   and shared components (cards, tables, calculator, mode-bar, gauge)
+   are inherited unchanged — that's the EuroCompass identity, not
+   something worth reinventing per-version.
+
+   What IS new here is v2's own signature: a verified-teal accent used
+   ONLY for things that are genuinely new to v2 (validated data, the
+   trust strip, recommendation seals, confidence indicators) — gold
+   keeps its original, narrower meaning (the single best rate), so the
+   two colors stay meaningful rather than competing decorations. */
+
+:root {
+  --v2-teal: #0E6E5C;
+  --v2-teal-deep: #0A5346;
+  --v2-teal-light: #E7F3EF;
+}
+
+.brand-mark { background: var(--v2-teal) !important; }
+
+.currency-toggle {
+  display: flex;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+}
+.currency-btn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 7px 16px;
+  cursor: pointer;
+}
+.currency-btn.active {
+  background: var(--v2-teal);
+  color: #fff;
+}
+
+/* Trust strip — v2's structural signature element. Built entirely from
+   real numbers already in the export (banks reporting, average
+   confidence) — no invented score, just made visible and prominent
+   instead of buried in a mid-page card. */
+.trust-strip {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  background: var(--v2-teal-deep);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  padding: 14px 24px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.trust-seal {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14.5px;
+}
+.trust-seal svg { flex-shrink: 0; }
+.trust-stat {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.85);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.trust-stat b { color: #fff; font-weight: 600; }
+.trust-divider { width: 1px; height: 16px; background: rgba(255,255,255,0.25); }
+
+/* Confidence dots — a small graphic reinforcement used everywhere
+   confidence is shown, so the "this is real per-observation
+   confidence, not a vibe" story is visually consistent, not just a
+   colored word. */
+.conf-dots { display: inline-flex; gap: 3px; vertical-align: middle; margin-right: 5px; }
+.conf-dots span { width: 5px; height: 5px; border-radius: 50%; background: var(--border); }
+.conf-dots.high span:nth-child(-n+3) { background: var(--success); }
+.conf-dots.medium span:nth-child(-n+2) { background: var(--gold); }
+.conf-dots.low span:nth-child(-n+1) { background: var(--danger); }
+
+/* Recommendation cards — redesigned as the page's visual centerpiece,
+   not a mid-scroll section that looks like everything else. Teal seal
+   corner, larger identity, explanation set as an italic pull-quote
+   rather than plain body copy. */
+.rec-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.rec-card {
+  position: relative;
+  padding: 28px 26px 24px;
+  display: flex;
+  flex-direction: column;
+  border: 1.5px solid var(--v2-teal-light);
+  overflow: hidden;
+}
+.rec-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--v2-teal);
+}
+.rec-card.rec-card-active {
+  border-color: var(--v2-teal);
+  box-shadow: var(--shadow-hover);
+}
+.rec-seal {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--v2-teal);
+  background: var(--v2-teal-light);
+  border-radius: 999px;
+  padding: 4px 10px 4px 8px;
+  margin-bottom: 16px;
+  width: fit-content;
+}
+.rec-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.rec-amount {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.rec-confidence {
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.rec-bank-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 8px;
+}
+.rec-bank-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+}
+.rec-total {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.rec-savings {
+  font-size: 12px;
+  color: var(--success);
+  font-weight: 500;
+  margin-bottom: 18px;
+}
+.rec-explanation {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.65;
+  margin: 0 0 18px;
+  padding: 0 0 18px 14px;
+  border-left: 2.5px solid var(--v2-teal-light);
+  border-bottom: 1px solid var(--border);
+}
+.rec-alts-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+.rec-alt-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  padding: 6px 0;
+}
+.rec-alt-diff {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
+
+/* Calculator */
+.calc-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  background: var(--bg-alt);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin-bottom: 18px;
+}
+
+/* Trends grid: 3 cards here (confidence, volatility, trend list),
+   not v1's 4-column layout — the trend list needs the most room. */
+#trendsGrid.mi-grid {
+  grid-template-columns: 0.8fr 0.8fr 1.6fr;
+}
+
+@media (max-width: 1100px) {
+  .rec-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 900px) {
+  #trendsGrid.mi-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 720px) {
+  .rec-grid { grid-template-columns: 1fr; }
+  #trendsGrid.mi-grid { grid-template-columns: 1fr; }
+  .currency-btn { padding: 7px 12px; }
+  .trust-strip { gap: 14px; padding: 14px 18px; }
+  .trust-divider { display: none; }
+}

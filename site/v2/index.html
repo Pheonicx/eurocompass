@@ -1,229 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>EuroCompass v2.0 — Preview</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EuroCompass — Cross-Border Financial Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#FBF8F3; --bg-alt:#F3ECDD; --ink:#14213D;
-    --text-secondary:#5B6472; --text-muted:#8B8578;
-    --gold:#B8862F; --gold-deep:#8F6A24; --gold-light:#FBF1DD;
-    --border:#EAE3D6; --white:#FFFFFF;
-    --success:#3F7A57; --success-light:#EDF5EF;
-    --warn:#8F6A24; --warn-light:#FBF1DD;
-    --radius-card:20px; --radius-sm:12px;
-    --shadow-card:0 1px 2px rgba(20,33,61,0.04), 0 12px 32px rgba(20,33,61,0.07);
-    --font-display:'Fraunces', serif; --font-sans:'Inter', sans-serif; --font-mono:'JetBrains Mono', monospace;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{background:var(--bg-alt);font-family:var(--font-sans);color:var(--ink);-webkit-font-smoothing:antialiased;}
-  .shell{max-width:960px;margin:0 auto;padding:0 24px 80px;}
-
-  .preview-banner{background:var(--ink);color:#fff;text-align:center;font-size:13px;padding:9px 16px;font-family:var(--font-mono);}
-  .preview-banner b{color:var(--gold);}
-
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:28px 0 20px;}
-  .brand{display:flex;align-items:center;gap:10px;}
-  .brand-mark{width:34px;height:34px;border-radius:9px;background:var(--ink);display:flex;align-items:center;justify-content:center;color:var(--gold);font-family:var(--font-display);font-weight:600;}
-  .brand-name{font-family:var(--font-display);font-weight:600;font-size:19px;}
-  .brand-name span{color:var(--gold);}
-  .updated{font-size:12px;color:var(--text-muted);font-family:var(--font-mono);}
-
-  h1{font-family:var(--font-display);font-weight:600;font-size:28px;margin:8px 0 4px;}
-  .subtitle{color:var(--text-secondary);font-size:14.5px;line-height:1.6;margin:0 0 28px;max-width:620px;}
-
-  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:24px 26px;margin-bottom:20px;}
-  .card h2{font-family:var(--font-display);font-size:18px;margin:0 0 16px;font-weight:600;}
-
-  table{width:100%;border-collapse:collapse;font-size:14px;}
-  th{text-align:left;color:var(--text-muted);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.03em;padding:0 10px 10px;}
-  td{padding:12px 10px;border-top:1px solid var(--border);}
-  tr:first-child td{font-weight:600;}
-  .best-badge{display:inline-block;background:var(--success-light);color:var(--success);font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;margin-left:8px;}
-  .stale-badge{display:inline-block;background:var(--warn-light);color:var(--warn-deep,var(--warn));font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;margin-left:6px;}
-  .mono{font-family:var(--font-mono);}
-
-  .rec-card{border:1px solid var(--gold);background:var(--gold-light);border-radius:var(--radius-sm);padding:18px 20px;margin-bottom:14px;}
-  .rec-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
-  .rec-amount{font-family:var(--font-mono);font-size:13px;color:var(--gold-deep);}
-  .rec-bank{font-family:var(--font-display);font-size:19px;font-weight:600;color:var(--ink);}
-  .rec-cost{font-family:var(--font-mono);font-size:15px;font-weight:600;}
-  .rec-explanation{font-size:13.5px;line-height:1.65;color:var(--text-secondary);margin:0 0 12px;}
-  .confidence-pill{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;text-transform:capitalize;}
-  .confidence-high{background:var(--success-light);color:var(--success);}
-  .confidence-medium{background:var(--warn-light);color:var(--warn-deep,var(--warn));}
-  .confidence-low{background:#FBEFF2;color:#B23A63;}
-
-  .alt-list{font-size:13px;color:var(--text-secondary);margin-top:10px;}
-  .alt-row{display:flex;justify-content:space-between;padding:6px 0;border-top:1px dashed var(--border);}
-
-  .empty-state, .error-state{text-align:center;padding:50px 20px;color:var(--text-secondary);}
-  #loading{text-align:center;padding:60px 20px;color:var(--text-muted);font-size:14px;}
-  #app{display:none;}
-  #errorScreen{display:none;text-align:center;padding:60px 20px;}
-  #errorScreen h2{font-family:var(--font-display);font-size:20px;}
-  #errorScreen p{color:var(--text-secondary);font-size:14px;max-width:420px;margin:8px auto 0;line-height:1.6;}
-
-  footer{margin-top:30px;font-size:12px;color:var(--text-muted);text-align:center;line-height:1.7;}
-  footer a{color:var(--gold-deep);}
-</style>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="preview-banner">
-  🚧 <b>EuroCompass v2.0 — Preview</b> — new intelligence layer, not the live site. Your current dashboard is unaffected.
+<div id="loadingScreen"><div class="spinner"></div><p>Loading live rates and recommendations…</p></div>
+
+<div id="errorScreen">
+  <h2>Couldn't load live data</h2>
+  <p id="errorDetail"></p>
+  <button onclick="location.reload()">Try again</button>
 </div>
 
-<div class="shell">
-  <div class="nav">
-    <div class="brand">
-      <div class="brand-mark">€</div>
-      <div class="brand-name">EuroCompass <span>v2</span></div>
+<div id="app">
+  <div class="ticker-wrap"><div class="ticker-track" id="tickerTrack"></div></div>
+
+  <div class="shell">
+
+    <nav class="nav">
+      <div class="brand">
+        <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="1.6"/><path d="M12 7L14 12L12 17L10 12L12 7Z" fill="white"/></svg></div>
+        <span class="brand-name">EuroCompass</span>
+      </div>
+      <div class="nav-links">
+        <a class="nav-link active" href="#">Overview</a>
+        <a class="nav-link" href="#calc-section">Transfer</a>
+        <a class="nav-link" href="#student-section">Student rates</a>
+        <a class="nav-link" href="#forecast-section">Forecast</a>
+        <a class="nav-link" href="#hist-section">History</a>
+      </div>
+      <div class="nav-right">
+        <div class="currency-toggle">
+          <button class="currency-btn active" data-currency="EUR">€ EUR</button>
+          <button class="currency-btn" data-currency="USD">$ USD</button>
+        </div>
+        <span class="updated" id="updatedStamp"></span>
+        <button class="refresh-btn" id="refreshBtn">Refresh</button>
+      </div>
+    </nav>
+
+    <div class="trust-strip" id="trustStrip">
+      <div class="trust-seal">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M12 3l2.4 1.4L17 4l.6 2.6L20 8l-1.4 2.4L20 13l-2.4 1L17 17l-2.6-.6L12 18l-2.4-1.4L7 17l-.6-2.6L4 13l1.4-2.4L4 8l2.4-1L7 4l2.6.6L12 3Z" stroke="white" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        Every rate below passed real validation
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-stat" id="trustBanksStat">—</div>
+      <div class="trust-divider"></div>
+      <div class="trust-stat" id="trustConfidenceStat">—</div>
+      <div class="trust-divider"></div>
+      <div class="trust-stat" id="trustStaleStat">—</div>
     </div>
-    <div class="updated" id="updatedAt"></div>
-  </div>
 
-  <div id="loading">Loading the latest rates…</div>
+    <div class="insight-banner">
+      <div class="insight-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5L5.7 21l2.3-7.2-6-4.6h7.6L12 2Z" stroke="white" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+      <div class="insight-text" id="insightText">—</div>
+    </div>
 
-  <div id="errorScreen">
-    <h2>Couldn't load rate data</h2>
-    <p>This page reads <code>v2_exports/latest.json</code>. That file only exists once the new collection pipeline has actually run — this is expected until then.</p>
-  </div>
+    <div class="mode-bar">
+      <span class="mode-bar-label">I want to</span>
+      <button class="mode-btn active" data-mode="send">
+        <span class="m-title">Send money abroad</span>
+        <span class="m-sub">Buy foreign currency with BDT — uses TT selling rate</span>
+      </button>
+      <button class="mode-btn" data-mode="convert">
+        <span class="m-title">Convert to BDT</span>
+        <span class="m-sub">Sell foreign currency for BDT — uses TT buying rate</span>
+      </button>
+    </div>
 
-  <div id="app">
-    <h1>Which bank should you use today?</h1>
-    <p class="subtitle">
-      Every recommendation below explains itself — the exact numbers behind it, whether fees were verified, and how confident EuroCompass is. Nothing here is hidden or guessed silently.
-    </p>
+    <div class="hero">
+      <div class="best-card" id="heroBestCard"></div>
+      <div class="rank-hero-card">
+        <div class="rank-hero-head">
+          <span class="rank-hero-title">Bank comparison</span>
+          <span class="rank-hero-caption" id="rankCaption"></span>
+        </div>
+        <div class="rank-card">
+          <table class="rank-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Bank</th>
+                <th class="num">Buy</th>
+                <th class="num hl" id="rankSellHead">Sell</th>
+                <th class="num">Student rate</th>
+                <th class="num">vs. best</th>
+                <th class="num">Confidence</th>
+              </tr>
+            </thead>
+            <tbody id="rankTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-    <div id="recommendations"></div>
+    <div class="section">
+      <div class="section-head">
+        <h2 class="section-title">Recommendations</h2>
+        <span class="section-caption">Real, explained recommendations for common transfer amounts — validated, not guessed</span>
+      </div>
+      <div class="rec-grid" id="recommendationsGrid"></div>
+    </div>
 
-    <div id="ratesSection"></div>
+    <div class="section">
+      <div class="section-head">
+        <h2 class="section-title">Market intelligence</h2>
+        <span class="section-caption">Assessed against recent rate history — nothing here is predicted or fabricated</span>
+      </div>
+      <div class="mi-grid">
+        <div class="card mi-card">
+          <div class="mi-label">Opportunity score</div>
+          <div class="gauge-wrap">
+            <svg width="68" height="68" viewBox="0 0 72 72">
+              <circle cx="36" cy="36" r="30" fill="none" stroke="#F3ECDD" stroke-width="8"/>
+              <circle id="gaugeArc" class="gauge-arc" cx="36" cy="36" r="30" fill="none" stroke="#B8862F" stroke-width="8" stroke-linecap="round" transform="rotate(-90 36 36)"/>
+            </svg>
+            <div><div class="gauge-num" id="gaugeNum">—</div><div class="gauge-sub">/ 100 — how much wider than usual today's spread is</div></div>
+          </div>
+        </div>
+        <div class="card mi-card">
+          <div class="mi-label">Market health</div>
+          <div class="health-badge" id="healthBadge"><span class="health-dot"></span><span id="healthLabel">—</span></div>
+          <div class="health-note" id="healthNote">—</div>
+        </div>
+        <div class="card mi-card">
+          <div class="mi-label">Data confidence</div>
+          <div class="confidence-num" id="confidenceNum">—</div>
+          <div class="meter-track"><div class="meter-fill" id="confFill"></div></div>
+        </div>
+        <div class="card mi-card">
+          <div class="mi-label">Why this recommendation</div>
+          <ul class="reasons-list" id="reasonsList"></ul>
+        </div>
+      </div>
+    </div>
 
-    <footer>
-      Generated by EuroCompass's v2.0 data pipeline — see
-      <a href="https://github.com/Pheonicx/eurocompass/blob/v2-dev/V2_PROGRESS.md" target="_blank" rel="noopener">V2_PROGRESS.md</a>
-      for exactly what's been verified so far and what hasn't.
-    </footer>
+    <div class="section">
+      <div class="section-head">
+        <h2 class="section-title">Exchange rate snapshot</h2>
+        <span class="section-caption">TT buying and selling rates, by bank — today's actual values, labeled</span>
+      </div>
+      <div class="charts-grid">
+        <div class="card chart-card">
+          <span class="chart-card-title">TT buying rate</span>
+          <div class="legend-row" id="buyBarLegend" style="margin:10px 0 12px;"></div>
+          <div id="buyBarChart"></div>
+        </div>
+        <div class="card chart-card">
+          <span class="chart-card-title">TT selling rate <span class="active-tag" id="barActiveTag">Active for your mode</span></span>
+          <div class="legend-row" id="sellBarLegend" style="margin:10px 0 12px;"></div>
+          <div id="sellBarChart"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="calc-section">
+      <div class="section-head">
+        <h2 class="section-title">Transfer calculator</h2>
+        <span class="section-caption">Any amount, computed live from current rates</span>
+      </div>
+      <div class="card calc-card">
+        <div class="calc-top">
+          <div class="calc-input-block">
+            <span class="calc-label">Amount to send</span>
+            <div class="calc-input-row">
+              <select class="calc-currency-select" id="calcCurrency">
+                <option value="EUR">EUR</option>
+                <option value="USD">USD</option>
+              </select>
+              <input class="calc-input" id="calcAmount" type="number" value="1000" min="0" step="1">
+            </div>
+            <div class="student-toggle-wrap" id="calcStudentWrap">
+              <label class="toggle-switch">
+                <input type="checkbox" id="calcStudentToggle">
+                <span class="toggle-slider"></span>
+              </label>
+              <div class="student-toggle-text">
+                <span class="student-toggle-label">Use student file rate</span>
+                <span class="student-toggle-note">Only applied when sending, for banks that publish one</span>
+              </div>
+            </div>
+          </div>
+          <div id="calcResultTiles" class="calc-results"></div>
+        </div>
+
+        <div class="fees-block">
+          <div class="fees-head">
+            <div><div class="fees-title">Additional costs</div><div class="fees-caption">Transfer fees, student file charges — anything on top of the exchange itself</div></div>
+            <button class="add-fee-btn" id="addFeeBtn">+ Add cost</button>
+          </div>
+          <div id="feeRows"></div>
+          <div class="fee-note">Fees convert at the bank's own live rate for the transfer's currency, or an approximate ৳121.50/USD reference rate otherwise — not a live tracked rate.</div>
+        </div>
+
+        <div class="vat-block">
+          <div class="vat-head">
+            <div class="vat-title">VAT</div>
+            <div class="vat-caption">Always calculated as a percentage, applied to whichever base you choose</div>
+          </div>
+          <div class="vat-row">
+            <div class="vat-pct-wrap"><input type="number" id="vatPercent" value="15" min="0" step="0.5"><span>%</span></div>
+            <select id="vatBasis">
+              <option value="transfer" selected>of the transfer amount</option>
+              <option value="fees">of the other added costs</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <h2 class="section-title">Cost by bank</h2>
+        <span class="section-caption">Your entered amount plus all added costs, at every bank</span>
+      </div>
+      <div class="card rank-card">
+        <div id="calcResults"></div>
+      </div>
+    </div>
+
+    <div class="section" id="student-section">
+      <div class="section-head">
+        <h2 class="section-title">Student file rates</h2>
+        <span class="section-caption">Preferential rates some banks publish specifically for education-related transfers, where available</span>
+      </div>
+      <div class="card rank-card">
+        <table class="rank-table">
+          <thead>
+            <tr><th>Bank</th><th class="num">Student rate</th><th class="num">Savings vs normal rate</th></tr>
+          </thead>
+          <tbody id="studentTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="forecast-section">
+      <div class="section-head">
+        <h2 class="section-title">Rate forecast</h2>
+        <span class="section-caption">A simple trend projection, not a guarantee — see the note below the chart</span>
+      </div>
+      <div class="card forecast-card">
+        <div class="legend-row" id="forecastLegend"></div>
+        <div id="forecastChartWrap" style="margin-top:12px;"></div>
+        <div class="forecast-summary" id="forecastSummary"></div>
+      </div>
+    </div>
+
+    <div class="section" id="hist-section" style="margin-bottom:0;">
+      <div class="section-head">
+        <h2 class="section-title">Historical rates</h2>
+        <span class="section-caption" id="histCaption"></span>
+      </div>
+      <div class="card hist-card">
+        <div class="chart-card-title">
+          <div class="legend-row" id="histLegend"></div>
+        </div>
+        <div id="histChartWrap"></div>
+      </div>
+    </div>
+
+    <div class="data-note">Live data from <a href="https://github.com/Pheonicx/eurocompass" target="_blank" rel="noopener">github.com/Pheonicx/eurocompass</a>, refreshed automatically by GitHub Actions.</div>
+    <footer>Built by students, for students. Not a bank or financial advisor — always confirm final costs directly with the bank before transferring.</footer>
+
   </div>
 </div>
 
-<script>
-const EXPORT_URL = "https://raw.githubusercontent.com/Pheonicx/eurocompass/main/v2_exports/latest.json";
-
-function fmtBDT(n) {
-  return Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
-
-function confidencePill(level) {
-  return `<span class="confidence-pill confidence-${level}">${level} confidence</span>`;
-}
-
-function renderRecommendation(rec) {
-  const alts = rec.alternatives.map(a => `
-    <div class="alt-row">
-      <span>${a.bank_name}</span>
-      <span class="mono">+${fmtBDT(a.extra_cost_vs_recommended_bdt)} BDT</span>
-    </div>
-  `).join("");
-
-  return `
-    <div class="rec-card">
-      <div class="rec-head">
-        <div>
-          <div class="rec-amount">${fmtBDT(rec.requested_amount)} ${rec.currency} · ${rec.product_id}</div>
-          <div class="rec-bank">${rec.recommended_bank_name}<span class="best-badge">Best option</span></div>
-        </div>
-        <div style="text-align:right">
-          <div class="rec-cost">${fmtBDT(rec.total_cost_bdt)} BDT</div>
-          ${confidencePill(rec.confidence)}
-        </div>
-      </div>
-      <p class="rec-explanation">${rec.explanation}</p>
-      <div class="alt-list">
-        <strong style="font-size:12px;color:var(--text-muted);">OTHER OPTIONS</strong>
-        ${alts}
-      </div>
-    </div>
-  `;
-}
-
-function renderRatesTable(rates) {
-  if (!rates || rates.length === 0) return "";
-  const cheapestSell = Math.min(...rates.map(r => r.sell));
-  return rates.map(r => `
-    <tr>
-      <td>${r.bank_name}${r.sell === cheapestSell ? '<span class="best-badge">Lowest sell</span>' : ''}${r.is_stale ? '<span class="stale-badge">Stale</span>' : ''}</td>
-      <td class="mono">${r.buy.toFixed(4)}</td>
-      <td class="mono">${r.sell.toFixed(4)}</td>
-      <td style="text-transform:capitalize;">${r.confidence}</td>
-    </tr>
-  `).join("");
-}
-
-// Builds one rates card per currency actually present in the export —
-// NOT hardcoded to EUR. USD (or any future currency) shows up here
-// automatically the moment it has real data, with no code change needed.
-function renderRatesSection(ratesByCurrency) {
-  const currencies = Object.keys(ratesByCurrency || {});
-  if (currencies.length === 0) {
-    return '<div class="card"><div class="empty-state">No rate data available yet.</div></div>';
-  }
-
-  // A stable, sensible display order for the currencies we know about
-  // today, with any future/unexpected currency still shown (just after
-  // the known ones) rather than silently dropped.
-  const preferredOrder = ["EUR", "USD"];
-  const ordered = [
-    ...preferredOrder.filter(c => currencies.includes(c)),
-    ...currencies.filter(c => !preferredOrder.includes(c)).sort(),
-  ];
-
-  return ordered.map(currency => `
-    <div class="card">
-      <h2>Current ${currency} rates by bank</h2>
-      <table>
-        <thead>
-          <tr><th>Bank</th><th>Buy</th><th>Sell</th><th>Confidence</th></tr>
-        </thead>
-        <tbody>
-          ${renderRatesTable(ratesByCurrency[currency]) || '<tr><td colspan="4" class="empty-state">No data yet.</td></tr>'}
-        </tbody>
-      </table>
-    </div>
-  `).join("");
-}
-
-fetch(EXPORT_URL)
-  .then(res => {
-    if (!res.ok) throw new Error("Export file not found (HTTP " + res.status + ")");
-    return res.json();
-  })
-  .then(data => {
-    document.getElementById("loading").style.display = "none";
-    document.getElementById("app").style.display = "block";
-
-    const generated = new Date(data.generated_at);
-    document.getElementById("updatedAt").textContent = "Updated " + generated.toLocaleString();
-
-    document.getElementById("recommendations").innerHTML =
-      data.recommendations.length
-        ? data.recommendations.map(renderRecommendation).join("")
-        : '<div class="empty-state">No recommendations available yet.</div>';
-
-    document.getElementById("ratesSection").innerHTML =
-      renderRatesSection(data.rates_by_currency);
-  })
-  .catch(err => {
-    document.getElementById("loading").style.display = "none";
-    document.getElementById("errorScreen").style.display = "block";
-    console.error("EuroCompass v2 export load failed:", err);
-  });
-</script>
-
+<script type="module" src="js/main.js"></script>
 </body>
 </html>
