@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-02T18:27:09.861629+00:00",
+  "generated_at": "2026-08-02T18:30:59.026459+00:00",
   "rates_by_currency": {
     "EUR": [
       {
@@ -20,9 +20,7 @@
         "confidence": "low",
         "is_stale": true,
         "collected_at": "2026-08-02T18:25:06.676326+00:00",
-        "student_rate": {
-          "rate": 143.905
-        }
+        "student_rate": 143.905
       },
       {
         "bank_id": "PRIME",
@@ -32,9 +30,7 @@
         "confidence": "low",
         "is_stale": true,
         "collected_at": "2026-08-02T18:27:05.232382+00:00",
-        "student_rate": {
-          "rate": 143.0605
-        }
+        "student_rate": 143.0605
       },
       {
         "bank_id": "CITY",
@@ -44,9 +40,7 @@
         "confidence": "low",
         "is_stale": true,
         "collected_at": "2026-08-02T18:26:44.440154+00:00",
-        "student_rate": {
-          "rate": 143.74
-        }
+        "student_rate": 143.74
       },
       {
         "bank_id": "EBL",
@@ -68,9 +62,7 @@
         "confidence": "low",
         "is_stale": true,
         "collected_at": "2026-08-02T18:26:44.440172+00:00",
-        "student_rate": {
-          "rate": 123.95
-        }
+        "student_rate": 123.95
       },
       {
         "bank_id": "SONALI",
@@ -90,9 +82,7 @@
         "confidence": "low",
         "is_stale": true,
         "collected_at": "2026-08-02T18:25:06.676349+00:00",
-        "student_rate": {
-          "rate": 124.4
-        }
+        "student_rate": 124.4
       },
       {
         "bank_id": "EBL",
@@ -112,9 +102,7 @@
         "confidence": "low",
         "is_stale": true,
         "collected_at": "2026-08-02T18:27:05.232398+00:00",
-        "student_rate": {
-          "rate": 123.98
-        }
+        "student_rate": 123.98
       }
     ]
   },

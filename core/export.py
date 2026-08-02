@@ -107,7 +107,11 @@ def build_export(
                     "confidence": o.confidence.value,
                     "is_stale": o.is_stale,
                     "collected_at": o.collected_at.isoformat(),
-                    "student_rate": o.metadata.get("student_rate"),
+                    # find_student_rate() (utils/pdf_utils.py) returns a
+                    # dict like {"rate": 143.86}, not a plain number --
+                    # unwrap it here so downstream consumers (the
+                    # dashboard) get a plain float, not a raw dict.
+                    "student_rate": (o.metadata.get("student_rate") or {}).get("rate"),
                 }
                 for o in sorted(observations, key=lambda o: o.sell)
             ]

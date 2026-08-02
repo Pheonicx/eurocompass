@@ -193,7 +193,11 @@ def test_student_rate_included_when_present():
             bank_id="BRAC", currency="EUR", product_id="TT",
             buy=139.0, sell=142.0, collected_at=utc_now(),
             source_type=SourceType.PDF, confidence=Confidence.HIGH,
-            metadata={"student_rate": 140.5},
+            # find_student_rate() (utils/pdf_utils.py) returns a dict
+            # like {"rate": X}, not a plain float -- this is the real
+            # shape metadata["student_rate"] actually has in production
+            # (confirmed via a real live collection run).
+            metadata={"student_rate": {"rate": 140.5}},
         )
         observation_store.append(obs, storage_dir=tmp_path)
 
