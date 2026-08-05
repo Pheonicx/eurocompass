@@ -1,5 +1,11 @@
 {
   "CITY": {
     "alerted_for_last_success_at": "2026-07-16T01:13:35.155179+00:00"
+  },
+  "EBL": {
+    "alerted_for_last_success_at": "2026-08-05T01:12:11.972870+00:00"
+  },
+  "SONALI": {
+    "alerted_for_last_success_at": "2026-08-05T01:15:22.346539+00:00"
   }
 }
