@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-05T03:39:09.685970+00:00",
+  "generated_at": "2026-08-05T06:48:15.311091+00:00",
   "rates_by_currency": {
     "EUR": [
       {
@@ -19,7 +19,7 @@
         "sell": 143.7796,
         "confidence": "low",
         "is_stale": true,
-        "collected_at": "2026-08-05T03:39:03.593982+00:00",
+        "collected_at": "2026-08-05T06:48:10.187673+00:00",
         "student_rate": 142.7878
       },
       {
@@ -29,7 +29,7 @@
         "sell": 144.0806,
         "confidence": "low",
         "is_stale": true,
-        "collected_at": "2026-08-05T03:39:09.587375+00:00",
+        "collected_at": "2026-08-05T06:48:15.245714+00:00",
         "student_rate": null
       },
       {
@@ -101,7 +101,7 @@
         "sell": 123.98,
         "confidence": "low",
         "is_stale": true,
-        "collected_at": "2026-08-05T03:39:03.593998+00:00",
+        "collected_at": "2026-08-05T06:48:10.187692+00:00",
         "student_rate": 123.98
       }
     ]
@@ -147,26 +147,26 @@
       {
         "bank_id": "PRIME",
         "bank_name": "Prime Bank PLC",
-        "sample_size": 261,
-        "average_sell": 142.7528,
+        "sample_size": 262,
+        "average_sell": 142.7567,
         "lowest_sell": 141.9536,
         "highest_sell": 144.0648,
-        "volatility": 0.5078,
+        "volatility": 0.5107,
         "direction": "rising",
         "change_pct": 1.17,
-        "description": "Over the last 261 observations, PRIME's EUR TT sell rate has risen 1.2%, averaging 142.7528 (range 141.9536\u2013144.0648)."
+        "description": "Over the last 262 observations, PRIME's EUR TT sell rate has risen 1.2%, averaging 142.7567 (range 141.9536\u2013144.0648)."
       },
       {
         "bank_id": "SONALI",
         "bank_name": "Sonali Bank PLC",
-        "sample_size": 193,
-        "average_sell": 143.0013,
+        "sample_size": 194,
+        "average_sell": 143.0068,
         "lowest_sell": 142.2131,
         "highest_sell": 144.0806,
-        "volatility": 0.4346,
+        "volatility": 0.4403,
         "direction": "rising",
         "change_pct": 0.85,
-        "description": "Over the last 193 observations, SONALI's EUR TT sell rate has risen 0.8%, averaging 143.0013 (range 142.2131\u2013144.0806)."
+        "description": "Over the last 194 observations, SONALI's EUR TT sell rate has risen 0.8%, averaging 143.0068 (range 142.2131\u2013144.0806)."
       }
     ],
     "USD": [
@@ -209,14 +209,14 @@
       {
         "bank_id": "PRIME",
         "bank_name": "Prime Bank PLC",
-        "sample_size": 21,
+        "sample_size": 22,
         "average_sell": 123.98,
         "lowest_sell": 123.98,
         "highest_sell": 123.98,
         "volatility": 0.0,
         "direction": "stable",
         "change_pct": 0.0,
-        "description": "Over the last 21 observations, PRIME's USD TT sell rate has stayed roughly flat (within 0.0%), averaging 123.9800 (range 123.9800\u2013123.9800)."
+        "description": "Over the last 22 observations, PRIME's USD TT sell rate has stayed roughly flat (within 0.0%), averaging 123.9800 (range 123.9800\u2013123.9800)."
       },
       {
         "bank_id": "SONALI",
@@ -1402,11 +1402,6 @@
         "bank_name": "Prime Bank PLC",
         "points": [
           {
-            "collected_at": "2026-07-27T21:01:02+00:00",
-            "buy": 139.4253,
-            "sell": 142.4805
-          },
-          {
             "collected_at": "2026-07-27T22:01:12+00:00",
             "buy": 139.4253,
             "sell": 142.4805
@@ -1850,6 +1845,11 @@
             "collected_at": "2026-08-05T03:39:03.593982+00:00",
             "buy": 140.7137,
             "sell": 143.7796
+          },
+          {
+            "collected_at": "2026-08-05T06:48:10.187673+00:00",
+            "buy": 140.7137,
+            "sell": 143.7796
           }
         ]
       },
@@ -1857,11 +1857,6 @@
         "bank_id": "SONALI",
         "bank_name": "Sonali Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-07-25T12:01:31+00:00",
-            "buy": 140.393,
-            "sell": 142.9762
-          },
           {
             "collected_at": "2026-07-25T13:21:01+00:00",
             "buy": 140.393,
@@ -2306,6 +2301,11 @@
             "collected_at": "2026-08-05T03:39:09.587375+00:00",
             "buy": 141.4909,
             "sell": 144.0806
+          },
+          {
+            "collected_at": "2026-08-05T06:48:15.245714+00:00",
+            "buy": 141.4909,
+            "sell": 144.0806
           }
         ]
       }
@@ -2705,6 +2705,11 @@
           },
           {
             "collected_at": "2026-08-05T03:39:03.593998+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-05T06:48:10.187692+00:00",
             "buy": 122.98,
             "sell": 123.98
           }
