@@ -29,7 +29,7 @@ permissions:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 18
 
     steps:
       - name: 📥 Checkout v2-dev branch
