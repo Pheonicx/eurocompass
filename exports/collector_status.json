@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-08-07T21:25:31.571734+00:00",
-    "last_status": "ok",
+    "last_checked_at": "2026-08-07T22:22:23.166442+00:00",
+    "last_status": "failed",
     "last_success_at": "2026-08-07T21:25:31.571734+00:00",
     "last_buy": 140.12,
     "last_sell": 145.0,
-    "last_failure_reason": null
+    "last_failure_reason": "Collector returned no data"
   },
   "CITY": {
-    "last_checked_at": "2026-08-07T21:28:28.340215+00:00",
+    "last_checked_at": "2026-08-07T22:25:19.501024+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,27 +16,27 @@
     "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-08-07T21:28:31.134539+00:00",
+    "last_checked_at": "2026-08-07T22:25:22.148001+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-08-07T21:28:31.134539+00:00",
+    "last_success_at": "2026-08-07T22:25:22.148001+00:00",
     "last_buy": 141.4162,
     "last_sell": 144.2124
   },
   "PRIME": {
-    "last_checked_at": "2026-08-07T21:28:37.704711+00:00",
-    "last_status": "ok",
+    "last_checked_at": "2026-08-07T22:25:42.442206+00:00",
+    "last_status": "failed",
     "last_success_at": "2026-08-07T21:28:37.704711+00:00",
     "last_buy": 141.3286,
     "last_sell": 144.3995,
-    "last_failure_reason": null
+    "last_failure_reason": "Collector returned no data"
   },
   "SONALI": {
-    "last_checked_at": "2026-08-07T21:28:47.190159+00:00",
-    "last_status": "ok",
+    "last_checked_at": "2026-08-07T22:26:30.919654+00:00",
+    "last_status": "failed",
     "last_success_at": "2026-08-07T21:28:47.190159+00:00",
     "last_buy": 141.9827,
     "last_sell": 144.5939,
-    "last_failure_reason": null
+    "last_failure_reason": "Collector returned no data"
   }
 }
