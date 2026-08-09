@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-08-09T14:21:40.217810+00:00",
-    "last_status": "failed",
-    "last_success_at": "2026-08-09T12:20:28.870241+00:00",
+    "last_checked_at": "2026-08-09T15:18:18.050694+00:00",
+    "last_status": "ok",
+    "last_success_at": "2026-08-09T15:18:18.050694+00:00",
     "last_buy": 140.14,
     "last_sell": 145.01,
-    "last_failure_reason": "Collector returned no data"
+    "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-08-09T14:24:33.154207+00:00",
+    "last_checked_at": "2026-08-09T15:21:15.943569+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,25 +16,25 @@
     "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-08-09T14:24:36.316924+00:00",
+    "last_checked_at": "2026-08-09T15:21:18.431555+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-08-09T14:24:36.316924+00:00",
+    "last_success_at": "2026-08-09T15:21:18.431555+00:00",
     "last_buy": 141.5277,
     "last_sell": 144.3141
   },
   "PRIME": {
-    "last_checked_at": "2026-08-09T14:24:42.913503+00:00",
+    "last_checked_at": "2026-08-09T15:21:25.531498+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-08-09T14:24:42.913503+00:00",
+    "last_success_at": "2026-08-09T15:21:25.531498+00:00",
     "last_buy": 141.3187,
     "last_sell": 144.3894,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-08-09T14:24:45.226694+00:00",
+    "last_checked_at": "2026-08-09T15:21:27.373979+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-08-09T14:24:45.226694+00:00",
+    "last_success_at": "2026-08-09T15:21:27.373979+00:00",
     "last_buy": 142.1056,
     "last_sell": 144.7065,
     "last_failure_reason": null
