@@ -1,0 +1,52 @@
+name: Deploy Dashboard to GitHub Pages
+
+# Deploys site/ as-is to GitHub Pages. Since GitHub Pages serves the
+# uploaded folder's structure directly, this needs zero code changes to
+# either dashboard:
+#   https://<user>.github.io/eurocompass/     -> site/index.html   (v1)
+#   https://<user>.github.io/eurocompass/v2/  -> site/v2/index.html (v2)
+# v2's index.html references "../styles.css" relatively, which
+# resolves correctly here because it exactly matches the real
+# site/v2/ -> site/ folder relationship in the repo.
+#
+# Unlike the existing Cloudflare Worker preview (which needs a manual
+# `wrangler deploy` to pick up new code), this redeploys automatically
+# on every push to v2-dev that touches site/ -- exactly the gap that
+# made the Worker preview unreliable for checking current work.
+
+on:
+  push:
+    branches: [v2-dev]
+    paths:
+      - "site/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 📥 Checkout v2-dev branch
+        uses: actions/checkout@v4
+        with:
+          ref: v2-dev
+
+      - name: 📦 Upload site/ as the Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: 🚀 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
