@@ -1,108 +1,108 @@
 {
-  "generated_at": "2026-08-06T15:33:53.378398+00:00",
+  "generated_at": "2026-08-09T10:01:25.204076+00:00",
   "rates_by_currency": {
     "EUR": [
       {
         "bank_id": "BRAC",
         "bank_name": "BRAC Bank PLC",
-        "buy": 141.4162,
-        "sell": 144.2124,
+        "buy": 141.5277,
+        "sell": 144.3141,
         "confidence": "medium",
         "is_stale": false,
-        "collected_at": "2026-08-06T15:30:56.019930+00:00",
-        "student_rate": 144.1547
+        "collected_at": "2026-08-09T09:59:27.909493+00:00",
+        "student_rate": 144.2563
       },
       {
         "bank_id": "PRIME",
         "bank_name": "Prime Bank PLC",
-        "buy": 141.3286,
-        "sell": 144.3995,
+        "buy": 141.3187,
+        "sell": 144.3894,
         "confidence": "medium",
         "is_stale": false,
-        "collected_at": "2026-08-06T15:32:54.175273+00:00",
-        "student_rate": 143.4077
+        "collected_at": "2026-08-09T10:01:22.877279+00:00",
+        "student_rate": 143.3978
       },
       {
         "bank_id": "SONALI",
         "bank_name": "Sonali Bank PLC",
-        "buy": 141.9827,
-        "sell": 144.5939,
+        "buy": 142.1056,
+        "sell": 144.7065,
         "confidence": "medium",
         "is_stale": false,
-        "collected_at": "2026-08-06T12:23:46.119788+00:00",
+        "collected_at": "2026-08-09T10:01:25.071876+00:00",
+        "student_rate": null
+      },
+      {
+        "bank_id": "EBL",
+        "bank_name": "Eastern Bank PLC",
+        "buy": 140.14,
+        "sell": 145.01,
+        "confidence": "medium",
+        "is_stale": false,
+        "collected_at": "2026-08-09T10:01:17.366230+00:00",
         "student_rate": null
       },
       {
         "bank_id": "CITY",
         "bank_name": "City Bank PLC",
-        "buy": 140.1261,
-        "sell": 144.9843,
+        "buy": 140.2271,
+        "sell": 145.0855,
         "confidence": "low",
         "is_stale": true,
-        "collected_at": "2026-08-06T15:32:32.311293+00:00",
-        "student_rate": 143.98
-      },
-      {
-        "bank_id": "EBL",
-        "bank_name": "Eastern Bank PLC",
-        "buy": 140.12,
-        "sell": 145.0,
-        "confidence": "medium",
-        "is_stale": false,
-        "collected_at": "2026-08-06T15:32:46.261226+00:00",
-        "student_rate": null
+        "collected_at": "2026-08-09T10:01:03.785527+00:00",
+        "student_rate": 144.09
       }
     ],
     "USD": [
       {
-        "bank_id": "CITY",
-        "bank_name": "City Bank PLC",
-        "buy": 122.95,
-        "sell": 123.95,
-        "confidence": "low",
-        "is_stale": true,
-        "collected_at": "2026-08-06T15:32:32.311311+00:00",
-        "student_rate": 123.95
-      },
-      {
         "bank_id": "EBL",
         "bank_name": "Eastern Bank PLC",
-        "buy": 122.95,
-        "sell": 123.95,
+        "buy": 122.85,
+        "sell": 123.85,
         "confidence": "medium",
         "is_stale": false,
-        "collected_at": "2026-08-06T15:32:46.261247+00:00",
+        "collected_at": "2026-08-09T10:01:17.366245+00:00",
         "student_rate": null
       },
       {
-        "bank_id": "SONALI",
-        "bank_name": "Sonali Bank PLC",
-        "buy": 122.95,
-        "sell": 123.95,
-        "confidence": "medium",
-        "is_stale": false,
-        "collected_at": "2026-08-06T12:23:46.119800+00:00",
-        "student_rate": null
+        "bank_id": "CITY",
+        "bank_name": "City Bank PLC",
+        "buy": 122.92,
+        "sell": 123.92,
+        "confidence": "low",
+        "is_stale": true,
+        "collected_at": "2026-08-09T10:01:03.785540+00:00",
+        "student_rate": 123.92
       },
       {
         "bank_id": "BRAC",
         "bank_name": "BRAC Bank PLC",
-        "buy": 122.97,
-        "sell": 123.97,
+        "buy": 122.95,
+        "sell": 123.95,
         "confidence": "medium",
         "is_stale": false,
-        "collected_at": "2026-08-06T15:30:56.019951+00:00",
+        "collected_at": "2026-08-09T09:59:27.909506+00:00",
         "student_rate": 124.4
       },
       {
         "bank_id": "PRIME",
         "bank_name": "Prime Bank PLC",
-        "buy": 122.98,
-        "sell": 123.98,
+        "buy": 122.95,
+        "sell": 123.95,
         "confidence": "medium",
         "is_stale": false,
-        "collected_at": "2026-08-06T15:32:54.175291+00:00",
-        "student_rate": 123.98
+        "collected_at": "2026-08-09T10:01:22.877289+00:00",
+        "student_rate": 123.95
+      },
+      {
+        "bank_id": "SONALI",
+        "bank_name": "Sonali Bank PLC",
+        "buy": 122.95,
+        "sell": 123.95,
+        "confidence": "medium",
+        "is_stale": false,
+        "collected_at": "2026-08-09T10:01:25.071889+00:00",
+        "student_rate": null
       }
     ]
   },
@@ -111,124 +111,124 @@
       {
         "bank_id": "BRAC",
         "bank_name": "BRAC Bank PLC",
-        "sample_size": 277,
-        "average_sell": 142.5559,
+        "sample_size": 324,
+        "average_sell": 142.7978,
         "lowest_sell": 141.6377,
-        "highest_sell": 144.2124,
-        "volatility": 0.6608,
+        "highest_sell": 144.3141,
+        "volatility": 0.8475,
         "direction": "rising",
-        "change_pct": 1.75,
-        "description": "Over the last 277 observations, BRAC's EUR TT sell rate has risen 1.8%, averaging 142.5559 (range 141.6377\u2013144.2124)."
+        "change_pct": 1.82,
+        "description": "Over the last 324 observations, BRAC's EUR TT sell rate has risen 1.8%, averaging 142.7978 (range 141.6377\u2013144.3141)."
       },
       {
         "bank_id": "CITY",
         "bank_name": "City Bank PLC",
-        "sample_size": 59,
-        "average_sell": 143.599,
+        "sample_size": 95,
+        "average_sell": 144.1282,
         "lowest_sell": 142.622,
-        "highest_sell": 144.9843,
-        "volatility": 0.9528,
+        "highest_sell": 145.0855,
+        "volatility": 1.0115,
         "direction": "rising",
-        "change_pct": 1.5,
-        "description": "Over the last 59 observations, CITY's EUR TT sell rate has risen 1.5%, averaging 143.5990 (range 142.6220\u2013144.9843)."
+        "change_pct": 1.57,
+        "description": "Over the last 95 observations, CITY's EUR TT sell rate has risen 1.6%, averaging 144.1282 (range 142.6220\u2013145.0855)."
       },
       {
         "bank_id": "EBL",
         "bank_name": "Eastern Bank PLC",
-        "sample_size": 254,
-        "average_sell": 143.434,
+        "sample_size": 287,
+        "average_sell": 143.6142,
         "lowest_sell": 142.7,
-        "highest_sell": 145.0,
-        "volatility": 0.5617,
+        "highest_sell": 145.01,
+        "volatility": 0.7274,
         "direction": "rising",
-        "change_pct": 1.61,
-        "description": "Over the last 254 observations, EBL's EUR TT sell rate has risen 1.6%, averaging 143.4340 (range 142.7000\u2013145.0000)."
+        "change_pct": 1.62,
+        "description": "Over the last 287 observations, EBL's EUR TT sell rate has risen 1.6%, averaging 143.6142 (range 142.7000\u2013145.0100)."
       },
       {
         "bank_id": "PRIME",
         "bank_name": "Prime Bank PLC",
-        "sample_size": 275,
-        "average_sell": 142.8141,
+        "sample_size": 322,
+        "average_sell": 143.0453,
         "lowest_sell": 141.9536,
         "highest_sell": 144.3995,
-        "volatility": 0.5646,
+        "volatility": 0.7649,
         "direction": "rising",
         "change_pct": 1.6,
-        "description": "Over the last 275 observations, PRIME's EUR TT sell rate has risen 1.6%, averaging 142.8141 (range 141.9536\u2013144.3995)."
+        "description": "Over the last 322 observations, PRIME's EUR TT sell rate has risen 1.6%, averaging 143.0453 (range 141.9536\u2013144.3995)."
       },
       {
         "bank_id": "SONALI",
         "bank_name": "Sonali Bank PLC",
-        "sample_size": 206,
-        "average_sell": 143.0768,
+        "sample_size": 252,
+        "average_sell": 143.356,
         "lowest_sell": 142.2131,
-        "highest_sell": 144.5939,
-        "volatility": 0.5145,
+        "highest_sell": 144.7065,
+        "volatility": 0.7521,
         "direction": "rising",
-        "change_pct": 1.21,
-        "description": "Over the last 206 observations, SONALI's EUR TT sell rate has risen 1.2%, averaging 143.0768 (range 142.2131\u2013144.5939)."
+        "change_pct": 1.29,
+        "description": "Over the last 252 observations, SONALI's EUR TT sell rate has risen 1.3%, averaging 143.3560 (range 142.2131\u2013144.7065)."
       }
     ],
     "USD": [
       {
         "bank_id": "BRAC",
         "bank_name": "BRAC Bank PLC",
-        "sample_size": 34,
-        "average_sell": 123.97,
-        "lowest_sell": 123.97,
+        "sample_size": 81,
+        "average_sell": 123.9688,
+        "lowest_sell": 123.95,
         "highest_sell": 123.97,
-        "volatility": 0.0,
+        "volatility": 0.0048,
         "direction": "stable",
-        "change_pct": 0.0,
-        "description": "Over the last 34 observations, BRAC's USD TT sell rate has stayed roughly flat (within 0.0%), averaging 123.9700 (range 123.9700\u2013123.9700)."
+        "change_pct": -0.02,
+        "description": "Over the last 81 observations, BRAC's USD TT sell rate has stayed roughly flat (within 0.0%), averaging 123.9688 (range 123.9500\u2013123.9700)."
       },
       {
         "bank_id": "CITY",
         "bank_name": "City Bank PLC",
-        "sample_size": 26,
-        "average_sell": 123.9646,
-        "lowest_sell": 123.95,
+        "sample_size": 62,
+        "average_sell": 123.9542,
+        "lowest_sell": 123.92,
         "highest_sell": 123.97,
-        "volatility": 0.0089,
+        "volatility": 0.0128,
         "direction": "stable",
-        "change_pct": 0.0,
-        "description": "Over the last 26 observations, CITY's USD TT sell rate has stayed roughly flat (within 0.0%), averaging 123.9646 (range 123.9500\u2013123.9700)."
+        "change_pct": -0.02,
+        "description": "Over the last 62 observations, CITY's USD TT sell rate has stayed roughly flat (within 0.0%), averaging 123.9542 (range 123.9200\u2013123.9700)."
       },
       {
         "bank_id": "EBL",
         "bank_name": "Eastern Bank PLC",
-        "sample_size": 26,
-        "average_sell": 123.9562,
-        "lowest_sell": 123.95,
+        "sample_size": 59,
+        "average_sell": 123.9459,
+        "lowest_sell": 123.85,
         "highest_sell": 123.97,
-        "volatility": 0.0092,
+        "volatility": 0.0268,
         "direction": "stable",
-        "change_pct": -0.02,
-        "description": "Over the last 26 observations, EBL's USD TT sell rate has stayed roughly flat (within 0.0%), averaging 123.9562 (range 123.9500\u2013123.9700)."
+        "change_pct": -0.1,
+        "description": "Over the last 59 observations, EBL's USD TT sell rate has stayed roughly flat (within 0.1%), averaging 123.9459 (range 123.8500\u2013123.9700)."
       },
       {
         "bank_id": "PRIME",
         "bank_name": "Prime Bank PLC",
-        "sample_size": 35,
-        "average_sell": 123.98,
-        "lowest_sell": 123.98,
+        "sample_size": 82,
+        "average_sell": 123.9782,
+        "lowest_sell": 123.95,
         "highest_sell": 123.98,
-        "volatility": 0.0,
+        "volatility": 0.0072,
         "direction": "stable",
-        "change_pct": 0.0,
-        "description": "Over the last 35 observations, PRIME's USD TT sell rate has stayed roughly flat (within 0.0%), averaging 123.9800 (range 123.9800\u2013123.9800)."
+        "change_pct": -0.02,
+        "description": "Over the last 82 observations, PRIME's USD TT sell rate has stayed roughly flat (within 0.0%), averaging 123.9782 (range 123.9500\u2013123.9800)."
       },
       {
         "bank_id": "SONALI",
         "bank_name": "Sonali Bank PLC",
-        "sample_size": 16,
+        "sample_size": 62,
         "average_sell": 123.95,
         "lowest_sell": 123.95,
         "highest_sell": 123.95,
         "volatility": 0.0,
         "direction": "stable",
         "change_pct": 0.0,
-        "description": "Over the last 16 observations, SONALI's USD TT sell rate has stayed roughly flat (within 0.0%), averaging 123.9500 (range 123.9500\u2013123.9500)."
+        "description": "Over the last 62 observations, SONALI's USD TT sell rate has stayed roughly flat (within 0.0%), averaging 123.9500 (range 123.9500\u2013123.9500)."
       }
     ]
   },
@@ -238,241 +238,6 @@
         "bank_id": "BRAC",
         "bank_name": "BRAC Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-07-28T21:55:43+00:00",
-            "buy": 138.9984,
-            "sell": 141.7395
-          },
-          {
-            "collected_at": "2026-07-28T22:49:23+00:00",
-            "buy": 138.9984,
-            "sell": 141.7395
-          },
-          {
-            "collected_at": "2026-07-28T23:49:12+00:00",
-            "buy": 138.9984,
-            "sell": 141.7395
-          },
-          {
-            "collected_at": "2026-07-29T01:17:42+00:00",
-            "buy": 138.9984,
-            "sell": 141.7395
-          },
-          {
-            "collected_at": "2026-07-29T04:57:05+00:00",
-            "buy": 138.9984,
-            "sell": 141.7395
-          },
-          {
-            "collected_at": "2026-07-29T07:37:22+00:00",
-            "buy": 139.3877,
-            "sell": 142.1488
-          },
-          {
-            "collected_at": "2026-07-29T10:26:02+00:00",
-            "buy": 139.3877,
-            "sell": 142.1488
-          },
-          {
-            "collected_at": "2026-07-29T12:55:45+00:00",
-            "buy": 139.3877,
-            "sell": 142.1488
-          },
-          {
-            "collected_at": "2026-07-29T15:04:21+00:00",
-            "buy": 139.3877,
-            "sell": 142.1488
-          },
-          {
-            "collected_at": "2026-07-29T17:03:30+00:00",
-            "buy": 139.3877,
-            "sell": 142.1488
-          },
-          {
-            "collected_at": "2026-07-29T18:10:16+00:00",
-            "buy": 139.3877,
-            "sell": 142.1488
-          },
-          {
-            "collected_at": "2026-07-29T20:08:16+00:00",
-            "buy": 139.3877,
-            "sell": 142.1488
-          },
-          {
-            "collected_at": "2026-07-29T21:46:20+00:00",
-            "buy": 139.3877,
-            "sell": 142.1488
-          },
-          {
-            "collected_at": "2026-07-29T22:47:10+00:00",
-            "buy": 139.3877,
-            "sell": 142.1488
-          },
-          {
-            "collected_at": "2026-07-29T23:51:06+00:00",
-            "buy": 139.3877,
-            "sell": 142.1488
-          },
-          {
-            "collected_at": "2026-07-30T01:10:39+00:00",
-            "buy": 139.3877,
-            "sell": 142.1488
-          },
-          {
-            "collected_at": "2026-07-30T04:45:07+00:00",
-            "buy": 139.3877,
-            "sell": 142.1488
-          },
-          {
-            "collected_at": "2026-07-30T07:27:23+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-30T10:10:21+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-30T12:22:43+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-30T15:01:16+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-30T16:24:29+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-30T18:10:15+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-30T20:12:43+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-30T21:57:53+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-30T22:56:16+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-30T23:51:43+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-31T01:23:04+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-31T05:22:39+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-31T08:27:51+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-31T11:17:11+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-31T13:24:59+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-31T15:54:17+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-31T17:19:25+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-31T19:04:14+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-31T20:52:08+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-31T21:56:33+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-31T22:49:23+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-07-31T23:51:49+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-08-01T01:24:17+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-08-01T05:15:42+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-08-01T07:57:10+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-08-01T09:49:36+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-08-01T11:11:13+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-08-01T12:48:21+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-08-01T14:21:23+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
-          {
-            "collected_at": "2026-08-01T15:50:29+00:00",
-            "buy": 140.2282,
-            "sell": 143.0011
-          },
           {
             "collected_at": "2026-08-01T16:46:03+00:00",
             "buy": 140.2282,
@@ -687,6 +452,241 @@
             "collected_at": "2026-08-06T15:30:56.019930+00:00",
             "buy": 141.4162,
             "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T00:18:11.921702+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T03:21:18.749527+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T05:53:00.497890+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T07:45:02.678223+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T09:17:54.604556+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T10:15:31.973574+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T11:09:57.019945+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T12:00:03.504669+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T13:42:17.942523+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T15:11:32.106069+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T16:11:07.058100+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T17:11:17.017411+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T18:05:33.230492+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T19:19:03.739569+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T20:03:16.194820+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T21:11:01.293770+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T21:58:18.132799+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T22:57:23.705496+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-07T23:50:18.373448+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T02:24:41.433473+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T04:31:06.107956+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T05:59:52.955182+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T07:18:39.939371+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T08:04:39.214929+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T09:03:53.972372+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T09:56:47.096925+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T10:53:37.028489+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T11:46:51.779886+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T13:14:41.050967+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T13:59:46.079626+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T14:51:47.961992+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T15:49:12.578549+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T16:54:52.760450+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T17:48:59.459274+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T19:01:46.350348+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T19:46:58.828210+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T20:51:26.375166+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T21:48:48.205528+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T22:50:14.481492+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-08T23:47:59.195430+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-09T02:32:11.344332+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-09T04:39:38.090735+00:00",
+            "buy": 141.4162,
+            "sell": 144.2124
+          },
+          {
+            "collected_at": "2026-08-09T06:00:59.225473+00:00",
+            "buy": 141.5277,
+            "sell": 144.3141
+          },
+          {
+            "collected_at": "2026-08-09T07:19:22.775231+00:00",
+            "buy": 141.5277,
+            "sell": 144.3141
+          },
+          {
+            "collected_at": "2026-08-09T08:05:29.057941+00:00",
+            "buy": 141.5277,
+            "sell": 144.3141
+          },
+          {
+            "collected_at": "2026-08-09T09:05:14.517998+00:00",
+            "buy": 141.5277,
+            "sell": 144.3141
+          },
+          {
+            "collected_at": "2026-08-09T09:59:27.909493+00:00",
+            "buy": 141.5277,
+            "sell": 144.3141
           }
         ]
       },
@@ -694,31 +694,6 @@
         "bank_id": "CITY",
         "bank_name": "City Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-07-01T13:18:25+00:00",
-            "buy": 142.8364,
-            "sell": 142.8364
-          },
-          {
-            "collected_at": "2026-07-01T13:21:58+00:00",
-            "buy": 142.8364,
-            "sell": 142.8364
-          },
-          {
-            "collected_at": "2026-07-01T13:34:53+00:00",
-            "buy": 138.0007,
-            "sell": 142.8364
-          },
-          {
-            "collected_at": "2026-07-01T15:23:59+00:00",
-            "buy": 137.79014,
-            "sell": 142.62204
-          },
-          {
-            "collected_at": "2026-07-01T15:49:58+00:00",
-            "buy": 137.79014,
-            "sell": 142.62204
-          },
           {
             "collected_at": "2026-07-01T17:20:14+00:00",
             "buy": 137.79014,
@@ -988,6 +963,186 @@
             "collected_at": "2026-08-06T15:32:32.311293+00:00",
             "buy": 140.1261,
             "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-07T00:19:48.278542+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-07T03:22:55.287766+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-07T07:46:39.476578+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-07T10:17:08.899014+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-07T11:11:33.183584+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-07T12:01:41.697837+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-07T13:43:54.558883+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-07T15:13:08.231657+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-07T16:12:43.006506+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-07T17:12:54.722033+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-07T18:07:08.921253+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-07T19:20:39.622953+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-07T20:04:52.290118+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-07T21:12:38.367212+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-07T21:59:54.488319+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-07T22:59:00.031407+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-08T02:26:18.632288+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-08T04:32:42.812816+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-08T06:01:29.199412+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-08T08:06:17.699212+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-08T09:05:29.990045+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-08T09:58:23.213962+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-08T11:48:29.374470+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-08T13:16:17.112822+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-08T14:01:22.656671+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-08T15:50:48.830378+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-08T16:56:32.137978+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-08T17:50:38.497033+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-08T19:03:23.783970+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-08T21:50:24.697900+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-08T22:51:50.423457+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-08T23:49:36.985617+00:00",
+            "buy": 140.1261,
+            "sell": 144.9843
+          },
+          {
+            "collected_at": "2026-08-09T07:20:59.033897+00:00",
+            "buy": 140.2271,
+            "sell": 145.0855
+          },
+          {
+            "collected_at": "2026-08-09T08:07:05.539330+00:00",
+            "buy": 140.2271,
+            "sell": 145.0855
+          },
+          {
+            "collected_at": "2026-08-09T09:06:52.489750+00:00",
+            "buy": 140.2271,
+            "sell": 145.0855
+          },
+          {
+            "collected_at": "2026-08-09T10:01:03.785527+00:00",
+            "buy": 140.2271,
+            "sell": 145.0855
           }
         ]
       },
@@ -995,171 +1150,6 @@
         "bank_id": "EBL",
         "bank_name": "Eastern Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-07-26T21:44:58+00:00",
-            "buy": 137.85,
-            "sell": 142.72
-          },
-          {
-            "collected_at": "2026-07-26T23:47:50+00:00",
-            "buy": 137.85,
-            "sell": 142.72
-          },
-          {
-            "collected_at": "2026-07-27T01:24:11+00:00",
-            "buy": 137.85,
-            "sell": 142.72
-          },
-          {
-            "collected_at": "2026-07-27T05:34:02+00:00",
-            "buy": 137.85,
-            "sell": 142.72
-          },
-          {
-            "collected_at": "2026-07-27T09:00:16+00:00",
-            "buy": 138.34,
-            "sell": 143.19
-          },
-          {
-            "collected_at": "2026-07-27T12:22:44+00:00",
-            "buy": 138.34,
-            "sell": 143.19
-          },
-          {
-            "collected_at": "2026-07-27T15:33:39+00:00",
-            "buy": 138.34,
-            "sell": 143.19
-          },
-          {
-            "collected_at": "2026-07-27T17:25:40+00:00",
-            "buy": 138.34,
-            "sell": 143.19
-          },
-          {
-            "collected_at": "2026-07-27T19:04:34+00:00",
-            "buy": 138.34,
-            "sell": 143.19
-          },
-          {
-            "collected_at": "2026-07-27T20:57:55+00:00",
-            "buy": 138.34,
-            "sell": 143.19
-          },
-          {
-            "collected_at": "2026-07-27T21:58:08+00:00",
-            "buy": 138.34,
-            "sell": 143.19
-          },
-          {
-            "collected_at": "2026-07-27T22:55:13+00:00",
-            "buy": 138.34,
-            "sell": 143.19
-          },
-          {
-            "collected_at": "2026-07-27T23:51:46+00:00",
-            "buy": 138.34,
-            "sell": 143.19
-          },
-          {
-            "collected_at": "2026-07-28T04:49:10+00:00",
-            "buy": 138.34,
-            "sell": 143.19
-          },
-          {
-            "collected_at": "2026-07-28T07:28:02+00:00",
-            "buy": 137.94,
-            "sell": 142.81
-          },
-          {
-            "collected_at": "2026-07-28T10:17:04+00:00",
-            "buy": 137.94,
-            "sell": 142.81
-          },
-          {
-            "collected_at": "2026-07-28T12:28:07+00:00",
-            "buy": 137.94,
-            "sell": 142.81
-          },
-          {
-            "collected_at": "2026-07-28T15:08:23+00:00",
-            "buy": 137.94,
-            "sell": 142.81
-          },
-          {
-            "collected_at": "2026-07-28T17:14:39+00:00",
-            "buy": 137.94,
-            "sell": 142.81
-          },
-          {
-            "collected_at": "2026-07-28T19:00:19+00:00",
-            "buy": 137.94,
-            "sell": 142.81
-          },
-          {
-            "collected_at": "2026-07-28T20:15:38+00:00",
-            "buy": 137.94,
-            "sell": 142.81
-          },
-          {
-            "collected_at": "2026-07-28T21:52:44+00:00",
-            "buy": 137.94,
-            "sell": 142.81
-          },
-          {
-            "collected_at": "2026-07-29T01:14:42+00:00",
-            "buy": 137.94,
-            "sell": 142.81
-          },
-          {
-            "collected_at": "2026-07-29T04:54:03+00:00",
-            "buy": 137.94,
-            "sell": 142.81
-          },
-          {
-            "collected_at": "2026-07-29T07:34:18+00:00",
-            "buy": 138.32,
-            "sell": 143.19
-          },
-          {
-            "collected_at": "2026-07-29T10:23:02+00:00",
-            "buy": 138.32,
-            "sell": 143.19
-          },
-          {
-            "collected_at": "2026-07-29T12:52:46+00:00",
-            "buy": 138.32,
-            "sell": 143.19
-          },
-          {
-            "collected_at": "2026-07-29T15:01:21+00:00",
-            "buy": 138.32,
-            "sell": 143.19
-          },
-          {
-            "collected_at": "2026-07-29T17:00:30+00:00",
-            "buy": 138.32,
-            "sell": 143.19
-          },
-          {
-            "collected_at": "2026-07-29T18:07:16+00:00",
-            "buy": 138.32,
-            "sell": 143.19
-          },
-          {
-            "collected_at": "2026-07-29T20:05:15+00:00",
-            "buy": 138.32,
-            "sell": 143.19
-          },
-          {
-            "collected_at": "2026-07-29T21:43:22+00:00",
-            "buy": 138.32,
-            "sell": 143.19
-          },
-          {
-            "collected_at": "2026-07-29T22:44:11+00:00",
-            "buy": 138.32,
-            "sell": 143.19
-          },
           {
             "collected_at": "2026-07-30T01:07:39+00:00",
             "buy": 138.32,
@@ -1444,6 +1434,171 @@
             "collected_at": "2026-08-06T15:32:46.261226+00:00",
             "buy": 140.12,
             "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-07T00:20:02.232329+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-07T03:23:09.258133+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-07T07:46:53.726141+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-07T10:17:22.939880+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-07T11:11:47.119859+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-07T12:02:01.051917+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-07T13:44:09.174615+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-07T15:13:22.118857+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-07T16:12:57.096676+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-07T17:13:08.993666+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-07T18:07:22.704364+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-07T19:20:52.959826+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-07T20:05:06.236995+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-07T21:12:52.707628+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-07T22:59:16.663010+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-08T06:01:43.787114+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-08T08:06:32.166847+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-08T09:05:43.597245+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-08T09:58:36.843807+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-08T11:48:44.016052+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-08T13:16:30.774295+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-08T14:01:41.138368+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-08T15:51:02.594135+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-08T16:56:45.413537+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-08T17:50:52.507048+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-08T19:03:40.022554+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-08T21:50:39.219094+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-08T22:52:04.212014+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-08T23:49:51.046389+00:00",
+            "buy": 140.12,
+            "sell": 145.0
+          },
+          {
+            "collected_at": "2026-08-09T07:21:12.562137+00:00",
+            "buy": 140.14,
+            "sell": 145.01
+          },
+          {
+            "collected_at": "2026-08-09T08:07:19.111412+00:00",
+            "buy": 140.14,
+            "sell": 145.01
+          },
+          {
+            "collected_at": "2026-08-09T09:07:05.827041+00:00",
+            "buy": 140.14,
+            "sell": 145.01
+          },
+          {
+            "collected_at": "2026-08-09T10:01:17.366230+00:00",
+            "buy": 140.14,
+            "sell": 145.01
           }
         ]
       },
@@ -1451,241 +1606,6 @@
         "bank_id": "PRIME",
         "bank_name": "Prime Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-07-28T22:49:30+00:00",
-            "buy": 139.0933,
-            "sell": 142.1459
-          },
-          {
-            "collected_at": "2026-07-28T23:49:20+00:00",
-            "buy": 139.0933,
-            "sell": 142.1459
-          },
-          {
-            "collected_at": "2026-07-29T01:17:51+00:00",
-            "buy": 139.0933,
-            "sell": 142.1459
-          },
-          {
-            "collected_at": "2026-07-29T04:57:13+00:00",
-            "buy": 139.0933,
-            "sell": 142.1459
-          },
-          {
-            "collected_at": "2026-07-29T07:37:30+00:00",
-            "buy": 139.3638,
-            "sell": 142.4186
-          },
-          {
-            "collected_at": "2026-07-29T10:26:09+00:00",
-            "buy": 139.3638,
-            "sell": 142.4186
-          },
-          {
-            "collected_at": "2026-07-29T12:55:53+00:00",
-            "buy": 139.3638,
-            "sell": 142.4186
-          },
-          {
-            "collected_at": "2026-07-29T15:04:28+00:00",
-            "buy": 139.3638,
-            "sell": 142.4186
-          },
-          {
-            "collected_at": "2026-07-29T17:03:37+00:00",
-            "buy": 139.3638,
-            "sell": 142.4186
-          },
-          {
-            "collected_at": "2026-07-29T18:10:23+00:00",
-            "buy": 139.3638,
-            "sell": 142.4186
-          },
-          {
-            "collected_at": "2026-07-29T20:08:23+00:00",
-            "buy": 139.3638,
-            "sell": 142.4186
-          },
-          {
-            "collected_at": "2026-07-29T21:46:27+00:00",
-            "buy": 139.3638,
-            "sell": 142.4186
-          },
-          {
-            "collected_at": "2026-07-29T22:47:17+00:00",
-            "buy": 139.3638,
-            "sell": 142.4186
-          },
-          {
-            "collected_at": "2026-07-29T23:51:13+00:00",
-            "buy": 139.3638,
-            "sell": 142.4186
-          },
-          {
-            "collected_at": "2026-07-30T01:10:45+00:00",
-            "buy": 139.3638,
-            "sell": 142.4186
-          },
-          {
-            "collected_at": "2026-07-30T04:45:14+00:00",
-            "buy": 139.3638,
-            "sell": 142.4186
-          },
-          {
-            "collected_at": "2026-07-30T07:27:31+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-30T10:10:27+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-30T12:22:49+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-30T15:01:26+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-30T16:24:36+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-30T18:10:21+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-30T20:12:49+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-30T21:58:00+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-30T22:56:22+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-30T23:51:49+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-31T01:23:10+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-31T05:22:47+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-31T08:27:58+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-31T11:17:18+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-31T13:25:06+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-31T15:54:24+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-31T17:19:32+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-31T19:04:21+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-31T20:52:15+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-31T21:56:41+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-31T22:49:29+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-07-31T23:51:55+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-08-01T01:24:23+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-08-01T05:15:48+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-08-01T07:57:17+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-08-01T09:49:43+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-08-01T11:11:19+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-08-01T12:48:27+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-08-01T14:21:29+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-08-01T15:50:35+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
-          {
-            "collected_at": "2026-08-01T16:46:09+00:00",
-            "buy": 140.0865,
-            "sell": 143.1473
-          },
           {
             "collected_at": "2026-08-01T17:50:04+00:00",
             "buy": 140.0865,
@@ -1900,6 +1820,241 @@
             "collected_at": "2026-08-06T15:32:54.175273+00:00",
             "buy": 141.3286,
             "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T00:20:08.853943+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T03:23:16.329146+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T05:56:17.913337+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T07:46:59.704629+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T09:21:12.673918+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T10:17:29.453674+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T11:11:53.648892+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T12:02:07.462058+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T13:44:15.636179+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T15:13:28.506711+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T16:13:03.615074+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T17:13:15.438813+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T18:07:29.333774+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T19:20:59.364881+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T20:05:12.523019+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T21:12:58.936205+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T22:00:07.902008+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T22:59:23.399411+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-07T23:53:35.562998+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T02:27:16.189629+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T04:33:40.564143+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T06:01:50.660483+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T07:21:57.042234+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T08:06:38.857259+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T09:05:49.408874+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T09:58:43.098219+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T10:56:54.542665+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T11:48:50.784729+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T13:16:37.316242+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T14:01:47.514901+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T14:55:06.117724+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T15:51:08.637428+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T16:56:52.293906+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T17:50:58.637694+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T19:03:46.531010+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T19:50:16.495483+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T20:54:43.677502+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T21:50:45.531239+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T22:52:10.878823+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-08T23:49:58.153958+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-09T02:35:29.335933+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-09T04:42:55.040394+00:00",
+            "buy": 141.3286,
+            "sell": 144.3995
+          },
+          {
+            "collected_at": "2026-08-09T06:04:17.292982+00:00",
+            "buy": 141.3187,
+            "sell": 144.3894
+          },
+          {
+            "collected_at": "2026-08-09T07:21:19.453377+00:00",
+            "buy": 141.3187,
+            "sell": 144.3894
+          },
+          {
+            "collected_at": "2026-08-09T08:07:25.766543+00:00",
+            "buy": 141.3187,
+            "sell": 144.3894
+          },
+          {
+            "collected_at": "2026-08-09T09:07:12.769961+00:00",
+            "buy": 141.3187,
+            "sell": 144.3894
+          },
+          {
+            "collected_at": "2026-08-09T10:01:22.877279+00:00",
+            "buy": 141.3187,
+            "sell": 144.3894
           }
         ]
       },
@@ -1907,236 +2062,6 @@
         "bank_id": "SONALI",
         "bank_name": "Sonali Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-07-26T08:03:45+00:00",
-            "buy": 139.6436,
-            "sell": 142.2131
-          },
-          {
-            "collected_at": "2026-07-26T10:02:49+00:00",
-            "buy": 139.6436,
-            "sell": 142.2131
-          },
-          {
-            "collected_at": "2026-07-26T11:20:54+00:00",
-            "buy": 139.6436,
-            "sell": 142.2131
-          },
-          {
-            "collected_at": "2026-07-26T12:51:40+00:00",
-            "buy": 139.6436,
-            "sell": 142.2131
-          },
-          {
-            "collected_at": "2026-07-26T14:23:51+00:00",
-            "buy": 139.6436,
-            "sell": 142.2131
-          },
-          {
-            "collected_at": "2026-07-26T15:54:29+00:00",
-            "buy": 139.6436,
-            "sell": 142.2131
-          },
-          {
-            "collected_at": "2026-07-26T16:44:39+00:00",
-            "buy": 139.6436,
-            "sell": 142.2131
-          },
-          {
-            "collected_at": "2026-07-26T17:52:44+00:00",
-            "buy": 139.6436,
-            "sell": 142.2131
-          },
-          {
-            "collected_at": "2026-07-26T21:48:08+00:00",
-            "buy": 139.6436,
-            "sell": 142.2131
-          },
-          {
-            "collected_at": "2026-07-26T22:48:14+00:00",
-            "buy": 139.6436,
-            "sell": 142.2131
-          },
-          {
-            "collected_at": "2026-07-26T23:51:01+00:00",
-            "buy": 139.6436,
-            "sell": 142.2131
-          },
-          {
-            "collected_at": "2026-07-27T01:27:24+00:00",
-            "buy": 139.6436,
-            "sell": 142.2131
-          },
-          {
-            "collected_at": "2026-07-28T04:52:18+00:00",
-            "buy": 139.7496,
-            "sell": 142.3081
-          },
-          {
-            "collected_at": "2026-07-28T07:31:11+00:00",
-            "buy": 139.7496,
-            "sell": 142.3081
-          },
-          {
-            "collected_at": "2026-07-28T10:20:24+00:00",
-            "buy": 139.7496,
-            "sell": 142.3081
-          },
-          {
-            "collected_at": "2026-07-28T12:31:15+00:00",
-            "buy": 139.7496,
-            "sell": 142.3081
-          },
-          {
-            "collected_at": "2026-07-28T15:11:33+00:00",
-            "buy": 139.7496,
-            "sell": 142.3081
-          },
-          {
-            "collected_at": "2026-07-28T17:17:47+00:00",
-            "buy": 139.7496,
-            "sell": 142.3081
-          },
-          {
-            "collected_at": "2026-07-28T19:03:31+00:00",
-            "buy": 139.7496,
-            "sell": 142.3081
-          },
-          {
-            "collected_at": "2026-07-28T20:19:12+00:00",
-            "buy": 139.7496,
-            "sell": 142.3081
-          },
-          {
-            "collected_at": "2026-07-28T21:55:56+00:00",
-            "buy": 139.7496,
-            "sell": 142.3081
-          },
-          {
-            "collected_at": "2026-07-29T01:17:56+00:00",
-            "buy": 139.7496,
-            "sell": 142.3081
-          },
-          {
-            "collected_at": "2026-07-29T04:57:19+00:00",
-            "buy": 139.7496,
-            "sell": 142.3081
-          },
-          {
-            "collected_at": "2026-07-29T07:37:33+00:00",
-            "buy": 140.1138,
-            "sell": 142.691
-          },
-          {
-            "collected_at": "2026-07-29T10:26:12+00:00",
-            "buy": 140.1138,
-            "sell": 142.691
-          },
-          {
-            "collected_at": "2026-07-29T12:55:57+00:00",
-            "buy": 140.1138,
-            "sell": 142.691
-          },
-          {
-            "collected_at": "2026-07-29T15:04:36+00:00",
-            "buy": 140.1138,
-            "sell": 142.691
-          },
-          {
-            "collected_at": "2026-07-29T17:03:39+00:00",
-            "buy": 140.1138,
-            "sell": 142.691
-          },
-          {
-            "collected_at": "2026-07-29T18:10:31+00:00",
-            "buy": 140.1138,
-            "sell": 142.691
-          },
-          {
-            "collected_at": "2026-07-29T20:08:28+00:00",
-            "buy": 140.1138,
-            "sell": 142.691
-          },
-          {
-            "collected_at": "2026-07-29T21:46:44+00:00",
-            "buy": 140.1138,
-            "sell": 142.691
-          },
-          {
-            "collected_at": "2026-07-29T22:47:22+00:00",
-            "buy": 140.1138,
-            "sell": 142.691
-          },
-          {
-            "collected_at": "2026-07-29T23:51:18+00:00",
-            "buy": 140.1138,
-            "sell": 142.691
-          },
-          {
-            "collected_at": "2026-07-30T01:10:52+00:00",
-            "buy": 140.1138,
-            "sell": 142.691
-          },
-          {
-            "collected_at": "2026-07-30T04:45:20+00:00",
-            "buy": 140.1138,
-            "sell": 142.691
-          },
-          {
-            "collected_at": "2026-07-30T07:27:33+00:00",
-            "buy": 140.7778,
-            "sell": 143.367
-          },
-          {
-            "collected_at": "2026-07-30T10:10:30+00:00",
-            "buy": 140.7778,
-            "sell": 143.367
-          },
-          {
-            "collected_at": "2026-07-30T12:22:51+00:00",
-            "buy": 140.7778,
-            "sell": 143.367
-          },
-          {
-            "collected_at": "2026-07-30T15:01:28+00:00",
-            "buy": 140.7778,
-            "sell": 143.367
-          },
-          {
-            "collected_at": "2026-07-30T16:24:39+00:00",
-            "buy": 140.7778,
-            "sell": 143.367
-          },
-          {
-            "collected_at": "2026-07-30T18:10:27+00:00",
-            "buy": 140.7778,
-            "sell": 143.367
-          },
-          {
-            "collected_at": "2026-07-30T20:12:55+00:00",
-            "buy": 140.7778,
-            "sell": 143.367
-          },
-          {
-            "collected_at": "2026-07-30T21:58:05+00:00",
-            "buy": 140.7778,
-            "sell": 143.367
-          },
-          {
-            "collected_at": "2026-07-30T22:56:29+00:00",
-            "buy": 140.7778,
-            "sell": 143.367
-          },
-          {
-            "collected_at": "2026-07-31T01:23:14+00:00",
-            "buy": 140.7778,
-            "sell": 143.367
-          },
-          {
-            "collected_at": "2026-07-31T05:22:53+00:00",
-            "buy": 140.7778,
-            "sell": 143.367
-          },
           {
             "collected_at": "2026-07-31T08:28:02+00:00",
             "buy": 140.7778,
@@ -2356,6 +2281,236 @@
             "collected_at": "2026-08-06T12:23:46.119788+00:00",
             "buy": 141.9827,
             "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T00:20:13.827312+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T03:23:21.623854+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T05:56:23.701092+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T07:47:05.062149+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T09:21:18.377538+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T10:17:34.273708+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T11:12:00.052725+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T12:02:12.300684+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T13:44:21.531426+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T15:13:35.219776+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T16:13:09.617980+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T17:13:20.800083+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T18:07:40.063890+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T19:21:08.879129+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T20:05:23.569427+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T21:13:07.196491+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T22:00:17.614089+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T22:59:32.726597+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-07T23:53:44.913329+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T02:27:23.440808+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T04:33:48.676857+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T06:01:59.886046+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T08:06:47.933125+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T09:05:58.536653+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T09:58:53.619545+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T10:57:02.263994+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T11:48:59.032099+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T13:16:47.219024+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T14:01:58.658077+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T14:55:16.220294+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T15:51:17.586054+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T16:57:01.647068+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T17:51:06.954355+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T19:04:02.237898+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T19:50:28.727061+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T20:54:55.668950+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T21:50:58.691709+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T22:52:23.729849+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-08T23:50:09.336652+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-09T02:35:42.555353+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-09T04:43:07.902968+00:00",
+            "buy": 141.9827,
+            "sell": 144.5939
+          },
+          {
+            "collected_at": "2026-08-09T06:04:19.538790+00:00",
+            "buy": 142.1056,
+            "sell": 144.7065
+          },
+          {
+            "collected_at": "2026-08-09T07:21:21.845151+00:00",
+            "buy": 142.1056,
+            "sell": 144.7065
+          },
+          {
+            "collected_at": "2026-08-09T08:07:28.169280+00:00",
+            "buy": 142.1056,
+            "sell": 144.7065
+          },
+          {
+            "collected_at": "2026-08-09T09:07:15.035136+00:00",
+            "buy": 142.1056,
+            "sell": 144.7065
+          },
+          {
+            "collected_at": "2026-08-09T10:01:25.071876+00:00",
+            "buy": 142.1056,
+            "sell": 144.7065
           }
         ]
       }
@@ -2534,6 +2689,241 @@
             "collected_at": "2026-08-06T15:30:56.019951+00:00",
             "buy": 122.97,
             "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T00:18:11.921723+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T03:21:18.749556+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T05:53:00.497910+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T07:45:02.678242+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T09:17:54.604577+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T10:15:31.973592+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T11:09:57.019965+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T12:00:03.504689+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T13:42:17.942542+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T15:11:32.106089+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T16:11:07.058124+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T17:11:17.017432+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T18:05:33.230511+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T19:19:03.739589+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T20:03:16.194842+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T21:11:01.293789+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T21:58:18.132820+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T22:57:23.705517+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-07T23:50:18.373469+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T02:24:41.433491+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T04:31:06.107974+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T05:59:52.955202+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T07:18:39.939391+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T08:04:39.214948+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T09:03:53.972392+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T09:56:47.096946+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T10:53:37.028509+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T11:46:51.779905+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T13:14:41.050984+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T13:59:46.079646+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T14:51:47.962012+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T15:49:12.578570+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T16:54:52.760470+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T17:48:59.459293+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T19:01:46.350368+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T19:46:58.828229+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T20:51:26.375183+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T21:48:48.205548+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T22:50:14.481512+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-08T23:47:59.195451+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-09T02:32:11.344352+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-09T04:39:38.090752+00:00",
+            "buy": 122.97,
+            "sell": 123.97
+          },
+          {
+            "collected_at": "2026-08-09T06:00:59.225490+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-09T07:19:22.775250+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-09T08:05:29.057961+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-09T09:05:14.518022+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-09T09:59:27.909506+00:00",
+            "buy": 122.95,
+            "sell": 123.95
           }
         ]
       },
@@ -2670,6 +3060,186 @@
             "collected_at": "2026-08-06T15:32:32.311311+00:00",
             "buy": 122.95,
             "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T00:19:48.278559+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T03:22:55.287780+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T07:46:39.476593+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T10:17:08.899030+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T11:11:33.183601+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T12:01:41.697853+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T13:43:54.558898+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T15:13:08.231675+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T16:12:43.006525+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T17:12:54.722052+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T18:07:08.921268+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T19:20:39.622970+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T20:04:52.290134+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T21:12:38.367226+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T21:59:54.488336+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T22:59:00.031425+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T02:26:18.632303+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T04:32:42.812830+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T06:01:29.199427+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T08:06:17.699226+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T09:05:29.990061+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T09:58:23.213979+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T11:48:29.374484+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T13:16:17.112835+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T14:01:22.656688+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T15:50:48.830393+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T16:56:32.137995+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T17:50:38.497047+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T19:03:23.783987+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T21:50:24.697916+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T22:51:50.423474+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T23:49:36.985633+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-09T07:20:59.033914+00:00",
+            "buy": 122.92,
+            "sell": 123.92
+          },
+          {
+            "collected_at": "2026-08-09T08:07:05.539347+00:00",
+            "buy": 122.92,
+            "sell": 123.92
+          },
+          {
+            "collected_at": "2026-08-09T09:06:52.489765+00:00",
+            "buy": 122.92,
+            "sell": 123.92
+          },
+          {
+            "collected_at": "2026-08-09T10:01:03.785540+00:00",
+            "buy": 122.92,
+            "sell": 123.92
           }
         ]
       },
@@ -2806,6 +3376,171 @@
             "collected_at": "2026-08-06T15:32:46.261247+00:00",
             "buy": 122.95,
             "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T00:20:02.232349+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T03:23:09.258151+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T07:46:53.726158+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T10:17:22.939898+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T11:11:47.119880+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T12:02:01.051936+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T13:44:09.174634+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T15:13:22.118877+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T16:12:57.096698+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T17:13:08.993684+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T18:07:22.704380+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T19:20:52.959847+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T20:05:06.237014+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T21:12:52.707647+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T22:59:16.663065+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T06:01:43.787130+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T08:06:32.166868+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T09:05:43.597264+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T09:58:36.843825+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T11:48:44.016070+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T13:16:30.774311+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T14:01:41.138387+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T15:51:02.594152+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T16:56:45.413558+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T17:50:52.507065+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T19:03:40.022575+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T21:50:39.219115+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T22:52:04.212034+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T23:49:51.046407+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-09T07:21:12.562155+00:00",
+            "buy": 122.85,
+            "sell": 123.85
+          },
+          {
+            "collected_at": "2026-08-09T08:07:19.111429+00:00",
+            "buy": 122.85,
+            "sell": 123.85
+          },
+          {
+            "collected_at": "2026-08-09T09:07:05.827060+00:00",
+            "buy": 122.85,
+            "sell": 123.85
+          },
+          {
+            "collected_at": "2026-08-09T10:01:17.366245+00:00",
+            "buy": 122.85,
+            "sell": 123.85
           }
         ]
       },
@@ -2987,6 +3722,241 @@
             "collected_at": "2026-08-06T15:32:54.175291+00:00",
             "buy": 122.98,
             "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T00:20:08.853959+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T03:23:16.329159+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T05:56:17.913353+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T07:46:59.704643+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T09:21:12.673933+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T10:17:29.453687+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T11:11:53.648907+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T12:02:07.462073+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T13:44:15.636195+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T15:13:28.506726+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T16:13:03.615094+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T17:13:15.438827+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T18:07:29.333789+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T19:20:59.364897+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T20:05:12.523036+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T21:12:58.936220+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T22:00:07.902025+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T22:59:23.399428+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-07T23:53:35.563014+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T02:27:16.189645+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T04:33:40.564156+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T06:01:50.660496+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T07:21:57.042250+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T08:06:38.857273+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T09:05:49.408889+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T09:58:43.098234+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T10:56:54.542681+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T11:48:50.784744+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T13:16:37.316255+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T14:01:47.514917+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T14:55:06.117740+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T15:51:08.637443+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T16:56:52.293921+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T17:50:58.637708+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T19:03:46.531026+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T19:50:16.495499+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T20:54:43.677516+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T21:50:45.531255+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T22:52:10.878838+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-08T23:49:58.153973+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-09T02:35:29.335949+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-09T04:42:55.040408+00:00",
+            "buy": 122.98,
+            "sell": 123.98
+          },
+          {
+            "collected_at": "2026-08-09T06:04:17.292996+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-09T07:21:19.453392+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-09T08:07:25.766557+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-09T09:07:12.769976+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-09T10:01:22.877289+00:00",
+            "buy": 122.95,
+            "sell": 123.95
           }
         ]
       },
@@ -3073,6 +4043,236 @@
             "collected_at": "2026-08-06T12:23:46.119800+00:00",
             "buy": 122.95,
             "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T00:20:13.827329+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T03:23:21.623868+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T05:56:23.701109+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T07:47:05.062164+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T09:21:18.377553+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T10:17:34.273723+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T11:12:00.052743+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T12:02:12.300701+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T13:44:21.531444+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T15:13:35.219793+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T16:13:09.618001+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T17:13:20.800098+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T18:07:40.063908+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T19:21:08.879146+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T20:05:23.569444+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T21:13:07.196506+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T22:00:17.614106+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T22:59:32.726615+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-07T23:53:44.913346+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T02:27:23.440822+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T04:33:48.676868+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T06:01:59.886070+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T08:06:47.933141+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T09:05:58.536671+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T09:58:53.619563+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T10:57:02.264009+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T11:48:59.032114+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T13:16:47.219039+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T14:01:58.658094+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T14:55:16.220312+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T15:51:17.586069+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T16:57:01.647085+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T17:51:06.954369+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T19:04:02.237916+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T19:50:28.727077+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T20:54:55.668965+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T21:50:58.691725+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T22:52:23.729865+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-08T23:50:09.336666+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-09T02:35:42.555370+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-09T04:43:07.902984+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-09T06:04:19.538805+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-09T07:21:21.845168+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-09T08:07:28.169294+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-09T09:07:15.035153+00:00",
+            "buy": 122.95,
+            "sell": 123.95
+          },
+          {
+            "collected_at": "2026-08-09T10:01:25.071889+00:00",
+            "buy": 122.95,
+            "sell": 123.95
           }
         ]
       }
@@ -3085,37 +4285,37 @@
       "requested_amount": 1000.0,
       "recommended_bank_id": "BRAC",
       "recommended_bank_name": "BRAC Bank PLC",
-      "total_cost_bdt": 144212.4,
-      "estimated_savings_vs_most_expensive_bdt": 787.6,
+      "total_cost_bdt": 144314.1,
+      "estimated_savings_vs_most_expensive_bdt": 771.4,
       "confidence": "medium",
-      "explanation": "BRAC Bank PLC is recommended for 1,000.00 EUR: total estimated cost of 144,212.40 BDT (exchange rate 144.2124). No verified fee data (SWIFT charge, processing fee, VAT, etc.) is available yet for this bank, so this total reflects the exchange cost only \u2014 the real total may be somewhat higher once fees are added. The next-best option, Prime Bank PLC, would cost 187.10 BDT more. Other options considered, in order: Sonali Bank PLC, City Bank PLC, Eastern Bank PLC. Overall confidence in this recommendation: medium.",
+      "explanation": "BRAC Bank PLC is recommended for 1,000.00 EUR: total estimated cost of 144,314.10 BDT (exchange rate 144.3141). No verified fee data (SWIFT charge, processing fee, VAT, etc.) is available yet for this bank, so this total reflects the exchange cost only \u2014 the real total may be somewhat higher once fees are added. The next-best option, Prime Bank PLC, would cost 75.30 BDT more. Other options considered, in order: Sonali Bank PLC, Eastern Bank PLC, City Bank PLC. Overall confidence in this recommendation: medium.",
       "alternatives": [
         {
           "bank_id": "PRIME",
           "bank_name": "Prime Bank PLC",
-          "total_cost_bdt": 144399.5,
-          "extra_cost_vs_recommended_bdt": 187.1,
+          "total_cost_bdt": 144389.4,
+          "extra_cost_vs_recommended_bdt": 75.3,
           "fees_verified": false
         },
         {
           "bank_id": "SONALI",
           "bank_name": "Sonali Bank PLC",
-          "total_cost_bdt": 144593.9,
-          "extra_cost_vs_recommended_bdt": 381.5,
-          "fees_verified": false
-        },
-        {
-          "bank_id": "CITY",
-          "bank_name": "City Bank PLC",
-          "total_cost_bdt": 144984.3,
-          "extra_cost_vs_recommended_bdt": 771.9,
+          "total_cost_bdt": 144706.5,
+          "extra_cost_vs_recommended_bdt": 392.4,
           "fees_verified": false
         },
         {
           "bank_id": "EBL",
           "bank_name": "Eastern Bank PLC",
-          "total_cost_bdt": 145000.0,
-          "extra_cost_vs_recommended_bdt": 787.6,
+          "total_cost_bdt": 145010.0,
+          "extra_cost_vs_recommended_bdt": 695.9,
+          "fees_verified": false
+        },
+        {
+          "bank_id": "CITY",
+          "bank_name": "City Bank PLC",
+          "total_cost_bdt": 145085.5,
+          "extra_cost_vs_recommended_bdt": 771.4,
           "fees_verified": false
         }
       ]
@@ -3126,37 +4326,37 @@
       "requested_amount": 12208.0,
       "recommended_bank_id": "BRAC",
       "recommended_bank_name": "BRAC Bank PLC",
-      "total_cost_bdt": 1760544.98,
-      "estimated_savings_vs_most_expensive_bdt": 9615.02,
+      "total_cost_bdt": 1761786.53,
+      "estimated_savings_vs_most_expensive_bdt": 9417.25,
       "confidence": "medium",
-      "explanation": "BRAC Bank PLC is recommended for 12,208.00 EUR: total estimated cost of 1,760,544.98 BDT (exchange rate 144.2124). No verified fee data (SWIFT charge, processing fee, VAT, etc.) is available yet for this bank, so this total reflects the exchange cost only \u2014 the real total may be somewhat higher once fees are added. The next-best option, Prime Bank PLC, would cost 2,284.12 BDT more. Other options considered, in order: Sonali Bank PLC, City Bank PLC, Eastern Bank PLC. Overall confidence in this recommendation: medium.",
+      "explanation": "BRAC Bank PLC is recommended for 12,208.00 EUR: total estimated cost of 1,761,786.53 BDT (exchange rate 144.3141). No verified fee data (SWIFT charge, processing fee, VAT, etc.) is available yet for this bank, so this total reflects the exchange cost only \u2014 the real total may be somewhat higher once fees are added. The next-best option, Prime Bank PLC, would cost 919.27 BDT more. Other options considered, in order: Sonali Bank PLC, Eastern Bank PLC, City Bank PLC. Overall confidence in this recommendation: medium.",
       "alternatives": [
         {
           "bank_id": "PRIME",
           "bank_name": "Prime Bank PLC",
-          "total_cost_bdt": 1762829.1,
-          "extra_cost_vs_recommended_bdt": 2284.12,
+          "total_cost_bdt": 1762705.8,
+          "extra_cost_vs_recommended_bdt": 919.27,
           "fees_verified": false
         },
         {
           "bank_id": "SONALI",
           "bank_name": "Sonali Bank PLC",
-          "total_cost_bdt": 1765202.33,
-          "extra_cost_vs_recommended_bdt": 4657.35,
-          "fees_verified": false
-        },
-        {
-          "bank_id": "CITY",
-          "bank_name": "City Bank PLC",
-          "total_cost_bdt": 1769968.33,
-          "extra_cost_vs_recommended_bdt": 9423.35,
+          "total_cost_bdt": 1766576.95,
+          "extra_cost_vs_recommended_bdt": 4790.42,
           "fees_verified": false
         },
         {
           "bank_id": "EBL",
           "bank_name": "Eastern Bank PLC",
-          "total_cost_bdt": 1770160.0,
-          "extra_cost_vs_recommended_bdt": 9615.02,
+          "total_cost_bdt": 1770282.08,
+          "extra_cost_vs_recommended_bdt": 8495.55,
+          "fees_verified": false
+        },
+        {
+          "bank_id": "CITY",
+          "bank_name": "City Bank PLC",
+          "total_cost_bdt": 1771203.78,
+          "extra_cost_vs_recommended_bdt": 9417.25,
           "fees_verified": false
         }
       ]
@@ -3165,39 +4365,39 @@
       "currency": "USD",
       "product_id": "TT",
       "requested_amount": 1000.0,
-      "recommended_bank_id": "CITY",
-      "recommended_bank_name": "City Bank PLC",
-      "total_cost_bdt": 123950.0,
-      "estimated_savings_vs_most_expensive_bdt": 30.0,
-      "confidence": "low",
-      "explanation": "City Bank PLC is recommended for 1,000.00 USD: total estimated cost of 123,950.00 BDT (exchange rate 123.9500). No verified fee data (SWIFT charge, processing fee, VAT, etc.) is available yet for this bank, so this total reflects the exchange cost only \u2014 the real total may be somewhat higher once fees are added. The next-best option, Eastern Bank PLC, would cost 0.00 BDT more. Other options considered, in order: Sonali Bank PLC, BRAC Bank PLC, Prime Bank PLC. The underlying rate used for this recommendation is flagged as stale (older than expected) \u2014 treat this recommendation with extra caution until a fresher rate is collected. Overall confidence in this recommendation: low.",
+      "recommended_bank_id": "EBL",
+      "recommended_bank_name": "Eastern Bank PLC",
+      "total_cost_bdt": 123850.0,
+      "estimated_savings_vs_most_expensive_bdt": 100.0,
+      "confidence": "medium",
+      "explanation": "Eastern Bank PLC is recommended for 1,000.00 USD: total estimated cost of 123,850.00 BDT (exchange rate 123.8500). No verified fee data (SWIFT charge, processing fee, VAT, etc.) is available yet for this bank, so this total reflects the exchange cost only \u2014 the real total may be somewhat higher once fees are added. The next-best option, City Bank PLC, would cost 70.00 BDT more. Other options considered, in order: BRAC Bank PLC, Prime Bank PLC, Sonali Bank PLC. Overall confidence in this recommendation: medium.",
       "alternatives": [
         {
-          "bank_id": "EBL",
-          "bank_name": "Eastern Bank PLC",
+          "bank_id": "CITY",
+          "bank_name": "City Bank PLC",
+          "total_cost_bdt": 123920.0,
+          "extra_cost_vs_recommended_bdt": 70.0,
+          "fees_verified": false
+        },
+        {
+          "bank_id": "BRAC",
+          "bank_name": "BRAC Bank PLC",
           "total_cost_bdt": 123950.0,
-          "extra_cost_vs_recommended_bdt": 0.0,
+          "extra_cost_vs_recommended_bdt": 100.0,
+          "fees_verified": false
+        },
+        {
+          "bank_id": "PRIME",
+          "bank_name": "Prime Bank PLC",
+          "total_cost_bdt": 123950.0,
+          "extra_cost_vs_recommended_bdt": 100.0,
           "fees_verified": false
         },
         {
           "bank_id": "SONALI",
           "bank_name": "Sonali Bank PLC",
           "total_cost_bdt": 123950.0,
-          "extra_cost_vs_recommended_bdt": 0.0,
-          "fees_verified": false
-        },
-        {
-          "bank_id": "BRAC",
-          "bank_name": "BRAC Bank PLC",
-          "total_cost_bdt": 123970.0,
-          "extra_cost_vs_recommended_bdt": 20.0,
-          "fees_verified": false
-        },
-        {
-          "bank_id": "PRIME",
-          "bank_name": "Prime Bank PLC",
-          "total_cost_bdt": 123980.0,
-          "extra_cost_vs_recommended_bdt": 30.0,
+          "extra_cost_vs_recommended_bdt": 100.0,
           "fees_verified": false
         }
       ]
