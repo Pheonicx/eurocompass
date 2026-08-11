@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-08-11T04:09:59.034254+00:00",
-    "last_status": "failed",
-    "last_success_at": "2026-08-11T02:56:16.917959+00:00",
-    "last_buy": 140.04,
-    "last_sell": 144.92,
-    "last_failure_reason": "Collector returned no data"
+    "last_checked_at": "2026-08-11T05:44:25.317046+00:00",
+    "last_status": "ok",
+    "last_success_at": "2026-08-11T05:44:25.317046+00:00",
+    "last_buy": 139.86,
+    "last_sell": 144.73,
+    "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-08-11T04:12:32.325940+00:00",
+    "last_checked_at": "2026-08-11T05:47:23.338707+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,23 +16,23 @@
     "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-08-11T04:12:35.022004+00:00",
+    "last_checked_at": "2026-08-11T05:47:25.512807+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-08-11T04:12:35.022004+00:00",
-    "last_buy": 141.3375,
-    "last_sell": 144.1342
+    "last_success_at": "2026-08-11T05:47:25.512807+00:00",
+    "last_buy": 141.1796,
+    "last_sell": 143.974
   },
   "PRIME": {
-    "last_checked_at": "2026-08-11T04:12:44.815065+00:00",
+    "last_checked_at": "2026-08-11T05:47:31.425135+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-08-11T04:12:44.815065+00:00",
-    "last_buy": 141.2081,
-    "last_sell": 144.2778,
+    "last_success_at": "2026-08-11T05:47:31.425135+00:00",
+    "last_buy": 141.0769,
+    "last_sell": 144.1453,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-08-11T04:12:55.244138+00:00",
+    "last_checked_at": "2026-08-11T05:47:33.607451+00:00",
     "last_status": "failed",
     "last_success_at": "2026-08-10T03:06:25.883173+00:00",
     "last_buy": 142.1056,
