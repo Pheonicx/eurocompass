@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-08-12T22:26:50.646355+00:00",
-    "last_status": "ok",
+    "last_checked_at": "2026-08-12T23:26:52.967964+00:00",
+    "last_status": "failed",
     "last_success_at": "2026-08-12T22:26:50.646355+00:00",
     "last_buy": 139.72,
     "last_sell": 144.6,
-    "last_failure_reason": null
+    "last_failure_reason": "Collector returned no data"
   },
   "CITY": {
-    "last_checked_at": "2026-08-12T22:29:47.397927+00:00",
+    "last_checked_at": "2026-08-12T23:28:56.244521+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,25 +16,25 @@
     "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-08-12T22:29:50.457492+00:00",
+    "last_checked_at": "2026-08-12T23:28:58.786829+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-08-12T22:29:50.457492+00:00",
+    "last_success_at": "2026-08-12T23:28:58.786829+00:00",
     "last_buy": 141.073,
     "last_sell": 143.8664
   },
   "PRIME": {
-    "last_checked_at": "2026-08-12T22:29:56.487630+00:00",
+    "last_checked_at": "2026-08-12T23:29:05.268851+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-08-12T22:29:56.487630+00:00",
+    "last_success_at": "2026-08-12T23:29:05.268851+00:00",
     "last_buy": 140.8884,
     "last_sell": 143.9546,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-08-12T22:30:02.704945+00:00",
+    "last_checked_at": "2026-08-12T23:29:10.012465+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-08-12T22:30:02.704945+00:00",
+    "last_success_at": "2026-08-12T23:29:10.012465+00:00",
     "last_buy": 141.7529,
     "last_sell": 144.3604,
     "last_failure_reason": null
