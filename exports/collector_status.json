@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-08-14T03:16:50.433652+00:00",
-    "last_status": "failed",
-    "last_success_at": "2026-08-14T00:47:18.199832+00:00",
+    "last_checked_at": "2026-08-14T05:21:41.975176+00:00",
+    "last_status": "ok",
+    "last_success_at": "2026-08-14T05:21:41.975176+00:00",
     "last_buy": 139.34,
     "last_sell": 144.19,
-    "last_failure_reason": "Collector returned no data"
+    "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-08-14T03:19:43.470913+00:00",
+    "last_checked_at": "2026-08-14T05:24:37.622616+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,27 +16,27 @@
     "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-08-14T03:19:46.473022+00:00",
+    "last_checked_at": "2026-08-14T05:24:40.482680+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-08-14T03:19:46.473022+00:00",
+    "last_success_at": "2026-08-14T05:24:40.482680+00:00",
     "last_buy": 140.832,
     "last_sell": 143.6342
   },
   "PRIME": {
-    "last_checked_at": "2026-08-14T03:19:52.766510+00:00",
+    "last_checked_at": "2026-08-14T05:24:46.771427+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-08-14T03:19:52.766510+00:00",
+    "last_success_at": "2026-08-14T05:24:46.771427+00:00",
     "last_buy": 140.3605,
     "last_sell": 143.4206,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-08-14T03:20:27.494055+00:00",
+    "last_checked_at": "2026-08-14T05:24:53.385163+00:00",
     "last_status": "failed",
     "last_success_at": "2026-08-13T03:23:05.566860+00:00",
     "last_buy": 141.7529,
     "last_sell": 144.3604,
-    "last_failure_reason": "Collector returned no data"
+    "last_failure_reason": "Rejected: sell 44.1977 is outside the plausible range [100.0, 200.0]"
   }
 }
