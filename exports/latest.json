@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-08-17T04:31:31.605771+00:00",
+    "generated_at": "2026-08-17T05:26:55.396903+00:00",
     "currency": "EUR",
     "summary": {
         "banks_processed": 4,
@@ -9,18 +9,18 @@
         },
         "highest_buy": {
             "bank": "SONALI",
-            "value": 142.0883
+            "value": 141.8795
         },
         "lowest_sell": {
             "bank": "PRIME",
-            "value": 143.8721
+            "value": 143.7867
         },
         "highest_sell": {
             "bank": "SONALI",
-            "value": 144.7149
+            "value": 144.727
         },
-        "average_buy": 140.98399999999998,
-        "average_sell": 144.327225
+        "average_buy": 140.9255,
+        "average_sell": 144.321475
     },
     "banks": [
         {
@@ -37,32 +37,32 @@
         {
             "bank": "BRAC",
             "currency": "EUR",
-            "buy": 141.2787,
-            "sell": 144.0919,
-            "rate_date": "2026-08-16",
-            "is_stale": true,
+            "buy": 141.337,
+            "sell": 144.1422,
+            "rate_date": "2026-08-17",
+            "is_stale": false,
             "student": {
-                "rate": 143.9763
+                "rate": 144.0264
             }
         },
         {
             "bank": "PRIME",
             "currency": "EUR",
-            "buy": 140.809,
-            "sell": 143.8721,
-            "rate_date": "2026-08-16",
-            "is_stale": true,
+            "buy": 140.7255,
+            "sell": 143.7867,
+            "rate_date": "2026-08-17",
+            "is_stale": false,
             "student": {
-                "rate": 142.8849
+                "rate": 142.8011
             }
         },
         {
             "bank": "SONALI",
             "currency": "EUR",
-            "buy": 142.0883,
-            "sell": 144.7149,
-            "rate_date": "2026-08-16",
-            "is_stale": true
+            "buy": 141.8795,
+            "sell": 144.727,
+            "rate_date": "2026-08-17",
+            "is_stale": false
         }
     ]
 }
