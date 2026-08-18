@@ -1,15 +1,15 @@
 {
-    "generated_at": "2026-08-18T05:20:55.135546+00:00",
+    "generated_at": "2026-08-18T06:22:35.408870+00:00",
     "currency": "EUR",
     "summary": {
         "banks_processed": 4,
         "lowest_buy": {
             "bank": "EBL",
-            "value": 139.72
+            "value": 139.19
         },
         "highest_buy": {
             "bank": "SONALI",
-            "value": 141.8795
+            "value": 141.757
         },
         "lowest_sell": {
             "bank": "PRIME",
@@ -17,32 +17,32 @@
         },
         "highest_sell": {
             "bank": "SONALI",
-            "value": 144.727
+            "value": 144.5436
         },
-        "average_buy": 140.84572500000002,
-        "average_sell": 144.238325
+        "average_buy": 140.53865000000002,
+        "average_sell": 143.9202
     },
     "banks": [
         {
             "bank": "EBL",
             "currency": "EUR",
-            "buy": 139.72,
-            "sell": 144.58,
-            "rate_date": "2026-08-17",
-            "is_stale": true,
+            "buy": 139.19,
+            "sell": 144.07,
+            "rate_date": "2026-08-18",
+            "is_stale": false,
             "student": {
-                "rate": 143.7049
+                "rate": 143.0757
             }
         },
         {
             "bank": "BRAC",
             "currency": "EUR",
-            "buy": 141.337,
-            "sell": 144.1422,
-            "rate_date": "2026-08-17",
-            "is_stale": true,
+            "buy": 140.7612,
+            "sell": 143.5631,
+            "rate_date": "2026-08-18",
+            "is_stale": false,
             "student": {
-                "rate": 144.0264
+                "rate": 143.4473
             }
         },
         {
@@ -59,10 +59,10 @@
         {
             "bank": "SONALI",
             "currency": "EUR",
-            "buy": 141.8795,
-            "sell": 144.727,
-            "rate_date": "2026-08-17",
-            "is_stale": true
+            "buy": 141.757,
+            "sell": 144.5436,
+            "rate_date": "2026-08-18",
+            "is_stale": false
         }
     ]
 }
