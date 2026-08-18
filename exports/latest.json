@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-08-18T17:22:38.041071+00:00",
+    "generated_at": "2026-08-18T18:22:53.416621+00:00",
     "currency": "EUR",
     "summary": {
         "banks_processed": 4,
@@ -29,7 +29,7 @@
             "buy": 139.19,
             "sell": 144.07,
             "rate_date": "2026-08-18",
-            "is_stale": false,
+            "is_stale": true,
             "student": {
                 "rate": 143.0757
             }
@@ -40,7 +40,7 @@
             "buy": 140.7612,
             "sell": 143.5631,
             "rate_date": "2026-08-18",
-            "is_stale": false,
+            "is_stale": true,
             "student": {
                 "rate": 143.4473
             }
@@ -51,7 +51,7 @@
             "buy": 140.4464,
             "sell": 143.5041,
             "rate_date": "2026-08-18",
-            "is_stale": false,
+            "is_stale": true,
             "student": {
                 "rate": 142.5201
             }
@@ -62,7 +62,7 @@
             "buy": 141.757,
             "sell": 144.5436,
             "rate_date": "2026-08-18",
-            "is_stale": false
+            "is_stale": true
         }
     ]
 }
