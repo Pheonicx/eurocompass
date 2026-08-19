@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-19T19:02:03.500651+00:00",
+  "generated_at": "2026-08-19T22:48:43.919492+00:00",
   "rates_by_currency": {
     "EUR": [
       {
@@ -19,7 +19,7 @@
         "sell": 143.4223,
         "confidence": "low",
         "is_stale": true,
-        "collected_at": "2026-08-19T19:00:08.429888+00:00",
+        "collected_at": "2026-08-19T22:44:46.566207+00:00",
         "student_rate": 143.3065
       },
       {
@@ -71,7 +71,7 @@
         "sell": 122.75,
         "confidence": "low",
         "is_stale": true,
-        "collected_at": "2026-08-19T19:00:08.429906+00:00",
+        "collected_at": "2026-08-19T22:44:46.566230+00:00",
         "student_rate": 123.6
       },
       {
@@ -111,14 +111,14 @@
       {
         "bank_id": "BRAC",
         "bank_name": "BRAC Bank PLC",
-        "sample_size": 529,
-        "average_sell": 143.2107,
+        "sample_size": 530,
+        "average_sell": 143.2111,
         "lowest_sell": 141.6377,
         "highest_sell": 144.3141,
-        "volatility": 0.8588,
+        "volatility": 0.8581,
         "direction": "rising",
         "change_pct": 1.19,
-        "description": "Over the last 529 observations, BRAC's EUR TT sell rate has risen 1.2%, averaging 143.2107 (range 141.6377\u2013144.3141)."
+        "description": "Over the last 530 observations, BRAC's EUR TT sell rate has risen 1.2%, averaging 143.2111 (range 141.6377\u2013144.3141)."
       },
       {
         "bank_id": "CITY",
@@ -173,14 +173,14 @@
       {
         "bank_id": "BRAC",
         "bank_name": "BRAC Bank PLC",
-        "sample_size": 286,
-        "average_sell": 123.6558,
+        "sample_size": 287,
+        "average_sell": 123.6527,
         "lowest_sell": 122.75,
         "highest_sell": 123.97,
-        "volatility": 0.3386,
+        "volatility": 0.3422,
         "direction": "falling",
         "change_pct": -0.98,
-        "description": "Over the last 286 observations, BRAC's USD TT sell rate has fallen 1.0%, averaging 123.6558 (range 122.7500\u2013123.9700)."
+        "description": "Over the last 287 observations, BRAC's USD TT sell rate has fallen 1.0%, averaging 123.6527 (range 122.7500\u2013123.9700)."
       },
       {
         "bank_id": "CITY",
@@ -238,11 +238,6 @@
         "bank_id": "BRAC",
         "bank_name": "BRAC Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-08-15T18:49:27.760375+00:00",
-            "buy": 140.832,
-            "sell": 143.6342
-          },
           {
             "collected_at": "2026-08-15T19:38:07.092512+00:00",
             "buy": 140.832,
@@ -685,6 +680,11 @@
           },
           {
             "collected_at": "2026-08-19T19:00:08.429888+00:00",
+            "buy": 140.6176,
+            "sell": 143.4223
+          },
+          {
+            "collected_at": "2026-08-19T22:44:46.566207+00:00",
             "buy": 140.6176,
             "sell": 143.4223
           }
@@ -2521,11 +2521,6 @@
         "bank_name": "BRAC Bank PLC",
         "points": [
           {
-            "collected_at": "2026-08-15T18:49:27.760396+00:00",
-            "buy": 122.6,
-            "sell": 123.6
-          },
-          {
             "collected_at": "2026-08-15T19:38:07.092533+00:00",
             "buy": 122.6,
             "sell": 123.6
@@ -2967,6 +2962,11 @@
           },
           {
             "collected_at": "2026-08-19T19:00:08.429906+00:00",
+            "buy": 121.75,
+            "sell": 122.75
+          },
+          {
+            "collected_at": "2026-08-19T22:44:46.566230+00:00",
             "buy": 121.75,
             "sell": 122.75
           }
