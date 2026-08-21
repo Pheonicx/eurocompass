@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-21T14:02:18.676107+00:00",
+  "generated_at": "2026-08-21T14:58:24.255697+00:00",
   "rates_by_currency": {
     "EUR": [
       {
@@ -9,7 +9,7 @@
         "sell": 144.4988,
         "confidence": "low",
         "is_stale": true,
-        "collected_at": "2026-08-21T14:02:11.384318+00:00",
+        "collected_at": "2026-08-21T14:57:50.839962+00:00",
         "student_rate": 143.5164
       },
       {
@@ -19,7 +19,7 @@
         "sell": 144.678,
         "confidence": "low",
         "is_stale": true,
-        "collected_at": "2026-08-21T14:00:22.993944+00:00",
+        "collected_at": "2026-08-21T14:56:02.038636+00:00",
         "student_rate": 144.5612
       },
       {
@@ -29,7 +29,7 @@
         "sell": 145.18,
         "confidence": "low",
         "is_stale": true,
-        "collected_at": "2026-08-21T14:02:04.766893+00:00",
+        "collected_at": "2026-08-21T14:57:44.221200+00:00",
         "student_rate": 144.1887
       },
       {
@@ -49,7 +49,7 @@
         "sell": 145.4598,
         "confidence": "low",
         "is_stale": true,
-        "collected_at": "2026-08-21T14:01:59.453784+00:00",
+        "collected_at": "2026-08-21T14:57:38.202094+00:00",
         "student_rate": 144.46
       }
     ],
@@ -61,7 +61,7 @@
         "sell": 122.75,
         "confidence": "low",
         "is_stale": true,
-        "collected_at": "2026-08-21T14:02:04.766910+00:00",
+        "collected_at": "2026-08-21T14:57:44.221214+00:00",
         "student_rate": 122.75
       },
       {
@@ -71,7 +71,7 @@
         "sell": 122.8,
         "confidence": "low",
         "is_stale": true,
-        "collected_at": "2026-08-21T14:02:11.384335+00:00",
+        "collected_at": "2026-08-21T14:57:50.839975+00:00",
         "student_rate": 122.8
       },
       {
@@ -81,7 +81,7 @@
         "sell": 122.85,
         "confidence": "low",
         "is_stale": true,
-        "collected_at": "2026-08-21T14:00:22.993965+00:00",
+        "collected_at": "2026-08-21T14:56:02.038654+00:00",
         "student_rate": 123.7
       },
       {
@@ -91,7 +91,7 @@
         "sell": 123.0,
         "confidence": "low",
         "is_stale": true,
-        "collected_at": "2026-08-21T14:01:59.453802+00:00",
+        "collected_at": "2026-08-21T14:57:38.202108+00:00",
         "student_rate": 123.0
       },
       {
@@ -111,50 +111,50 @@
       {
         "bank_id": "BRAC",
         "bank_name": "BRAC Bank PLC",
-        "sample_size": 567,
-        "average_sell": 143.2957,
+        "sample_size": 568,
+        "average_sell": 143.2982,
         "lowest_sell": 141.6377,
         "highest_sell": 144.678,
-        "volatility": 0.896,
+        "volatility": 0.8971,
         "direction": "rising",
         "change_pct": 2.08,
-        "description": "Over the last 567 observations, BRAC's EUR TT sell rate has risen 2.1%, averaging 143.2957 (range 141.6377\u2013144.6780)."
+        "description": "Over the last 568 observations, BRAC's EUR TT sell rate has risen 2.1%, averaging 143.2982 (range 141.6377\u2013144.6780)."
       },
       {
         "bank_id": "CITY",
         "bank_name": "City Bank PLC",
-        "sample_size": 310,
-        "average_sell": 144.4842,
+        "sample_size": 311,
+        "average_sell": 144.4873,
         "lowest_sell": 142.622,
         "highest_sell": 145.4598,
-        "volatility": 0.7049,
+        "volatility": 0.7059,
         "direction": "rising",
         "change_pct": 1.84,
-        "description": "Over the last 310 observations, CITY's EUR TT sell rate has risen 1.8%, averaging 144.4842 (range 142.6220\u2013145.4598)."
+        "description": "Over the last 311 observations, CITY's EUR TT sell rate has risen 1.8%, averaging 144.4873 (range 142.6220\u2013145.4598)."
       },
       {
         "bank_id": "EBL",
         "bank_name": "Eastern Bank PLC",
-        "sample_size": 501,
-        "average_sell": 144.0154,
+        "sample_size": 502,
+        "average_sell": 144.0178,
         "lowest_sell": 142.7,
         "highest_sell": 145.18,
-        "volatility": 0.7653,
+        "volatility": 0.7663,
         "direction": "rising",
         "change_pct": 1.74,
-        "description": "Over the last 501 observations, EBL's EUR TT sell rate has risen 1.7%, averaging 144.0154 (range 142.7000\u2013145.1800)."
+        "description": "Over the last 502 observations, EBL's EUR TT sell rate has risen 1.7%, averaging 144.0178 (range 142.7000\u2013145.1800)."
       },
       {
         "bank_id": "PRIME",
         "bank_name": "Prime Bank PLC",
-        "sample_size": 558,
-        "average_sell": 143.3861,
+        "sample_size": 559,
+        "average_sell": 143.3881,
         "lowest_sell": 141.9536,
         "highest_sell": 144.4988,
-        "volatility": 0.7518,
+        "volatility": 0.7526,
         "direction": "rising",
         "change_pct": 1.67,
-        "description": "Over the last 558 observations, PRIME's EUR TT sell rate has risen 1.7%, averaging 143.3861 (range 141.9536\u2013144.4988)."
+        "description": "Over the last 559 observations, PRIME's EUR TT sell rate has risen 1.7%, averaging 143.3881 (range 141.9536\u2013144.4988)."
       },
       {
         "bank_id": "SONALI",
@@ -173,50 +173,50 @@
       {
         "bank_id": "BRAC",
         "bank_name": "BRAC Bank PLC",
-        "sample_size": 324,
-        "average_sell": 123.5595,
+        "sample_size": 325,
+        "average_sell": 123.5573,
         "lowest_sell": 122.75,
         "highest_sell": 123.97,
-        "volatility": 0.4138,
+        "volatility": 0.415,
         "direction": "falling",
         "change_pct": -0.9,
-        "description": "Over the last 324 observations, BRAC's USD TT sell rate has fallen 0.9%, averaging 123.5595 (range 122.7500\u2013123.9700)."
+        "description": "Over the last 325 observations, BRAC's USD TT sell rate has fallen 0.9%, averaging 123.5573 (range 122.7500\u2013123.9700)."
       },
       {
         "bank_id": "CITY",
         "bank_name": "City Bank PLC",
-        "sample_size": 277,
-        "average_sell": 123.5519,
+        "sample_size": 278,
+        "average_sell": 123.5499,
         "lowest_sell": 122.8,
         "highest_sell": 123.97,
-        "volatility": 0.3715,
+        "volatility": 0.3723,
         "direction": "falling",
         "change_pct": -0.77,
-        "description": "Over the last 277 observations, CITY's USD TT sell rate has fallen 0.8%, averaging 123.5519 (range 122.8000\u2013123.9700)."
+        "description": "Over the last 278 observations, CITY's USD TT sell rate has fallen 0.8%, averaging 123.5499 (range 122.8000\u2013123.9700)."
       },
       {
         "bank_id": "EBL",
         "bank_name": "Eastern Bank PLC",
-        "sample_size": 273,
-        "average_sell": 123.4628,
+        "sample_size": 274,
+        "average_sell": 123.4602,
         "lowest_sell": 122.65,
         "highest_sell": 123.97,
-        "volatility": 0.4343,
+        "volatility": 0.4357,
         "direction": "falling",
         "change_pct": -0.98,
-        "description": "Over the last 273 observations, EBL's USD TT sell rate has fallen 1.0%, averaging 123.4628 (range 122.6500\u2013123.9700)."
+        "description": "Over the last 274 observations, EBL's USD TT sell rate has fallen 1.0%, averaging 123.4602 (range 122.6500\u2013123.9700)."
       },
       {
         "bank_id": "PRIME",
         "bank_name": "Prime Bank PLC",
-        "sample_size": 318,
-        "average_sell": 123.5447,
+        "sample_size": 319,
+        "average_sell": 123.5424,
         "lowest_sell": 122.8,
         "highest_sell": 123.98,
-        "volatility": 0.429,
+        "volatility": 0.4303,
         "direction": "falling",
         "change_pct": -0.95,
-        "description": "Over the last 318 observations, PRIME's USD TT sell rate has fallen 0.9%, averaging 123.5447 (range 122.8000\u2013123.9800)."
+        "description": "Over the last 319 observations, PRIME's USD TT sell rate has fallen 0.9%, averaging 123.5424 (range 122.8000\u2013123.9800)."
       },
       {
         "bank_id": "SONALI",
@@ -238,11 +238,6 @@
         "bank_id": "BRAC",
         "bank_name": "BRAC Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-08-17T10:50:14.040710+00:00",
-            "buy": 141.337,
-            "sell": 144.1422
-          },
           {
             "collected_at": "2026-08-17T11:44:03.019342+00:00",
             "buy": 141.337,
@@ -687,6 +682,11 @@
             "collected_at": "2026-08-21T14:00:22.993944+00:00",
             "buy": 141.8634,
             "sell": 144.678
+          },
+          {
+            "collected_at": "2026-08-21T14:56:02.038636+00:00",
+            "buy": 141.8634,
+            "sell": 144.678
           }
         ]
       },
@@ -694,11 +694,6 @@
         "bank_id": "CITY",
         "bank_name": "City Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-08-16T23:37:54.817822+00:00",
-            "buy": 139.6177,
-            "sell": 144.6926
-          },
           {
             "collected_at": "2026-08-17T01:58:53.332584+00:00",
             "buy": 139.6177,
@@ -1143,6 +1138,11 @@
             "collected_at": "2026-08-21T14:01:59.453784+00:00",
             "buy": 140.6172,
             "sell": 145.4598
+          },
+          {
+            "collected_at": "2026-08-21T14:57:38.202094+00:00",
+            "buy": 140.6172,
+            "sell": 145.4598
           }
         ]
       },
@@ -1150,11 +1150,6 @@
         "bank_id": "EBL",
         "bank_name": "Eastern Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-08-16T23:38:00.215834+00:00",
-            "buy": 139.76,
-            "sell": 144.63
-          },
           {
             "collected_at": "2026-08-17T01:58:58.768417+00:00",
             "buy": 139.76,
@@ -1599,6 +1594,11 @@
             "collected_at": "2026-08-21T14:02:04.766893+00:00",
             "buy": 140.32,
             "sell": 145.18
+          },
+          {
+            "collected_at": "2026-08-21T14:57:44.221200+00:00",
+            "buy": 140.32,
+            "sell": 145.18
           }
         ]
       },
@@ -1606,11 +1606,6 @@
         "bank_id": "PRIME",
         "bank_name": "Prime Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-08-17T05:55:19.755992+00:00",
-            "buy": 140.7255,
-            "sell": 143.7867
-          },
           {
             "collected_at": "2026-08-17T07:20:54.827452+00:00",
             "buy": 140.7255,
@@ -2053,6 +2048,11 @@
           },
           {
             "collected_at": "2026-08-21T14:02:11.384318+00:00",
+            "buy": 141.2019,
+            "sell": 144.4988
+          },
+          {
+            "collected_at": "2026-08-21T14:57:50.839962+00:00",
             "buy": 141.2019,
             "sell": 144.4988
           }
@@ -2521,11 +2521,6 @@
         "bank_name": "BRAC Bank PLC",
         "points": [
           {
-            "collected_at": "2026-08-17T10:50:14.040729+00:00",
-            "buy": 122.35,
-            "sell": 123.35
-          },
-          {
             "collected_at": "2026-08-17T11:44:03.019362+00:00",
             "buy": 122.35,
             "sell": 123.35
@@ -2969,6 +2964,11 @@
             "collected_at": "2026-08-21T14:00:22.993965+00:00",
             "buy": 121.85,
             "sell": 122.85
+          },
+          {
+            "collected_at": "2026-08-21T14:56:02.038654+00:00",
+            "buy": 121.85,
+            "sell": 122.85
           }
         ]
       },
@@ -2976,11 +2976,6 @@
         "bank_id": "CITY",
         "bank_name": "City Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-08-16T23:37:54.817838+00:00",
-            "buy": 122.3,
-            "sell": 123.5
-          },
           {
             "collected_at": "2026-08-17T01:58:53.332602+00:00",
             "buy": 122.3,
@@ -3425,6 +3420,11 @@
             "collected_at": "2026-08-21T14:01:59.453802+00:00",
             "buy": 122.0,
             "sell": 123.0
+          },
+          {
+            "collected_at": "2026-08-21T14:57:38.202108+00:00",
+            "buy": 122.0,
+            "sell": 123.0
           }
         ]
       },
@@ -3432,11 +3432,6 @@
         "bank_id": "EBL",
         "bank_name": "Eastern Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-08-16T23:38:00.215850+00:00",
-            "buy": 122.4,
-            "sell": 123.4
-          },
           {
             "collected_at": "2026-08-17T01:58:58.768434+00:00",
             "buy": 122.4,
@@ -3881,6 +3876,11 @@
             "collected_at": "2026-08-21T14:02:04.766910+00:00",
             "buy": 121.75,
             "sell": 122.75
+          },
+          {
+            "collected_at": "2026-08-21T14:57:44.221214+00:00",
+            "buy": 121.75,
+            "sell": 122.75
           }
         ]
       },
@@ -3888,11 +3888,6 @@
         "bank_id": "PRIME",
         "bank_name": "Prime Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-08-17T05:55:19.756007+00:00",
-            "buy": 122.2,
-            "sell": 123.2
-          },
           {
             "collected_at": "2026-08-17T07:20:54.827468+00:00",
             "buy": 122.2,
@@ -4335,6 +4330,11 @@
           },
           {
             "collected_at": "2026-08-21T14:02:11.384335+00:00",
+            "buy": 121.6,
+            "sell": 122.8
+          },
+          {
+            "collected_at": "2026-08-21T14:57:50.839975+00:00",
             "buy": 121.6,
             "sell": 122.8
           }
