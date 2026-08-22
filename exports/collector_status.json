@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-08-22T12:11:44.217593+00:00",
+    "last_checked_at": "2026-08-22T13:22:25.956917+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-08-22T12:11:44.217593+00:00",
+    "last_success_at": "2026-08-22T13:22:25.956917+00:00",
     "last_buy": 140.32,
     "last_sell": 145.18,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-08-22T12:14:42.509089+00:00",
+    "last_checked_at": "2026-08-22T13:25:23.091886+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,27 +16,27 @@
     "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-08-22T12:14:45.377948+00:00",
+    "last_checked_at": "2026-08-22T13:25:25.780274+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-08-22T12:14:45.377948+00:00",
+    "last_success_at": "2026-08-22T13:25:25.780274+00:00",
     "last_buy": 141.8634,
     "last_sell": 144.678
   },
   "PRIME": {
-    "last_checked_at": "2026-08-22T12:14:51.094161+00:00",
+    "last_checked_at": "2026-08-22T13:25:32.093626+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-08-22T12:14:51.094161+00:00",
+    "last_success_at": "2026-08-22T13:25:32.093626+00:00",
     "last_buy": 141.2019,
     "last_sell": 144.4988,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-08-22T12:15:01.593051+00:00",
-    "last_status": "ok",
+    "last_checked_at": "2026-08-22T13:26:00.528704+00:00",
+    "last_status": "failed",
     "last_success_at": "2026-08-22T12:15:01.593051+00:00",
     "last_buy": 142.8219,
     "last_sell": 145.4545,
-    "last_failure_reason": null
+    "last_failure_reason": "Collector returned no data"
   }
 }
