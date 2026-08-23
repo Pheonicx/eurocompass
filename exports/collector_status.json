@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-08-23T04:24:49.264220+00:00",
+    "last_checked_at": "2026-08-23T05:17:37.456852+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-08-23T04:24:49.264220+00:00",
+    "last_success_at": "2026-08-23T05:17:37.456852+00:00",
     "last_buy": 140.32,
     "last_sell": 145.18,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-08-23T04:27:50.268396+00:00",
+    "last_checked_at": "2026-08-23T05:20:34.074221+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,27 +16,27 @@
     "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-08-23T04:27:52.978612+00:00",
+    "last_checked_at": "2026-08-23T05:20:36.699723+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-08-23T04:27:52.978612+00:00",
+    "last_success_at": "2026-08-23T05:20:36.699723+00:00",
     "last_buy": 141.8634,
     "last_sell": 144.678
   },
   "PRIME": {
-    "last_checked_at": "2026-08-23T04:27:59.491313+00:00",
+    "last_checked_at": "2026-08-23T05:20:42.953374+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-08-23T04:27:59.491313+00:00",
+    "last_success_at": "2026-08-23T05:20:42.953374+00:00",
     "last_buy": 141.2019,
     "last_sell": 144.4988,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-08-23T04:28:11.772872+00:00",
+    "last_checked_at": "2026-08-23T05:20:45.271789+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-08-23T04:28:11.772872+00:00",
-    "last_buy": 142.8219,
-    "last_sell": 145.4545,
+    "last_success_at": "2026-08-23T05:20:45.271789+00:00",
+    "last_buy": 142.8464,
+    "last_sell": 145.467,
     "last_failure_reason": null
   }
 }
