@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-08-29T17:59:41.420133+00:00",
+    "generated_at": "2026-08-29T20:09:54.539757+00:00",
     "currency": "EUR",
     "summary": {
         "banks_processed": 3,
@@ -27,12 +27,7 @@
             "bank": "EBL",
             "currency": "EUR",
             "buy": 140.93,
-            "sell": 145.8,
-            "rate_date": "2026-08-27",
-            "is_stale": true,
-            "student": {
-                "rate": 144.8041
-            }
+            "sell": 145.8
         },
         {
             "bank": "BRAC",
