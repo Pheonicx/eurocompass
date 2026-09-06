@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-09-06T05:11:21.221700+00:00",
+    "last_checked_at": "2026-09-06T09:43:40.486895+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-09-06T05:11:21.221700+00:00",
-    "last_buy": 140.0,
-    "last_sell": 144.86,
+    "last_success_at": "2026-09-06T09:43:40.486895+00:00",
+    "last_buy": 140.13,
+    "last_sell": 144.99,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-09-06T05:14:16.859979+00:00",
+    "last_checked_at": "2026-09-06T09:46:37.001596+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,23 +16,23 @@
     "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-09-06T05:14:19.893094+00:00",
+    "last_checked_at": "2026-09-06T09:46:39.762234+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-09-06T05:14:19.893094+00:00",
+    "last_success_at": "2026-09-06T09:46:39.762234+00:00",
     "last_buy": 141.2141,
     "last_sell": 144.0136
   },
   "PRIME": {
-    "last_checked_at": "2026-09-06T05:14:29.918202+00:00",
-    "last_status": "failed",
-    "last_success_at": "2026-09-06T00:20:16.667566+00:00",
-    "last_buy": 140.921,
-    "last_sell": 144.2176,
-    "last_failure_reason": "Collector returned no data"
+    "last_checked_at": "2026-09-06T09:46:49.114390+00:00",
+    "last_status": "ok",
+    "last_success_at": "2026-09-06T09:46:49.114390+00:00",
+    "last_buy": 141.1288,
+    "last_sell": 144.4274,
+    "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-09-06T05:14:32.391395+00:00",
+    "last_checked_at": "2026-09-06T09:46:51.387723+00:00",
     "last_status": "failed",
     "last_success_at": "2026-09-03T01:36:27.876635+00:00",
     "last_buy": 141.9463,
