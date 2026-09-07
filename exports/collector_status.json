@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-09-07T00:23:51.892050+00:00",
+    "last_checked_at": "2026-09-07T05:18:53.353442+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-09-07T00:23:51.892050+00:00",
-    "last_buy": 140.13,
-    "last_sell": 144.99,
+    "last_success_at": "2026-09-07T05:18:53.353442+00:00",
+    "last_buy": 140.08,
+    "last_sell": 144.95,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-09-07T00:26:48.116437+00:00",
+    "last_checked_at": "2026-09-07T05:21:49.030950+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,27 +16,27 @@
     "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-09-07T00:26:50.451487+00:00",
+    "last_checked_at": "2026-09-07T05:21:51.801742+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-09-07T00:26:50.451487+00:00",
+    "last_success_at": "2026-09-07T05:21:51.801742+00:00",
     "last_buy": 141.2141,
     "last_sell": 144.0136
   },
   "PRIME": {
-    "last_checked_at": "2026-09-07T00:26:57.115808+00:00",
+    "last_checked_at": "2026-09-07T05:21:58.586177+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-09-07T00:26:57.115808+00:00",
-    "last_buy": 141.1288,
-    "last_sell": 144.4274,
+    "last_success_at": "2026-09-07T05:21:58.586177+00:00",
+    "last_buy": 141.0799,
+    "last_sell": 144.378,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-09-07T00:27:02.086346+00:00",
-    "last_status": "failed",
-    "last_success_at": "2026-09-03T01:36:27.876635+00:00",
-    "last_buy": 141.9463,
-    "last_sell": 144.5476,
-    "last_failure_reason": "Rejected: sell 44.9259 is outside the plausible range [100.0, 200.0]"
+    "last_checked_at": "2026-09-07T05:22:01.059297+00:00",
+    "last_status": "ok",
+    "last_success_at": "2026-09-07T05:22:01.059297+00:00",
+    "last_buy": 142.2928,
+    "last_sell": 144.9134,
+    "last_failure_reason": null
   }
 }
