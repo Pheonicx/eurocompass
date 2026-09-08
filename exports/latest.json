@@ -1,58 +1,58 @@
 {
-    "generated_at": "2026-09-08T01:33:53.796363+00:00",
+    "generated_at": "2026-09-08T06:37:48.342358+00:00",
     "currency": "EUR",
     "summary": {
         "banks_processed": 4,
         "lowest_buy": {
             "bank": "EBL",
-            "value": 140.08
+            "value": 140.37
         },
         "highest_buy": {
             "bank": "SONALI",
-            "value": 142.2928
+            "value": 142.3818
         },
         "lowest_sell": {
             "bank": "BRAC",
-            "value": 143.8603
+            "value": 144.0338
         },
         "highest_sell": {
             "bank": "EBL",
-            "value": 144.95
+            "value": 145.24
         },
-        "average_buy": 141.15455,
-        "average_sell": 144.52542499999998
+        "average_buy": 141.343775,
+        "average_sell": 144.7165
     },
     "banks": [
         {
             "bank": "EBL",
             "currency": "EUR",
-            "buy": 140.08,
-            "sell": 144.95
+            "buy": 140.37,
+            "sell": 145.24
         },
         {
             "bank": "BRAC",
             "currency": "EUR",
-            "buy": 141.1655,
-            "sell": 143.8603
+            "buy": 141.3357,
+            "sell": 144.0338
         },
         {
             "bank": "PRIME",
             "currency": "EUR",
-            "buy": 141.0799,
-            "sell": 144.378,
-            "rate_date": "2026-09-07",
-            "is_stale": true,
+            "buy": 141.2876,
+            "sell": 144.5878,
+            "rate_date": "2026-09-08",
+            "is_stale": false,
             "student": {
-                "rate": 143.3908
+                "rate": 143.6006
             }
         },
         {
             "bank": "SONALI",
             "currency": "EUR",
-            "buy": 142.2928,
-            "sell": 144.9134,
-            "rate_date": "2026-09-07",
-            "is_stale": true
+            "buy": 142.3818,
+            "sell": 145.0044,
+            "rate_date": "2026-09-08",
+            "is_stale": false
         }
     ]
 }
