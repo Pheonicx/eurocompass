@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-09-16T00:51:21.364696+00:00",
+    "last_checked_at": "2026-09-16T05:22:49.349529+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-09-16T00:51:21.364696+00:00",
-    "last_buy": 139.73,
-    "last_sell": 144.61,
+    "last_success_at": "2026-09-16T05:22:49.349529+00:00",
+    "last_buy": 139.55,
+    "last_sell": 144.42,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-09-16T00:54:17.908690+00:00",
+    "last_checked_at": "2026-09-16T05:25:45.437308+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,27 +16,27 @@
     "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-09-16T00:54:20.516007+00:00",
+    "last_checked_at": "2026-09-16T05:25:48.079691+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-09-16T00:54:20.516007+00:00",
+    "last_success_at": "2026-09-16T05:25:48.079691+00:00",
     "last_buy": 140.6815,
     "last_sell": 143.4174
   },
   "PRIME": {
-    "last_checked_at": "2026-09-16T00:54:26.949318+00:00",
+    "last_checked_at": "2026-09-16T05:25:54.043885+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-09-16T00:54:26.949318+00:00",
-    "last_buy": 140.581,
-    "last_sell": 143.8755,
+    "last_success_at": "2026-09-16T05:25:54.043885+00:00",
+    "last_buy": 140.5933,
+    "last_sell": 143.8878,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-09-16T00:54:30.766525+00:00",
+    "last_checked_at": "2026-09-16T05:25:56.414127+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-09-16T00:54:30.766525+00:00",
-    "last_buy": 141.489,
-    "last_sell": 144.094,
+    "last_success_at": "2026-09-16T05:25:56.414127+00:00",
+    "last_buy": 141.5626,
+    "last_sell": 144.169,
     "last_failure_reason": null
   }
 }
