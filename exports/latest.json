@@ -1,15 +1,15 @@
 {
-    "generated_at": "2026-09-16T00:54:31.860500+00:00",
+    "generated_at": "2026-09-16T05:25:57.636792+00:00",
     "currency": "EUR",
     "summary": {
         "banks_processed": 4,
         "lowest_buy": {
             "bank": "EBL",
-            "value": 139.73
+            "value": 139.55
         },
         "highest_buy": {
             "bank": "SONALI",
-            "value": 141.489
+            "value": 141.5626
         },
         "lowest_sell": {
             "bank": "BRAC",
@@ -17,21 +17,21 @@
         },
         "highest_sell": {
             "bank": "EBL",
-            "value": 144.61
+            "value": 144.42
         },
-        "average_buy": 140.620375,
-        "average_sell": 143.999225
+        "average_buy": 140.59685000000002,
+        "average_sell": 143.97355
     },
     "banks": [
         {
             "bank": "EBL",
             "currency": "EUR",
-            "buy": 139.73,
-            "sell": 144.61,
-            "rate_date": "2026-09-15",
-            "is_stale": true,
+            "buy": 139.55,
+            "sell": 144.42,
+            "rate_date": "2026-09-16",
+            "is_stale": false,
             "student": {
-                "rate": 143.6143
+                "rate": 143.4209
             }
         },
         {
@@ -48,21 +48,21 @@
         {
             "bank": "PRIME",
             "currency": "EUR",
-            "buy": 140.581,
-            "sell": 143.8755,
-            "rate_date": "2026-09-15",
-            "is_stale": true,
+            "buy": 140.5933,
+            "sell": 143.8878,
+            "rate_date": "2026-09-16",
+            "is_stale": false,
             "student": {
-                "rate": 142.8859
+                "rate": 142.8982
             }
         },
         {
             "bank": "SONALI",
             "currency": "EUR",
-            "buy": 141.489,
-            "sell": 144.094,
-            "rate_date": "2026-09-15",
-            "is_stale": true
+            "buy": 141.5626,
+            "sell": 144.169,
+            "rate_date": "2026-09-16",
+            "is_stale": false
         }
     ]
 }
