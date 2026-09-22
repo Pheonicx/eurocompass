@@ -1,11 +1,11 @@
 {
-    "generated_at": "2026-09-22T01:20:19.529376+00:00",
+    "generated_at": "2026-09-22T06:56:10.340047+00:00",
     "currency": "EUR",
     "summary": {
         "banks_processed": 4,
         "lowest_buy": {
             "bank": "EBL",
-            "value": 138.6
+            "value": 138.68
         },
         "highest_buy": {
             "bank": "SONALI",
@@ -13,34 +13,34 @@
         },
         "lowest_sell": {
             "bank": "BRAC",
-            "value": 142.3148
+            "value": 142.4296
         },
         "highest_sell": {
             "bank": "EBL",
-            "value": 143.46
+            "value": 143.55
         },
-        "average_buy": 139.51955,
-        "average_sell": 142.882375
+        "average_buy": 139.5815,
+        "average_sell": 142.94705
     },
     "banks": [
         {
             "bank": "EBL",
             "currency": "EUR",
-            "buy": 138.6,
-            "sell": 143.46,
-            "rate_date": "2026-09-21",
-            "is_stale": true,
+            "buy": 138.68,
+            "sell": 143.55,
+            "rate_date": "2026-09-22",
+            "is_stale": false,
             "student": {
-                "rate": 142.4648
+                "rate": 142.5564
             }
         },
         {
             "bank": "BRAC",
             "currency": "EUR",
-            "buy": 139.5934,
-            "sell": 142.3148,
-            "rate_date": "2026-09-21",
-            "is_stale": true,
+            "buy": 139.7082,
+            "sell": 142.4296,
+            "rate_date": "2026-09-22",
+            "is_stale": false,
             "student": {
                 "rate": 142.3148
             }
@@ -48,12 +48,12 @@
         {
             "bank": "PRIME",
             "currency": "EUR",
-            "buy": 139.3283,
-            "sell": 142.6088,
-            "rate_date": "2026-09-21",
-            "is_stale": true,
+            "buy": 139.3813,
+            "sell": 142.6627,
+            "rate_date": "2026-09-22",
+            "is_stale": false,
             "student": {
-                "rate": 141.6224
+                "rate": 141.6755
             }
         },
         {
@@ -61,8 +61,8 @@
             "currency": "EUR",
             "buy": 140.5565,
             "sell": 143.1459,
-            "rate_date": "2026-09-21",
-            "is_stale": true
+            "rate_date": "2026-09-22",
+            "is_stale": false
         }
     ]
 }
