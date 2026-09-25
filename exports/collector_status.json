@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-09-25T07:04:21.999593+00:00",
+    "last_checked_at": "2026-09-25T13:02:38.912841+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-09-25T07:04:21.999593+00:00",
+    "last_success_at": "2026-09-25T13:02:38.912841+00:00",
     "last_buy": 137.68,
     "last_sell": 142.54,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-09-25T07:07:18.586522+00:00",
+    "last_checked_at": "2026-09-25T13:05:34.655239+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,27 +16,27 @@
     "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-09-25T07:07:21.077849+00:00",
+    "last_checked_at": "2026-09-25T13:05:37.678254+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-09-25T07:07:21.077849+00:00",
+    "last_success_at": "2026-09-25T13:05:37.678254+00:00",
     "last_buy": 138.9173,
     "last_sell": 141.617
   },
   "PRIME": {
-    "last_checked_at": "2026-09-25T07:07:27.454340+00:00",
+    "last_checked_at": "2026-09-25T13:05:43.738960+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-09-25T07:07:27.454340+00:00",
+    "last_success_at": "2026-09-25T13:05:43.738960+00:00",
     "last_buy": 138.5522,
     "last_sell": 141.8266,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-09-25T07:08:22.996529+00:00",
+    "last_checked_at": "2026-09-25T13:05:59.274166+00:00",
     "last_status": "failed",
     "last_success_at": "2026-09-23T01:55:59.082482+00:00",
     "last_buy": 140.5565,
     "last_sell": 143.1459,
-    "last_failure_reason": "Collector returned no data"
+    "last_failure_reason": "Rejected: sell 88.0123 is outside the plausible range [100.0, 200.0]"
   }
 }
