@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-10-06T00:24:42.368986+00:00",
+    "last_checked_at": "2026-10-06T06:55:57.561094+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-10-06T00:24:42.368986+00:00",
-    "last_buy": 134.97,
-    "last_sell": 139.79,
+    "last_success_at": "2026-10-06T06:55:57.561094+00:00",
+    "last_buy": 135.58,
+    "last_sell": 140.41,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-10-06T00:27:40.766012+00:00",
+    "last_checked_at": "2026-10-06T06:58:53.828408+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,27 +16,27 @@
     "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-10-06T00:27:43.388979+00:00",
+    "last_checked_at": "2026-10-06T06:58:56.683785+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-10-06T00:27:43.388979+00:00",
-    "last_buy": 136.1308,
-    "last_sell": 138.9612
+    "last_success_at": "2026-10-06T06:58:56.683785+00:00",
+    "last_buy": 136.8279,
+    "last_sell": 139.6578
   },
   "PRIME": {
-    "last_checked_at": "2026-10-06T00:27:49.586184+00:00",
+    "last_checked_at": "2026-10-06T06:59:03.288942+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-10-06T00:27:49.586184+00:00",
-    "last_buy": 135.7897,
-    "last_sell": 139.0363,
+    "last_success_at": "2026-10-06T06:59:03.288942+00:00",
+    "last_buy": 136.4623,
+    "last_sell": 139.7156,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-10-06T00:27:55.229379+00:00",
+    "last_checked_at": "2026-10-06T06:59:05.213394+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-10-06T00:27:55.229379+00:00",
-    "last_buy": 136.759,
-    "last_sell": 139.304,
+    "last_success_at": "2026-10-06T06:59:05.213394+00:00",
+    "last_buy": 137.4328,
+    "last_sell": 139.9527,
     "last_failure_reason": null
   }
 }
