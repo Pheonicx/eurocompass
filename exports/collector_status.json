@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-10-12T02:42:33.444940+00:00",
+    "last_checked_at": "2026-10-12T09:49:47.752141+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-10-12T02:42:33.444940+00:00",
-    "last_buy": 135.48,
-    "last_sell": 140.31,
+    "last_success_at": "2026-10-12T09:49:47.752141+00:00",
+    "last_buy": 135.65,
+    "last_sell": 140.47,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-10-12T02:45:29.992935+00:00",
+    "last_checked_at": "2026-10-12T09:52:43.891535+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,27 +16,27 @@
     "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-10-12T02:45:32.168390+00:00",
+    "last_checked_at": "2026-10-12T09:52:46.724342+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-10-12T02:45:32.168390+00:00",
-    "last_buy": 136.5402,
-    "last_sell": 139.3654
+    "last_success_at": "2026-10-12T09:52:46.724342+00:00",
+    "last_buy": 136.706,
+    "last_sell": 139.5209
   },
   "PRIME": {
-    "last_checked_at": "2026-10-12T02:45:38.558389+00:00",
+    "last_checked_at": "2026-10-12T09:52:52.980873+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-10-12T02:45:38.558389+00:00",
-    "last_buy": 136.4405,
-    "last_sell": 139.6944,
+    "last_success_at": "2026-10-12T09:52:52.980873+00:00",
+    "last_buy": 136.5385,
+    "last_sell": 139.7934,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-10-12T02:45:43.605615+00:00",
-    "last_status": "ok",
+    "last_checked_at": "2026-10-12T09:52:55.356876+00:00",
+    "last_status": "failed",
     "last_success_at": "2026-10-12T02:45:43.605615+00:00",
     "last_buy": 137.2123,
     "last_sell": 139.7406,
-    "last_failure_reason": null
+    "last_failure_reason": "Collector returned no data"
   }
 }
