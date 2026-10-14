@@ -1,59 +1,59 @@
 {
-    "generated_at": "2026-10-14T05:34:50.402034+00:00",
+    "generated_at": "2026-10-14T10:43:01.394104+00:00",
     "currency": "EUR",
     "summary": {
         "banks_processed": 4,
         "lowest_buy": {
             "bank": "EBL",
-            "value": 135.29
+            "value": 135.74
         },
         "highest_buy": {
             "bank": "SONALI",
             "value": 137.5099
         },
         "lowest_sell": {
-            "bank": "BRAC",
-            "value": 139.2031
+            "bank": "PRIME",
+            "value": 139.8251
         },
         "highest_sell": {
             "bank": "EBL",
-            "value": 140.13
+            "value": 140.59
         },
-        "average_buy": 136.3316,
-        "average_sell": 139.69175
+        "average_buy": 136.72335,
+        "average_sell": 140.089475
     },
     "banks": [
         {
             "bank": "EBL",
             "currency": "EUR",
-            "buy": 135.29,
-            "sell": 140.13,
-            "rate_date": "2026-10-13",
-            "is_stale": true,
+            "buy": 135.74,
+            "sell": 140.59,
+            "rate_date": "2026-10-14",
+            "is_stale": false,
             "student": {
-                "rate": 139.1345
+                "rate": 139.5924
             }
         },
         {
             "bank": "BRAC",
             "currency": "EUR",
-            "buy": 136.3857,
-            "sell": 139.2031,
-            "rate_date": "2026-10-13",
-            "is_stale": true,
+            "buy": 137.0738,
+            "sell": 139.9009,
+            "rate_date": "2026-10-14",
+            "is_stale": false,
             "student": {
-                "rate": 138.8121
+                "rate": 139.2843
             }
         },
         {
             "bank": "PRIME",
             "currency": "EUR",
-            "buy": 136.1408,
-            "sell": 139.392,
-            "rate_date": "2026-10-13",
-            "is_stale": true,
+            "buy": 136.5697,
+            "sell": 139.8251,
+            "rate_date": "2026-10-14",
+            "is_stale": false,
             "student": {
-                "rate": 138.402
+                "rate": 138.8351
             }
         },
         {
