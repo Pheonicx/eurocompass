@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-10-17T16:44:12.692503+00:00",
+    "generated_at": "2026-10-17T18:57:18.498698+00:00",
     "currency": "EUR",
     "summary": {
         "banks_processed": 4,
@@ -27,12 +27,7 @@
             "bank": "EBL",
             "currency": "EUR",
             "buy": 135.87,
-            "sell": 140.71,
-            "rate_date": "2026-10-15",
-            "is_stale": true,
-            "student": {
-                "rate": 139.7161
-            }
+            "sell": 140.71
         },
         {
             "bank": "BRAC",
@@ -40,7 +35,7 @@
             "buy": 137.2282,
             "sell": 140.0504,
             "rate_date": "2026-10-17",
-            "is_stale": false,
+            "is_stale": true,
             "student": {
                 "rate": 139.657
             }
@@ -51,7 +46,7 @@
             "buy": 136.8938,
             "sell": 140.1521,
             "rate_date": "2026-10-17",
-            "is_stale": false,
+            "is_stale": true,
             "student": {
                 "rate": 139.1625
             }
@@ -62,7 +57,7 @@
             "buy": 137.9025,
             "sell": 140.4292,
             "rate_date": "2026-10-17",
-            "is_stale": false
+            "is_stale": true
         }
     ]
 }
