@@ -1,38 +1,38 @@
 {
   "EBL": {
-    "last_checked_at": "2026-10-18T06:39:20.554936+00:00",
+    "last_checked_at": "2026-10-18T11:47:04.262286+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-10-18T06:39:20.554936+00:00",
-    "last_buy": 135.87,
-    "last_sell": 140.71,
+    "last_success_at": "2026-10-18T11:47:04.262286+00:00",
+    "last_buy": 136.17,
+    "last_sell": 141.0,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-10-18T06:42:17.793835+00:00",
+    "last_checked_at": "2026-10-18T11:47:08.571453+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
     "last_sell": 143.31882,
-    "last_failure_reason": "PDF method: reports list never appeared on the page after retry: Page.wait_for_selector: Timeout 40000ms exceeded.\nCall log:\nwaiting for locator(\"a[href*=\\\"currency_files\\\"]\")\n; API fallback also failed"
+    "last_failure_reason": "PDF method: found an EUR row but the values look wrong: ['', 'US Dollar', 'GB Pound', 'Euro', 'Saudi Riyal', 'Canadian\\nDollar', 'Kuwaiti Dinar', 'UAE\\nDirham', 'Singapore\\nDollar', 'Australian\\ndollar', 'Swiss Franc']; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-10-18T06:42:20.233042+00:00",
+    "last_checked_at": "2026-10-18T11:47:11.047548+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-10-18T06:42:20.233042+00:00",
+    "last_success_at": "2026-10-18T11:47:11.047548+00:00",
     "last_buy": 137.453,
     "last_sell": 140.2752
   },
   "PRIME": {
-    "last_checked_at": "2026-10-18T06:42:26.979540+00:00",
+    "last_checked_at": "2026-10-18T11:47:18.030142+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-10-18T06:42:26.979540+00:00",
+    "last_success_at": "2026-10-18T11:47:18.030142+00:00",
     "last_buy": 137.0055,
     "last_sell": 140.2654,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-10-18T06:42:28.773660+00:00",
+    "last_checked_at": "2026-10-18T11:47:20.358074+00:00",
     "last_status": "failed",
     "last_success_at": "2026-10-18T01:38:59.841098+00:00",
     "last_buy": 137.9025,
