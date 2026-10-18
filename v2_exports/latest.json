@@ -1,35 +1,35 @@
 {
-  "generated_at": "2026-10-18T01:10:01.314296+00:00",
+  "generated_at": "2026-10-18T06:01:18.137014+00:00",
   "rates_by_currency": {
     "EUR": [
       {
-        "bank_id": "BRAC",
-        "bank_name": "BRAC Bank PLC",
-        "buy": 137.2282,
-        "sell": 140.0504,
-        "confidence": "low",
-        "is_stale": true,
-        "collected_at": "2026-10-18T01:07:56.984171+00:00",
-        "student_rate": 139.657
-      },
-      {
         "bank_id": "PRIME",
         "bank_name": "Prime Bank PLC",
-        "buy": 136.8938,
-        "sell": 140.1521,
-        "confidence": "low",
-        "is_stale": true,
-        "collected_at": "2026-10-18T01:09:53.722290+00:00",
-        "student_rate": 139.1625
+        "buy": 137.0055,
+        "sell": 140.2654,
+        "confidence": "medium",
+        "is_stale": false,
+        "collected_at": "2026-10-18T06:01:15.028847+00:00",
+        "student_rate": 139.275
+      },
+      {
+        "bank_id": "BRAC",
+        "bank_name": "BRAC Bank PLC",
+        "buy": 137.453,
+        "sell": 140.2752,
+        "confidence": "medium",
+        "is_stale": false,
+        "collected_at": "2026-10-18T05:59:18.734760+00:00",
+        "student_rate": 139.7132
       },
       {
         "bank_id": "SONALI",
         "bank_name": "Sonali Bank PLC",
-        "buy": 137.9025,
-        "sell": 140.4292,
-        "confidence": "low",
-        "is_stale": true,
-        "collected_at": "2026-10-18T01:10:00.676769+00:00",
+        "buy": 137.8239,
+        "sell": 140.486,
+        "confidence": "medium",
+        "is_stale": false,
+        "collected_at": "2026-10-18T06:01:17.488072+00:00",
         "student_rate": null
       },
       {
@@ -39,7 +39,7 @@
         "sell": 140.71,
         "confidence": "medium",
         "is_stale": false,
-        "collected_at": "2026-10-18T01:09:47.305843+00:00",
+        "collected_at": "2026-10-18T06:01:08.109358+00:00",
         "student_rate": null
       },
       {
@@ -49,41 +49,11 @@
         "sell": 140.9389,
         "confidence": "low",
         "is_stale": true,
-        "collected_at": "2026-10-18T01:09:32.774470+00:00",
+        "collected_at": "2026-10-18T06:00:54.220668+00:00",
         "student_rate": 139.94
       }
     ],
     "USD": [
-      {
-        "bank_id": "PRIME",
-        "bank_name": "Prime Bank PLC",
-        "buy": 122.5,
-        "sell": 123.7,
-        "confidence": "low",
-        "is_stale": true,
-        "collected_at": "2026-10-18T01:09:53.722304+00:00",
-        "student_rate": 123.7
-      },
-      {
-        "bank_id": "SONALI",
-        "bank_name": "Sonali Bank PLC",
-        "buy": 122.58,
-        "sell": 123.7,
-        "confidence": "low",
-        "is_stale": true,
-        "collected_at": "2026-10-18T01:10:00.676782+00:00",
-        "student_rate": null
-      },
-      {
-        "bank_id": "BRAC",
-        "bank_name": "BRAC Bank PLC",
-        "buy": 122.75,
-        "sell": 123.75,
-        "confidence": "low",
-        "is_stale": true,
-        "collected_at": "2026-10-18T01:07:56.984189+00:00",
-        "student_rate": 124.0
-      },
       {
         "bank_id": "CITY",
         "bank_name": "City Bank PLC",
@@ -91,7 +61,7 @@
         "sell": 123.75,
         "confidence": "low",
         "is_stale": true,
-        "collected_at": "2026-10-18T01:09:32.774484+00:00",
+        "collected_at": "2026-10-18T06:00:54.220685+00:00",
         "student_rate": 123.75
       },
       {
@@ -101,8 +71,38 @@
         "sell": 123.75,
         "confidence": "medium",
         "is_stale": false,
-        "collected_at": "2026-10-18T01:09:47.305859+00:00",
+        "collected_at": "2026-10-18T06:01:08.109375+00:00",
         "student_rate": null
+      },
+      {
+        "bank_id": "SONALI",
+        "bank_name": "Sonali Bank PLC",
+        "buy": 122.75,
+        "sell": 123.75,
+        "confidence": "medium",
+        "is_stale": false,
+        "collected_at": "2026-10-18T06:01:17.488086+00:00",
+        "student_rate": null
+      },
+      {
+        "bank_id": "BRAC",
+        "bank_name": "BRAC Bank PLC",
+        "buy": 122.8,
+        "sell": 123.8,
+        "confidence": "medium",
+        "is_stale": false,
+        "collected_at": "2026-10-18T05:59:18.734781+00:00",
+        "student_rate": 124.05
+      },
+      {
+        "bank_id": "PRIME",
+        "bank_name": "Prime Bank PLC",
+        "buy": 122.6,
+        "sell": 123.8,
+        "confidence": "medium",
+        "is_stale": false,
+        "collected_at": "2026-10-18T06:01:15.028861+00:00",
+        "student_rate": 123.8
       }
     ]
   },
@@ -111,124 +111,124 @@
       {
         "bank_id": "BRAC",
         "bank_name": "BRAC Bank PLC",
-        "sample_size": 931,
-        "average_sell": 143.1973,
+        "sample_size": 932,
+        "average_sell": 143.1942,
         "lowest_sell": 138.9612,
         "highest_sell": 144.9424,
-        "volatility": 1.3898,
+        "volatility": 1.3923,
         "direction": "falling",
-        "change_pct": -1.19,
-        "description": "Over the last 931 observations, BRAC's EUR TT sell rate has fallen 1.2%, averaging 143.1973 (range 138.9612\u2013144.9424)."
+        "change_pct": -1.03,
+        "description": "Over the last 932 observations, BRAC's EUR TT sell rate has fallen 1.0%, averaging 143.1942 (range 138.9612\u2013144.9424)."
       },
       {
         "bank_id": "CITY",
         "bank_name": "City Bank PLC",
-        "sample_size": 666,
-        "average_sell": 144.1603,
+        "sample_size": 667,
+        "average_sell": 144.1555,
         "lowest_sell": 139.7897,
         "highest_sell": 145.9098,
-        "volatility": 1.5349,
+        "volatility": 1.5388,
         "direction": "falling",
         "change_pct": -1.33,
-        "description": "Over the last 666 observations, CITY's EUR TT sell rate has fallen 1.3%, averaging 144.1603 (range 139.7897\u2013145.9098)."
+        "description": "Over the last 667 observations, CITY's EUR TT sell rate has fallen 1.3%, averaging 144.1555 (range 139.7897\u2013145.9098)."
       },
       {
         "bank_id": "EBL",
         "bank_name": "Eastern Bank PLC",
-        "sample_size": 863,
-        "average_sell": 143.9576,
+        "sample_size": 864,
+        "average_sell": 143.9539,
         "lowest_sell": 139.79,
         "highest_sell": 145.85,
-        "volatility": 1.3682,
+        "volatility": 1.3719,
         "direction": "falling",
         "change_pct": -1.39,
-        "description": "Over the last 863 observations, EBL's EUR TT sell rate has fallen 1.4%, averaging 143.9576 (range 139.7900\u2013145.8500)."
+        "description": "Over the last 864 observations, EBL's EUR TT sell rate has fallen 1.4%, averaging 143.9539 (range 139.7900\u2013145.8500)."
       },
       {
         "bank_id": "PRIME",
         "bank_name": "Prime Bank PLC",
-        "sample_size": 935,
-        "average_sell": 143.3194,
+        "sample_size": 936,
+        "average_sell": 143.3161,
         "lowest_sell": 139.0363,
         "highest_sell": 145.3568,
-        "volatility": 1.3568,
+        "volatility": 1.3598,
         "direction": "falling",
-        "change_pct": -1.38,
-        "description": "Over the last 935 observations, PRIME's EUR TT sell rate has fallen 1.4%, averaging 143.3194 (range 139.0363\u2013145.3568)."
+        "change_pct": -1.3,
+        "description": "Over the last 936 observations, PRIME's EUR TT sell rate has fallen 1.3%, averaging 143.3161 (range 139.0363\u2013145.3568)."
       },
       {
         "bank_id": "SONALI",
         "bank_name": "Sonali Bank PLC",
-        "sample_size": 669,
-        "average_sell": 144.0132,
+        "sample_size": 670,
+        "average_sell": 144.008,
         "lowest_sell": 139.304,
         "highest_sell": 145.5725,
-        "volatility": 1.3628,
+        "volatility": 1.3686,
         "direction": "falling",
-        "change_pct": -1.71,
-        "description": "Over the last 669 observations, SONALI's EUR TT sell rate has fallen 1.7%, averaging 144.0132 (range 139.3040\u2013145.5725)."
+        "change_pct": -1.67,
+        "description": "Over the last 670 observations, SONALI's EUR TT sell rate has fallen 1.7%, averaging 144.0080 (range 139.3040\u2013145.5725)."
       }
     ],
     "USD": [
       {
         "bank_id": "BRAC",
         "bank_name": "BRAC Bank PLC",
-        "sample_size": 707,
-        "average_sell": 123.5024,
+        "sample_size": 708,
+        "average_sell": 123.5028,
         "lowest_sell": 122.75,
         "highest_sell": 123.97,
-        "volatility": 0.3486,
+        "volatility": 0.3485,
         "direction": "stable",
-        "change_pct": -0.18,
-        "description": "Over the last 707 observations, BRAC's USD TT sell rate has stayed roughly flat (within 0.2%), averaging 123.5024 (range 122.7500\u2013123.9700)."
+        "change_pct": -0.14,
+        "description": "Over the last 708 observations, BRAC's USD TT sell rate has stayed roughly flat (within 0.1%), averaging 123.5028 (range 122.7500\u2013123.9700)."
       },
       {
         "bank_id": "CITY",
         "bank_name": "City Bank PLC",
-        "sample_size": 633,
-        "average_sell": 123.4542,
+        "sample_size": 634,
+        "average_sell": 123.4547,
         "lowest_sell": 122.8,
         "highest_sell": 123.97,
         "volatility": 0.3123,
         "direction": "stable",
         "change_pct": -0.16,
-        "description": "Over the last 633 observations, CITY's USD TT sell rate has stayed roughly flat (within 0.2%), averaging 123.4542 (range 122.8000\u2013123.9700)."
+        "description": "Over the last 634 observations, CITY's USD TT sell rate has stayed roughly flat (within 0.2%), averaging 123.4547 (range 122.8000\u2013123.9700)."
       },
       {
         "bank_id": "EBL",
         "bank_name": "Eastern Bank PLC",
-        "sample_size": 635,
-        "average_sell": 123.4055,
+        "sample_size": 636,
+        "average_sell": 123.4061,
         "lowest_sell": 122.65,
         "highest_sell": 123.97,
         "volatility": 0.37,
         "direction": "stable",
         "change_pct": -0.18,
-        "description": "Over the last 635 observations, EBL's USD TT sell rate has stayed roughly flat (within 0.2%), averaging 123.4055 (range 122.6500\u2013123.9700)."
+        "description": "Over the last 636 observations, EBL's USD TT sell rate has stayed roughly flat (within 0.2%), averaging 123.4061 (range 122.6500\u2013123.9700)."
       },
       {
         "bank_id": "PRIME",
         "bank_name": "Prime Bank PLC",
-        "sample_size": 695,
-        "average_sell": 123.4595,
+        "sample_size": 696,
+        "average_sell": 123.46,
         "lowest_sell": 122.8,
         "highest_sell": 123.98,
         "volatility": 0.3737,
         "direction": "stable",
-        "change_pct": -0.23,
-        "description": "Over the last 695 observations, PRIME's USD TT sell rate has stayed roughly flat (within 0.2%), averaging 123.4595 (range 122.8000\u2013123.9800)."
+        "change_pct": -0.15,
+        "description": "Over the last 696 observations, PRIME's USD TT sell rate has stayed roughly flat (within 0.1%), averaging 123.4600 (range 122.8000\u2013123.9800)."
       },
       {
         "bank_id": "SONALI",
         "bank_name": "Sonali Bank PLC",
-        "sample_size": 563,
-        "average_sell": 123.6559,
+        "sample_size": 564,
+        "average_sell": 123.656,
         "lowest_sell": 123.3,
         "highest_sell": 123.95,
-        "volatility": 0.2212,
+        "volatility": 0.221,
         "direction": "stable",
-        "change_pct": -0.2,
-        "description": "Over the last 563 observations, SONALI's USD TT sell rate has stayed roughly flat (within 0.2%), averaging 123.6559 (range 123.3000\u2013123.9500)."
+        "change_pct": -0.16,
+        "description": "Over the last 564 observations, SONALI's USD TT sell rate has stayed roughly flat (within 0.2%), averaging 123.6560 (range 123.3000\u2013123.9500)."
       }
     ]
   },
@@ -238,11 +238,6 @@
         "bank_id": "BRAC",
         "bank_name": "BRAC Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-09-26T17:14:08.956315+00:00",
-            "buy": 138.9173,
-            "sell": 141.617
-          },
           {
             "collected_at": "2026-09-26T19:54:32.761614+00:00",
             "buy": 138.9173,
@@ -687,6 +682,11 @@
             "collected_at": "2026-10-18T01:07:56.984171+00:00",
             "buy": 137.2282,
             "sell": 140.0504
+          },
+          {
+            "collected_at": "2026-10-18T05:59:18.734760+00:00",
+            "buy": 137.453,
+            "sell": 140.2752
           }
         ]
       },
@@ -694,11 +694,6 @@
         "bank_id": "CITY",
         "bank_name": "City Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-09-27T14:05:11.628555+00:00",
-            "buy": 137.4212,
-            "sell": 142.4736
-          },
           {
             "collected_at": "2026-09-27T18:30:10.800698+00:00",
             "buy": 137.4212,
@@ -1143,6 +1138,11 @@
             "collected_at": "2026-10-18T01:09:32.774470+00:00",
             "buy": 135.8957,
             "sell": 140.9389
+          },
+          {
+            "collected_at": "2026-10-18T06:00:54.220668+00:00",
+            "buy": 135.8957,
+            "sell": 140.9389
           }
         ]
       },
@@ -1150,11 +1150,6 @@
         "bank_id": "EBL",
         "bank_name": "Eastern Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-09-27T14:05:12.618459+00:00",
-            "buy": 137.64,
-            "sell": 142.48
-          },
           {
             "collected_at": "2026-09-27T18:30:16.339894+00:00",
             "buy": 137.64,
@@ -1599,6 +1594,11 @@
             "collected_at": "2026-10-18T01:09:47.305843+00:00",
             "buy": 135.87,
             "sell": 140.71
+          },
+          {
+            "collected_at": "2026-10-18T06:01:08.109358+00:00",
+            "buy": 135.87,
+            "sell": 140.71
           }
         ]
       },
@@ -1606,11 +1606,6 @@
         "bank_id": "PRIME",
         "bank_name": "Prime Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-09-27T18:30:22.607809+00:00",
-            "buy": 138.5858,
-            "sell": 141.8601
-          },
           {
             "collected_at": "2026-09-27T22:17:59.964675+00:00",
             "buy": 138.5858,
@@ -2055,6 +2050,11 @@
             "collected_at": "2026-10-18T01:09:53.722290+00:00",
             "buy": 136.8938,
             "sell": 140.1521
+          },
+          {
+            "collected_at": "2026-10-18T06:01:15.028847+00:00",
+            "buy": 137.0055,
+            "sell": 140.2654
           }
         ]
       },
@@ -2062,11 +2062,6 @@
         "bank_id": "SONALI",
         "bank_name": "Sonali Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-09-14T14:11:09.574541+00:00",
-            "buy": 141.8359,
-            "sell": 144.4477
-          },
           {
             "collected_at": "2026-09-14T19:27:50.346914+00:00",
             "buy": 141.8359,
@@ -2511,6 +2506,11 @@
             "collected_at": "2026-10-18T01:10:00.676769+00:00",
             "buy": 137.9025,
             "sell": 140.4292
+          },
+          {
+            "collected_at": "2026-10-18T06:01:17.488072+00:00",
+            "buy": 137.8239,
+            "sell": 140.486
           }
         ]
       }
@@ -2520,11 +2520,6 @@
         "bank_id": "BRAC",
         "bank_name": "BRAC Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-09-28T00:51:01.371636+00:00",
-            "buy": 122.6,
-            "sell": 123.6
-          },
           {
             "collected_at": "2026-09-28T07:00:23.489149+00:00",
             "buy": 122.55,
@@ -2969,6 +2964,11 @@
             "collected_at": "2026-10-18T01:07:56.984189+00:00",
             "buy": 122.75,
             "sell": 123.75
+          },
+          {
+            "collected_at": "2026-10-18T05:59:18.734781+00:00",
+            "buy": 122.8,
+            "sell": 123.8
           }
         ]
       },
@@ -2976,11 +2976,6 @@
         "bank_id": "CITY",
         "bank_name": "City Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-09-27T14:05:11.628570+00:00",
-            "buy": 122.25,
-            "sell": 123.45
-          },
           {
             "collected_at": "2026-09-27T18:30:10.800714+00:00",
             "buy": 122.25,
@@ -3425,6 +3420,11 @@
             "collected_at": "2026-10-18T01:09:32.774484+00:00",
             "buy": 122.55,
             "sell": 123.75
+          },
+          {
+            "collected_at": "2026-10-18T06:00:54.220685+00:00",
+            "buy": 122.55,
+            "sell": 123.75
           }
         ]
       },
@@ -3432,11 +3432,6 @@
         "bank_id": "EBL",
         "bank_name": "Eastern Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-09-27T14:05:12.618474+00:00",
-            "buy": 122.45,
-            "sell": 123.45
-          },
           {
             "collected_at": "2026-09-27T18:30:16.339910+00:00",
             "buy": 122.45,
@@ -3881,6 +3876,11 @@
             "collected_at": "2026-10-18T01:09:47.305859+00:00",
             "buy": 122.75,
             "sell": 123.75
+          },
+          {
+            "collected_at": "2026-10-18T06:01:08.109375+00:00",
+            "buy": 122.75,
+            "sell": 123.75
           }
         ]
       },
@@ -3888,11 +3888,6 @@
         "bank_id": "PRIME",
         "bank_name": "Prime Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-09-27T18:30:22.607824+00:00",
-            "buy": 122.35,
-            "sell": 123.55
-          },
           {
             "collected_at": "2026-09-27T22:17:59.964686+00:00",
             "buy": 122.35,
@@ -4337,6 +4332,11 @@
             "collected_at": "2026-10-18T01:09:53.722304+00:00",
             "buy": 122.5,
             "sell": 123.7
+          },
+          {
+            "collected_at": "2026-10-18T06:01:15.028861+00:00",
+            "buy": 122.6,
+            "sell": 123.8
           }
         ]
       },
@@ -4344,11 +4344,6 @@
         "bank_id": "SONALI",
         "bank_name": "Sonali Bank PLC",
         "points": [
-          {
-            "collected_at": "2026-09-21T06:28:07.960048+00:00",
-            "buy": 122.5,
-            "sell": 123.5
-          },
           {
             "collected_at": "2026-09-21T19:35:20.467459+00:00",
             "buy": 122.5,
@@ -4793,6 +4788,11 @@
             "collected_at": "2026-10-18T01:10:00.676782+00:00",
             "buy": 122.58,
             "sell": 123.7
+          },
+          {
+            "collected_at": "2026-10-18T06:01:17.488086+00:00",
+            "buy": 122.75,
+            "sell": 123.75
           }
         ]
       }
@@ -4803,39 +4803,39 @@
       "currency": "EUR",
       "product_id": "TT",
       "requested_amount": 1000.0,
-      "recommended_bank_id": "BRAC",
-      "recommended_bank_name": "BRAC Bank PLC",
-      "total_cost_bdt": 140050.4,
-      "estimated_savings_vs_most_expensive_bdt": 888.5,
-      "confidence": "low",
-      "explanation": "BRAC Bank PLC is recommended for 1,000.00 EUR: total estimated cost of 140,050.40 BDT (exchange rate 140.0504). No verified fee data (SWIFT charge, processing fee, VAT, etc.) is available yet for this bank, so this total reflects the exchange cost only \u2014 the real total may be somewhat higher once fees are added. The next-best option, Prime Bank PLC, would cost 101.70 BDT more. Other options considered, in order: Sonali Bank PLC, Eastern Bank PLC, City Bank PLC. The underlying rate used for this recommendation is flagged as stale (older than expected) \u2014 treat this recommendation with extra caution until a fresher rate is collected. Overall confidence in this recommendation: low.",
+      "recommended_bank_id": "PRIME",
+      "recommended_bank_name": "Prime Bank PLC",
+      "total_cost_bdt": 140265.4,
+      "estimated_savings_vs_most_expensive_bdt": 673.5,
+      "confidence": "medium",
+      "explanation": "Prime Bank PLC is recommended for 1,000.00 EUR: total estimated cost of 140,265.40 BDT (exchange rate 140.2654). No verified fee data (SWIFT charge, processing fee, VAT, etc.) is available yet for this bank, so this total reflects the exchange cost only \u2014 the real total may be somewhat higher once fees are added. The next-best option, BRAC Bank PLC, would cost 9.80 BDT more. Other options considered, in order: Sonali Bank PLC, Eastern Bank PLC, City Bank PLC. Overall confidence in this recommendation: medium.",
       "alternatives": [
         {
-          "bank_id": "PRIME",
-          "bank_name": "Prime Bank PLC",
-          "total_cost_bdt": 140152.1,
-          "extra_cost_vs_recommended_bdt": 101.7,
+          "bank_id": "BRAC",
+          "bank_name": "BRAC Bank PLC",
+          "total_cost_bdt": 140275.2,
+          "extra_cost_vs_recommended_bdt": 9.8,
           "fees_verified": false
         },
         {
           "bank_id": "SONALI",
           "bank_name": "Sonali Bank PLC",
-          "total_cost_bdt": 140429.2,
-          "extra_cost_vs_recommended_bdt": 378.8,
+          "total_cost_bdt": 140486.0,
+          "extra_cost_vs_recommended_bdt": 220.6,
           "fees_verified": false
         },
         {
           "bank_id": "EBL",
           "bank_name": "Eastern Bank PLC",
           "total_cost_bdt": 140710.0,
-          "extra_cost_vs_recommended_bdt": 659.6,
+          "extra_cost_vs_recommended_bdt": 444.6,
           "fees_verified": false
         },
         {
           "bank_id": "CITY",
           "bank_name": "City Bank PLC",
           "total_cost_bdt": 140938.9,
-          "extra_cost_vs_recommended_bdt": 888.5,
+          "extra_cost_vs_recommended_bdt": 673.5,
           "fees_verified": false
         }
       ]
@@ -4844,39 +4844,39 @@
       "currency": "EUR",
       "product_id": "TT",
       "requested_amount": 12208.0,
-      "recommended_bank_id": "BRAC",
-      "recommended_bank_name": "BRAC Bank PLC",
-      "total_cost_bdt": 1709735.28,
-      "estimated_savings_vs_most_expensive_bdt": 10846.81,
-      "confidence": "low",
-      "explanation": "BRAC Bank PLC is recommended for 12,208.00 EUR: total estimated cost of 1,709,735.28 BDT (exchange rate 140.0504). No verified fee data (SWIFT charge, processing fee, VAT, etc.) is available yet for this bank, so this total reflects the exchange cost only \u2014 the real total may be somewhat higher once fees are added. The next-best option, Prime Bank PLC, would cost 1,241.56 BDT more. Other options considered, in order: Sonali Bank PLC, Eastern Bank PLC, City Bank PLC. The underlying rate used for this recommendation is flagged as stale (older than expected) \u2014 treat this recommendation with extra caution until a fresher rate is collected. Overall confidence in this recommendation: low.",
+      "recommended_bank_id": "PRIME",
+      "recommended_bank_name": "Prime Bank PLC",
+      "total_cost_bdt": 1712360.0,
+      "estimated_savings_vs_most_expensive_bdt": 8222.09,
+      "confidence": "medium",
+      "explanation": "Prime Bank PLC is recommended for 12,208.00 EUR: total estimated cost of 1,712,360.00 BDT (exchange rate 140.2654). No verified fee data (SWIFT charge, processing fee, VAT, etc.) is available yet for this bank, so this total reflects the exchange cost only \u2014 the real total may be somewhat higher once fees are added. The next-best option, BRAC Bank PLC, would cost 119.64 BDT more. Other options considered, in order: Sonali Bank PLC, Eastern Bank PLC, City Bank PLC. Overall confidence in this recommendation: medium.",
       "alternatives": [
         {
-          "bank_id": "PRIME",
-          "bank_name": "Prime Bank PLC",
-          "total_cost_bdt": 1710976.84,
-          "extra_cost_vs_recommended_bdt": 1241.56,
+          "bank_id": "BRAC",
+          "bank_name": "BRAC Bank PLC",
+          "total_cost_bdt": 1712479.64,
+          "extra_cost_vs_recommended_bdt": 119.64,
           "fees_verified": false
         },
         {
           "bank_id": "SONALI",
           "bank_name": "Sonali Bank PLC",
-          "total_cost_bdt": 1714359.67,
-          "extra_cost_vs_recommended_bdt": 4624.39,
+          "total_cost_bdt": 1715053.09,
+          "extra_cost_vs_recommended_bdt": 2693.09,
           "fees_verified": false
         },
         {
           "bank_id": "EBL",
           "bank_name": "Eastern Bank PLC",
           "total_cost_bdt": 1717787.68,
-          "extra_cost_vs_recommended_bdt": 8052.4,
+          "extra_cost_vs_recommended_bdt": 5427.68,
           "fees_verified": false
         },
         {
           "bank_id": "CITY",
           "bank_name": "City Bank PLC",
           "total_cost_bdt": 1720582.09,
-          "extra_cost_vs_recommended_bdt": 10846.81,
+          "extra_cost_vs_recommended_bdt": 8222.09,
           "fees_verified": false
         }
       ]
@@ -4885,38 +4885,38 @@
       "currency": "USD",
       "product_id": "TT",
       "requested_amount": 1000.0,
-      "recommended_bank_id": "PRIME",
-      "recommended_bank_name": "Prime Bank PLC",
-      "total_cost_bdt": 123700.0,
+      "recommended_bank_id": "CITY",
+      "recommended_bank_name": "City Bank PLC",
+      "total_cost_bdt": 123750.0,
       "estimated_savings_vs_most_expensive_bdt": 50.0,
       "confidence": "low",
-      "explanation": "Prime Bank PLC is recommended for 1,000.00 USD: total estimated cost of 123,700.00 BDT (exchange rate 123.7000). No verified fee data (SWIFT charge, processing fee, VAT, etc.) is available yet for this bank, so this total reflects the exchange cost only \u2014 the real total may be somewhat higher once fees are added. The next-best option, Sonali Bank PLC, would cost 0.00 BDT more. Other options considered, in order: BRAC Bank PLC, City Bank PLC, Eastern Bank PLC. The underlying rate used for this recommendation is flagged as stale (older than expected) \u2014 treat this recommendation with extra caution until a fresher rate is collected. Overall confidence in this recommendation: low.",
+      "explanation": "City Bank PLC is recommended for 1,000.00 USD: total estimated cost of 123,750.00 BDT (exchange rate 123.7500). No verified fee data (SWIFT charge, processing fee, VAT, etc.) is available yet for this bank, so this total reflects the exchange cost only \u2014 the real total may be somewhat higher once fees are added. The next-best option, Eastern Bank PLC, would cost 0.00 BDT more. Other options considered, in order: Sonali Bank PLC, BRAC Bank PLC, Prime Bank PLC. The underlying rate used for this recommendation is flagged as stale (older than expected) \u2014 treat this recommendation with extra caution until a fresher rate is collected. Overall confidence in this recommendation: low.",
       "alternatives": [
+        {
+          "bank_id": "EBL",
+          "bank_name": "Eastern Bank PLC",
+          "total_cost_bdt": 123750.0,
+          "extra_cost_vs_recommended_bdt": 0.0,
+          "fees_verified": false
+        },
         {
           "bank_id": "SONALI",
           "bank_name": "Sonali Bank PLC",
-          "total_cost_bdt": 123700.0,
+          "total_cost_bdt": 123750.0,
           "extra_cost_vs_recommended_bdt": 0.0,
           "fees_verified": false
         },
         {
           "bank_id": "BRAC",
           "bank_name": "BRAC Bank PLC",
-          "total_cost_bdt": 123750.0,
+          "total_cost_bdt": 123800.0,
           "extra_cost_vs_recommended_bdt": 50.0,
           "fees_verified": false
         },
         {
-          "bank_id": "CITY",
-          "bank_name": "City Bank PLC",
-          "total_cost_bdt": 123750.0,
-          "extra_cost_vs_recommended_bdt": 50.0,
-          "fees_verified": false
-        },
-        {
-          "bank_id": "EBL",
-          "bank_name": "Eastern Bank PLC",
-          "total_cost_bdt": 123750.0,
+          "bank_id": "PRIME",
+          "bank_name": "Prime Bank PLC",
+          "total_cost_bdt": 123800.0,
           "extra_cost_vs_recommended_bdt": 50.0,
           "fees_verified": false
         }
