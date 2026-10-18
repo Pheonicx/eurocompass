@@ -1,26 +1,26 @@
 {
-    "generated_at": "2026-10-18T01:39:01.234852+00:00",
+    "generated_at": "2026-10-18T06:42:29.918703+00:00",
     "currency": "EUR",
     "summary": {
-        "banks_processed": 4,
+        "banks_processed": 3,
         "lowest_buy": {
             "bank": "EBL",
             "value": 135.87
         },
         "highest_buy": {
-            "bank": "SONALI",
-            "value": 137.9025
+            "bank": "BRAC",
+            "value": 137.453
         },
         "lowest_sell": {
-            "bank": "BRAC",
-            "value": 140.0504
+            "bank": "PRIME",
+            "value": 140.2654
         },
         "highest_sell": {
             "bank": "EBL",
             "value": 140.71
         },
-        "average_buy": 136.973625,
-        "average_sell": 140.335425
+        "average_buy": 136.77616666666668,
+        "average_sell": 140.41686666666666
     },
     "banks": [
         {
@@ -32,32 +32,24 @@
         {
             "bank": "BRAC",
             "currency": "EUR",
-            "buy": 137.2282,
-            "sell": 140.0504,
-            "rate_date": "2026-10-17",
-            "is_stale": true,
+            "buy": 137.453,
+            "sell": 140.2752,
+            "rate_date": "2026-10-18",
+            "is_stale": false,
             "student": {
-                "rate": 139.657
+                "rate": 139.7132
             }
         },
         {
             "bank": "PRIME",
             "currency": "EUR",
-            "buy": 136.8938,
-            "sell": 140.1521,
-            "rate_date": "2026-10-17",
-            "is_stale": true,
+            "buy": 137.0055,
+            "sell": 140.2654,
+            "rate_date": "2026-10-18",
+            "is_stale": false,
             "student": {
-                "rate": 139.1625
+                "rate": 139.275
             }
-        },
-        {
-            "bank": "SONALI",
-            "currency": "EUR",
-            "buy": 137.9025,
-            "sell": 140.4292,
-            "rate_date": "2026-10-17",
-            "is_stale": true
         }
     ]
 }
