@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-10-24T22:00:42.603360+00:00",
+    "last_checked_at": "2026-10-25T00:36:43.952597+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-10-24T22:00:42.603360+00:00",
+    "last_success_at": "2026-10-25T00:36:43.952597+00:00",
     "last_buy": 136.18,
     "last_sell": 141.02,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-10-24T22:00:46.175475+00:00",
+    "last_checked_at": "2026-10-25T00:36:48.951261+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,23 +16,23 @@
     "last_failure_reason": "PDF method: found an EUR row but the values look wrong: ['', 'US Dollar', 'GB Pound', 'Euro', 'Saudi Riyal', 'Canadian\\nDollar', 'Kuwaiti Dinar', 'UAE\\nDirham', 'Singapore\\nDollar', 'Australian\\ndollar', 'Swiss Franc']; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-10-24T22:00:49.190013+00:00",
+    "last_checked_at": "2026-10-25T00:36:51.202049+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-10-24T22:00:49.190013+00:00",
+    "last_success_at": "2026-10-25T00:36:51.202049+00:00",
     "last_buy": 137.3307,
     "last_sell": 140.1629
   },
   "PRIME": {
-    "last_checked_at": "2026-10-24T22:00:55.546998+00:00",
+    "last_checked_at": "2026-10-25T00:36:57.365396+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-10-24T22:00:55.546998+00:00",
+    "last_success_at": "2026-10-25T00:36:57.365396+00:00",
     "last_buy": 137.0068,
     "last_sell": 140.2672,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-10-24T22:01:10.476371+00:00",
+    "last_checked_at": "2026-10-25T00:37:09.139697+00:00",
     "last_status": "failed",
     "last_success_at": "2026-10-18T01:38:59.841098+00:00",
     "last_buy": 137.9025,
