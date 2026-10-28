@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-10-28T06:23:00.645509+00:00",
+    "last_checked_at": "2026-10-28T13:36:54.227619+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-10-28T06:23:00.645509+00:00",
+    "last_success_at": "2026-10-28T13:36:54.227619+00:00",
     "last_buy": 135.26,
     "last_sell": 140.11,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-10-28T06:23:04.402611+00:00",
+    "last_checked_at": "2026-10-28T13:36:57.791289+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,27 +16,27 @@
     "last_failure_reason": "PDF method: found an EUR row but the values look wrong: ['', 'US Dollar', 'GB Pound', 'Euro', 'Saudi Riyal', 'Canadian\\nDollar', 'Kuwaiti Dinar', 'UAE\\nDirham', 'Singapore\\nDollar', 'Australian\\ndollar', 'Swiss Franc']; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-10-28T06:23:06.937098+00:00",
+    "last_checked_at": "2026-10-28T13:36:59.924129+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-10-28T06:23:06.937098+00:00",
+    "last_success_at": "2026-10-28T13:36:59.924129+00:00",
     "last_buy": 136.6215,
     "last_sell": 139.4143
   },
   "PRIME": {
-    "last_checked_at": "2026-10-28T06:23:13.830043+00:00",
+    "last_checked_at": "2026-10-28T13:37:05.379315+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-10-28T06:23:13.830043+00:00",
+    "last_success_at": "2026-10-28T13:37:05.379315+00:00",
     "last_buy": 136.1154,
     "last_sell": 139.3688,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-10-28T06:23:24.049759+00:00",
-    "last_status": "ok",
+    "last_checked_at": "2026-10-28T13:37:07.287646+00:00",
+    "last_status": "failed",
     "last_success_at": "2026-10-28T06:23:24.049759+00:00",
     "last_buy": 137.3597,
     "last_sell": 139.8742,
-    "last_failure_reason": null
+    "last_failure_reason": "Rejected: buy 36.8872 is outside the plausible range [100.0, 200.0]"
   }
 }
