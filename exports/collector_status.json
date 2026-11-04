@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-11-03T23:44:18.040684+00:00",
+    "last_checked_at": "2026-11-04T03:24:23.031611+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-11-03T23:44:18.040684+00:00",
+    "last_success_at": "2026-11-04T03:24:23.031611+00:00",
     "last_buy": 136.45,
     "last_sell": 141.3,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-11-03T23:44:22.403777+00:00",
+    "last_checked_at": "2026-11-04T03:24:27.094966+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,25 +16,25 @@
     "last_failure_reason": "PDF method: found an EUR row but the values look wrong: ['', 'US Dollar', 'GB Pound', 'Euro', 'Saudi Riyal', 'Canadian\\nDollar', 'Kuwaiti Dinar', 'UAE\\nDirham', 'Singapore\\nDollar', 'Australian\\ndollar', 'Swiss Franc']; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-11-03T23:44:25.050106+00:00",
+    "last_checked_at": "2026-11-04T03:24:32.312706+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-11-03T23:44:25.050106+00:00",
+    "last_success_at": "2026-11-04T03:24:32.312706+00:00",
     "last_buy": 137.9727,
     "last_sell": 140.7828
   },
   "PRIME": {
-    "last_checked_at": "2026-11-03T23:44:32.392943+00:00",
+    "last_checked_at": "2026-11-04T03:24:38.481353+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-11-03T23:44:32.392943+00:00",
+    "last_success_at": "2026-11-04T03:24:38.481353+00:00",
     "last_buy": 137.2331,
     "last_sell": 140.499,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-11-03T23:44:37.079744+00:00",
+    "last_checked_at": "2026-11-04T03:24:44.832683+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-11-03T23:44:37.079744+00:00",
+    "last_success_at": "2026-11-04T03:24:44.832683+00:00",
     "last_buy": 138.445,
     "last_sell": 140.9851,
     "last_failure_reason": null
