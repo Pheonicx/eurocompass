@@ -1,63 +1,55 @@
 {
-    "generated_at": "2026-11-04T03:24:46.270315+00:00",
+    "generated_at": "2026-11-04T11:38:48.719574+00:00",
     "currency": "EUR",
     "summary": {
-        "banks_processed": 4,
+        "banks_processed": 3,
         "lowest_buy": {
             "bank": "EBL",
-            "value": 136.45
+            "value": 137.38
         },
         "highest_buy": {
-            "bank": "SONALI",
-            "value": 138.445
+            "bank": "BRAC",
+            "value": 138.4782
         },
         "lowest_sell": {
-            "bank": "PRIME",
-            "value": 140.499
+            "bank": "BRAC",
+            "value": 141.3111
         },
         "highest_sell": {
             "bank": "EBL",
-            "value": 141.3
+            "value": 142.26
         },
-        "average_buy": 137.52519999999998,
-        "average_sell": 140.891725
+        "average_buy": 138.03276666666667,
+        "average_sell": 141.69583333333333
     },
     "banks": [
         {
             "bank": "EBL",
             "currency": "EUR",
-            "buy": 136.45,
-            "sell": 141.3
+            "buy": 137.38,
+            "sell": 142.26
         },
         {
             "bank": "BRAC",
             "currency": "EUR",
-            "buy": 137.9727,
-            "sell": 140.7828,
-            "rate_date": "2026-11-03",
-            "is_stale": true,
+            "buy": 138.4782,
+            "sell": 141.3111,
+            "rate_date": "2026-11-04",
+            "is_stale": false,
             "student": {
-                "rate": 140.2792
+                "rate": 140.9742
             }
         },
         {
             "bank": "PRIME",
             "currency": "EUR",
-            "buy": 137.2331,
-            "sell": 140.499,
-            "rate_date": "2026-11-03",
-            "is_stale": true,
+            "buy": 138.2401,
+            "sell": 141.5164,
+            "rate_date": "2026-11-04",
+            "is_stale": false,
             "student": {
-                "rate": 139.5022
+                "rate": 140.5184
             }
-        },
-        {
-            "bank": "SONALI",
-            "currency": "EUR",
-            "buy": 138.445,
-            "sell": 140.9851,
-            "rate_date": "2026-11-03",
-            "is_stale": true
         }
     ]
 }
