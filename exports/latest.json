@@ -1,54 +1,54 @@
 {
-    "generated_at": "2026-11-05T04:49:01.565298+00:00",
+    "generated_at": "2026-11-05T12:48:22.437298+00:00",
     "currency": "EUR",
     "summary": {
         "banks_processed": 3,
         "lowest_buy": {
             "bank": "EBL",
-            "value": 137.38
+            "value": 137.6
         },
         "highest_buy": {
             "bank": "BRAC",
-            "value": 138.4782
+            "value": 138.8728
         },
         "lowest_sell": {
-            "bank": "BRAC",
-            "value": 141.3111
+            "bank": "PRIME",
+            "value": 141.6287
         },
         "highest_sell": {
             "bank": "EBL",
-            "value": 142.26
+            "value": 142.51
         },
-        "average_buy": 138.03276666666667,
-        "average_sell": 141.69583333333333
+        "average_buy": 138.2747,
+        "average_sell": 141.98416666666665
     },
     "banks": [
         {
             "bank": "EBL",
             "currency": "EUR",
-            "buy": 137.38,
-            "sell": 142.26
+            "buy": 137.6,
+            "sell": 142.51
         },
         {
             "bank": "BRAC",
             "currency": "EUR",
-            "buy": 138.4782,
-            "sell": 141.3111,
-            "rate_date": "2026-11-04",
-            "is_stale": true,
+            "buy": 138.8728,
+            "sell": 141.8138,
+            "rate_date": "2026-11-05",
+            "is_stale": false,
             "student": {
-                "rate": 140.9742
+                "rate": 141.5322
             }
         },
         {
             "bank": "PRIME",
             "currency": "EUR",
-            "buy": 138.2401,
-            "sell": 141.5164,
-            "rate_date": "2026-11-04",
-            "is_stale": true,
+            "buy": 138.3513,
+            "sell": 141.6287,
+            "rate_date": "2026-11-05",
+            "is_stale": false,
             "student": {
-                "rate": 140.5184
+                "rate": 140.6307
             }
         }
     ]
