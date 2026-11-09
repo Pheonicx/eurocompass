@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-11-09T07:17:12.709010+00:00",
+    "last_checked_at": "2026-11-09T17:51:11.805873+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-11-09T07:17:12.709010+00:00",
+    "last_success_at": "2026-11-09T17:51:11.805873+00:00",
     "last_buy": 136.22,
     "last_sell": 141.08,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-11-09T07:17:16.195913+00:00",
+    "last_checked_at": "2026-11-09T17:51:16.272935+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,25 +16,25 @@
     "last_failure_reason": "PDF method: found an EUR row but the values look wrong: ['', 'US Dollar', 'GB Pound', 'Euro', 'Saudi Riyal', 'Canadian\\nDollar', 'Kuwaiti Dinar', 'UAE\\nDirham', 'Singapore\\nDollar', 'Australian\\ndollar', 'Swiss Franc']; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-11-09T07:17:18.873534+00:00",
+    "last_checked_at": "2026-11-09T17:51:18.636677+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-11-09T07:17:18.873534+00:00",
+    "last_success_at": "2026-11-09T17:51:18.636677+00:00",
     "last_buy": 137.5658,
     "last_sell": 140.4792
   },
   "PRIME": {
-    "last_checked_at": "2026-11-09T07:17:26.061014+00:00",
+    "last_checked_at": "2026-11-09T17:51:25.310523+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-11-09T07:17:26.061014+00:00",
+    "last_success_at": "2026-11-09T17:51:25.310523+00:00",
     "last_buy": 137.0724,
     "last_sell": 140.3376,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-11-09T07:17:42.731989+00:00",
+    "last_checked_at": "2026-11-09T17:51:27.101156+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-11-09T07:17:42.731989+00:00",
+    "last_success_at": "2026-11-09T17:51:27.101156+00:00",
     "last_buy": 138.0618,
     "last_sell": 140.5813,
     "last_failure_reason": null
