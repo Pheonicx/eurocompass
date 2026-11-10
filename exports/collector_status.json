@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-11-10T00:53:07.755438+00:00",
+    "last_checked_at": "2026-11-10T07:48:54.529566+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-11-10T00:53:07.755438+00:00",
-    "last_buy": 136.22,
-    "last_sell": 141.08,
+    "last_success_at": "2026-11-10T07:48:54.529566+00:00",
+    "last_buy": 137.23,
+    "last_sell": 142.11,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-11-10T00:53:11.577629+00:00",
+    "last_checked_at": "2026-11-10T07:48:58.284327+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,25 +16,25 @@
     "last_failure_reason": "PDF method: found an EUR row but the values look wrong: ['', 'US Dollar', 'GB Pound', 'Euro', 'Saudi Riyal', 'Canadian\\nDollar', 'Kuwaiti Dinar', 'UAE\\nDirham', 'Singapore\\nDollar', 'Australian\\ndollar', 'Swiss Franc']; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-11-10T00:53:14.329578+00:00",
+    "last_checked_at": "2026-11-10T07:49:00.801704+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-11-10T00:53:14.329578+00:00",
-    "last_buy": 137.5658,
-    "last_sell": 140.4792
+    "last_success_at": "2026-11-10T07:49:00.801704+00:00",
+    "last_buy": 138.4166,
+    "last_sell": 141.3479
   },
   "PRIME": {
-    "last_checked_at": "2026-11-10T00:53:20.037329+00:00",
+    "last_checked_at": "2026-11-10T07:49:07.616743+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-11-10T00:53:20.037329+00:00",
-    "last_buy": 137.0724,
-    "last_sell": 140.3376,
+    "last_success_at": "2026-11-10T07:49:07.616743+00:00",
+    "last_buy": 138.0245,
+    "last_sell": 141.2994,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-11-10T00:53:26.378831+00:00",
+    "last_checked_at": "2026-11-10T07:49:13.310484+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-11-10T00:53:26.378831+00:00",
+    "last_success_at": "2026-11-10T07:49:13.310484+00:00",
     "last_buy": 138.0618,
     "last_sell": 140.5813,
     "last_failure_reason": null
