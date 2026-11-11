@@ -1,40 +1,40 @@
 {
   "EBL": {
-    "last_checked_at": "2026-11-11T08:28:35.578165+00:00",
+    "last_checked_at": "2026-11-11T23:08:43.035272+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-11-11T08:28:35.578165+00:00",
+    "last_success_at": "2026-11-11T23:08:43.035272+00:00",
     "last_buy": 136.55,
     "last_sell": 141.41,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-11-11T08:28:40.891040+00:00",
+    "last_checked_at": "2026-11-11T23:10:50.313337+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
     "last_sell": 143.31882,
-    "last_failure_reason": "PDF method: found an EUR row but the values look wrong: ['', 'US Dollar', 'GB Pound', 'Euro', 'Saudi Riyal', 'Canadian\\nDollar', 'Kuwaiti Dinar', 'UAE\\nDirham', 'Singapore\\nDollar', 'Australian\\ndollar', 'Swiss Franc']; API fallback also failed"
+    "last_failure_reason": "PDF method: page navigation failed/timed out: Page.goto: Timeout 60000ms exceeded.\nCall log:\nnavigating to \"https://www.citybankplc.com/exchange-rates\", waiting until \"domcontentloaded\"\n; API fallback also failed (Authentication request failed.)"
   },
   "BRAC": {
-    "last_checked_at": "2026-11-11T08:28:42.921392+00:00",
+    "last_checked_at": "2026-11-11T23:10:52.970106+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-11-11T08:28:42.921392+00:00",
+    "last_success_at": "2026-11-11T23:10:52.970106+00:00",
     "last_buy": 137.9125,
     "last_sell": 140.8411
   },
   "PRIME": {
-    "last_checked_at": "2026-11-11T08:28:49.815599+00:00",
+    "last_checked_at": "2026-11-11T23:10:58.881128+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-11-11T08:28:49.815599+00:00",
+    "last_success_at": "2026-11-11T23:10:58.881128+00:00",
     "last_buy": 137.4329,
     "last_sell": 140.7025,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-11-11T08:28:51.637250+00:00",
+    "last_checked_at": "2026-11-11T23:11:04.302973+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-11-11T08:28:51.637250+00:00",
+    "last_success_at": "2026-11-11T23:11:04.302973+00:00",
     "last_buy": 138.3344,
     "last_sell": 140.8706,
     "last_failure_reason": null
