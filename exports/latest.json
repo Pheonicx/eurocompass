@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-11-16T17:31:18.531451+00:00",
+    "generated_at": "2026-11-17T01:07:55.994798+00:00",
     "currency": "EUR",
     "summary": {
         "banks_processed": 3,
@@ -29,7 +29,7 @@
             "buy": 134.79,
             "sell": 139.66,
             "rate_date": "2026-11-16",
-            "is_stale": false,
+            "is_stale": true,
             "student": {
                 "rate": 138.4616
             }
@@ -40,7 +40,7 @@
             "buy": 136.1578,
             "sell": 139.0345,
             "rate_date": "2026-11-16",
-            "is_stale": false,
+            "is_stale": true,
             "student": {
                 "rate": 138.7591
             }
@@ -51,7 +51,7 @@
             "buy": 135.7077,
             "sell": 138.9611,
             "rate_date": "2026-11-16",
-            "is_stale": false,
+            "is_stale": true,
             "student": {
                 "rate": 137.9603
             }
