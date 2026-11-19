@@ -1,14 +1,14 @@
 {
   "EBL": {
-    "last_checked_at": "2026-11-19T17:45:14.306432+00:00",
+    "last_checked_at": "2026-11-19T23:55:50.169160+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-11-19T17:45:14.306432+00:00",
+    "last_success_at": "2026-11-19T23:55:50.169160+00:00",
     "last_buy": 133.82,
     "last_sell": 138.67,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-11-19T17:45:17.904966+00:00",
+    "last_checked_at": "2026-11-19T23:55:54.535884+00:00",
     "last_status": "failed",
     "last_success_at": "2026-07-16T01:13:35.155179+00:00",
     "last_buy": 138.47922,
@@ -16,25 +16,25 @@
     "last_failure_reason": "PDF method: found an EUR row but the values look wrong: ['', 'US Dollar', 'GB Pound', 'Euro', 'Saudi Riyal', 'Canadian\\nDollar', 'Kuwaiti Dinar', 'UAE\\nDirham', 'Singapore\\nDollar', 'Australian\\ndollar', 'Swiss Franc']; API fallback also failed"
   },
   "BRAC": {
-    "last_checked_at": "2026-11-19T17:45:20.109617+00:00",
+    "last_checked_at": "2026-11-19T23:55:56.592102+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-11-19T17:45:20.109617+00:00",
+    "last_success_at": "2026-11-19T23:55:56.592102+00:00",
     "last_buy": 135.1491,
     "last_sell": 138.0242
   },
   "PRIME": {
-    "last_checked_at": "2026-11-19T17:45:26.107014+00:00",
+    "last_checked_at": "2026-11-19T23:56:02.340284+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-11-19T17:45:26.107014+00:00",
+    "last_success_at": "2026-11-19T23:56:02.340284+00:00",
     "last_buy": 134.9573,
     "last_sell": 138.2029,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-11-19T17:45:28.316268+00:00",
+    "last_checked_at": "2026-11-19T23:56:07.965180+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-11-19T17:45:28.316268+00:00",
+    "last_success_at": "2026-11-19T23:56:07.965180+00:00",
     "last_buy": 135.63,
     "last_sell": 138.1059,
     "last_failure_reason": null
