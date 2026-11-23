@@ -45,9 +45,11 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "🧭 EuroCompass\n\n"
             "Cloud-powered EUR Exchange Rate Intelligence\n\n"
             "Available commands\n\n"
-            "/rates\n"
-            "/recommend <EUR amount>\n"
-            "/refresh"
+            "/rates - Regular TT rates\n"
+            "/student - Student file rates\n"
+            "/recommend <EUR amount> - Best bank for transfer\n"
+            "/student-recommend <EUR amount> - Best student file rate\n"
+            "/refresh - Update market data"
         )
     except Exception:
         logger.exception("Failed to handle /start")
@@ -126,6 +128,121 @@ async def recommend(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("Could not calculate recommendation.")
 
 
+async def student(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    try:
+        banks = get_rates()
+
+        if not banks:
+            await update.message.reply_text("No market data available.")
+            return
+
+        # Filter banks with student rates
+        student_banks = [b for b in banks if b.get("student")]
+
+        if not student_banks:
+            await update.message.reply_text(
+                "📚 Student File Rates\n\n"
+                "No banks currently publish distinct student-file rates."
+            )
+            return
+
+        # Sort by student rate (ascending = best rates first)
+        student_banks.sort(key=lambda x: x.get("student", {}).get("rate", float('inf')))
+
+        medals = ["🥇", "🥈", "🥉"]
+        lines = ["📚 Student File EUR Rates", ""]
+
+        for index, bank in enumerate(student_banks):
+            rank = medals[index] if index < len(medals) else f"{index + 1}."
+            student_data = bank.get("student", {})
+
+            if "rate" in student_data:
+                rate_str = format_rate(student_data["rate"])
+            elif "sell" in student_data:
+                rate_str = format_rate(student_data["sell"])
+            else:
+                continue
+
+            lines.extend([
+                f"{rank} {bank['bank']}",
+                f"Student Rate: {rate_str}",
+                f"Normal Rate:  {format_rate(bank['sell'])}",
+                f"Difference:   {format_rate(abs(student_data.get('rate', student_data.get('sell')) - bank['sell']))} BDT",
+                "",
+            ])
+
+        await update.message.reply_text("\n".join(lines).strip())
+
+    except Exception:
+        logger.exception("Failed to handle /student")
+        await update.message.reply_text("Could not load student rates.")
+
+
+async def student_recommend(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    try:
+        if not context.args:
+            await update.message.reply_text("Usage: /student-recommend <EUR amount>")
+            return
+
+        amount_text = "".join(context.args).replace(",", "")
+        euro_amount = float(amount_text)
+
+        if euro_amount <= 0:
+            await update.message.reply_text("Amount must be greater than zero.")
+            return
+
+        banks = get_rates()
+
+        if not banks:
+            await update.message.reply_text("No market data available.")
+            return
+
+        # Filter to banks with student rates and calculate cost
+        student_banks = [b for b in banks if b.get("student")]
+
+        if not student_banks:
+            await update.message.reply_text("No banks currently offer student-file rates.")
+            return
+
+        best_bank = None
+        best_cost = float('inf')
+
+        for bank in student_banks:
+            student_data = bank.get("student", {})
+            rate = student_data.get("rate", student_data.get("sell"))
+            if rate:
+                cost = rate * euro_amount
+                if cost < best_cost:
+                    best_cost = cost
+                    best_bank = {**bank, "rate": rate}
+
+        if not best_bank:
+            await update.message.reply_text("Could not calculate student-file recommendation.")
+            return
+
+        message = (
+            "📚 Student File Transfer\n\n"
+            "Amount:\n"
+            f"{format_eur(euro_amount)}\n\n"
+            "🏆 Best Student Rate\n\n"
+            f"{best_bank['bank']}\n\n"
+            "Student Rate:\n"
+            f"{format_rate(best_bank['rate'])}\n\n"
+            "Estimated Cost:\n"
+            f"{format_bdt(best_cost)}\n\n"
+            "Normal Rate Comparison:\n"
+            f"{format_rate(best_bank['sell'])} (difference: {format_rate(abs(best_bank['rate'] - best_bank['sell']))} BDT)"
+        )
+
+        await update.message.reply_text(message)
+
+    except ValueError:
+        await update.message.reply_text("Please provide a valid EUR amount.")
+    except Exception:
+        logger.exception("Failed to handle /student-recommend")
+        await update.message.reply_text("Could not calculate student-file recommendation.")
+
+
 async def refresh(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         await update.message.reply_text("Refreshing market...")
@@ -187,7 +304,9 @@ def main():
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("rates", rates))
+    application.add_handler(CommandHandler("student", student))
     application.add_handler(CommandHandler("recommend", recommend))
+    application.add_handler(CommandHandler("student-recommend", student_recommend))
     application.add_handler(CommandHandler("refresh", refresh))
     application.add_error_handler(error_handler)
 

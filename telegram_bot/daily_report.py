@@ -64,6 +64,15 @@ def main():
 
     saving = spread * 12153
 
+    # Find best student rate if available
+    student_banks = [b for b in banks if b.get("student")]
+    best_student = None
+    if student_banks:
+        best_student = min(
+            student_banks,
+            key=lambda x: x.get("student", {}).get("rate", float('inf'))
+        )
+
     updated = datetime.fromisoformat(
         data["generated_at"]
     )
@@ -85,9 +94,13 @@ def main():
 📊 Market Spread
 {spread:.4f} BDT
 
-━━━━━━━━━━━━━━
-
 """
+
+    if best_student:
+        student_rate = best_student.get("student", {}).get("rate", best_student.get("student", {}).get("sell"))
+        message += f"📚 Best Student Rate\n{best_student['bank']}\n{student_rate:.4f} BDT/EUR\n\n"
+
+    message += "━━━━━━━━━━━━━━\n\n"
 
     medals = ["🥇", "🥈", "🥉"]
 
@@ -95,11 +108,13 @@ def main():
 
         rank = medals[i] if i < 3 else f"{i+1}."
 
-        message += (
-            f"{rank} "
-            f"{bank['bank']:<8} "
-            f"{bank['sell']:.4f}\n"
-        )
+        line = f"{rank} {bank['bank']:<8} {bank['sell']:.4f}"
+
+        if bank.get("student"):
+            student_rate = bank.get("student", {}).get("rate", bank.get("student", {}).get("sell"))
+            line += f" (📚 {student_rate:.4f})"
+
+        message += line + "\n"
 
     send_message(
         token,
