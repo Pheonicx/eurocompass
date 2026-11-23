@@ -1,59 +1,48 @@
 {
-    "generated_at": "2026-11-23T04:07:07.835675+00:00",
+    "generated_at": "2026-11-23T15:27:25.777812+00:00",
     "currency": "EUR",
     "summary": {
-        "banks_processed": 3,
+        "banks_processed": 2,
         "lowest_buy": {
             "bank": "EBL",
-            "value": 134.01
+            "value": 134.2
         },
         "highest_buy": {
             "bank": "BRAC",
-            "value": 135.2231
+            "value": 135.3587
         },
         "lowest_sell": {
             "bank": "BRAC",
-            "value": 138.0871
+            "value": 138.2382
         },
         "highest_sell": {
             "bank": "EBL",
-            "value": 138.85
+            "value": 139.04
         },
-        "average_buy": 134.73013333333333,
-        "average_sell": 138.38
+        "average_buy": 134.77935,
+        "average_sell": 138.63909999999998
     },
     "banks": [
         {
             "bank": "EBL",
             "currency": "EUR",
-            "buy": 134.01,
-            "sell": 138.85,
-            "rate_date": "2026-11-22",
-            "is_stale": true,
+            "buy": 134.2,
+            "sell": 139.04,
+            "rate_date": "2026-11-23",
+            "is_stale": false,
             "student": {
-                "rate": 137.6527
+                "rate": 137.8457
             }
         },
         {
             "bank": "BRAC",
             "currency": "EUR",
-            "buy": 135.2231,
-            "sell": 138.0871,
-            "rate_date": "2026-11-22",
-            "is_stale": true,
+            "buy": 135.3587,
+            "sell": 138.2382,
+            "rate_date": "2026-11-23",
+            "is_stale": false,
             "student": {
-                "rate": 137.2645
-            }
-        },
-        {
-            "bank": "PRIME",
-            "currency": "EUR",
-            "buy": 134.9573,
-            "sell": 138.2029,
-            "rate_date": "2026-11-22",
-            "is_stale": true,
-            "student": {
-                "rate": 136.8258
+                "rate": 137.5794
             }
         }
     ]
