@@ -7,6 +7,7 @@ import { renderBuySellCharts, renderHistChart } from './charts.js';
 import { renderFeeRows, renderCalcAndCostTable } from './render-calculator.js';
 import { renderForecast } from './render-forecast.js';
 import { renderStudentRates } from './render-student-rates.js';
+import { initStudentFileCalculator } from './student-file-calculator.js';
 
 function fmtTimestamp(iso) {
   if (!iso) return '—';
@@ -27,6 +28,7 @@ function renderAll() {
   renderMarketIntelligence();
   renderCalcAndCostTable();
   renderStudentRates();
+  initStudentFileCalculator(state.banks);
   renderBuySellCharts();
   renderHistChart();
   renderForecast();
