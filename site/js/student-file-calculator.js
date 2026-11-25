@@ -4,6 +4,29 @@
  */
 
 const STUDENT_FILE_INFO = {
+  CITY: {
+    name: "CITY Bank",
+    fileOpeningCharge: 7000, // Estimated
+    swiftCharge: 1150, // Estimated
+    remittanceCharge: { min: 115, max: 575 }, // Tk variable
+    intermediaryCharges: {
+      EUR: { amount: 20, currency: "EUR", bdtEstimate: 2700 },
+      USD: 15,
+      GBP: 25,
+      JPY: 10000
+    },
+    documents: [
+      "Admission letter",
+      "Living expense documents",
+      "Refund policy",
+      "Educational certificates",
+      "Student ID / VISA",
+      "Photographs",
+      "Payment proof"
+    ],
+    contact: "To be confirmed",
+    email: "To be confirmed"
+  },
   PRIME: {
     name: "PRIME Bank",
     fileOpeningCharge: 6900, // Tk (includes Tk 900 VAT)
@@ -123,7 +146,7 @@ function setupCalculatorInputs(bankRates) {
 }
 
 function renderInitialInfo() {
-  renderBankInfo('PRIME');
+  renderBankInfo('EBL');
 }
 
 function renderBankInfo(bankCode) {
