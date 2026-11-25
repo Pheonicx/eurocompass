@@ -1,42 +1,42 @@
 {
   "EBL": {
-    "last_checked_at": "2026-11-25T05:04:43.082826+00:00",
+    "last_checked_at": "2026-11-25T16:11:34.293753+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-11-25T05:04:43.082826+00:00",
-    "last_buy": 133.53,
-    "last_sell": 138.37,
+    "last_success_at": "2026-11-25T16:11:34.293753+00:00",
+    "last_buy": 134.14,
+    "last_sell": 138.98,
     "last_failure_reason": null
   },
   "CITY": {
-    "last_checked_at": "2026-11-25T05:04:46.316878+00:00",
+    "last_checked_at": "2026-11-25T16:11:37.969757+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-11-25T05:04:46.316878+00:00",
-    "last_buy": 134.3246,
-    "last_sell": 138.2197,
+    "last_success_at": "2026-11-25T16:11:37.969757+00:00",
+    "last_buy": 134.9339,
+    "last_sell": 138.836,
     "last_failure_reason": null
   },
   "BRAC": {
-    "last_checked_at": "2026-11-25T05:04:48.435365+00:00",
+    "last_checked_at": "2026-11-25T16:11:40.431529+00:00",
     "last_status": "ok",
     "last_failure_reason": null,
-    "last_success_at": "2026-11-25T05:04:48.435365+00:00",
-    "last_buy": 134.4813,
-    "last_sell": 137.3274
+    "last_success_at": "2026-11-25T16:11:40.431529+00:00",
+    "last_buy": 135.3629,
+    "last_sell": 138.231
   },
   "PRIME": {
-    "last_checked_at": "2026-11-25T05:04:55.385737+00:00",
+    "last_checked_at": "2026-11-25T16:11:46.780653+00:00",
     "last_status": "ok",
-    "last_success_at": "2026-11-25T05:04:55.385737+00:00",
-    "last_buy": 134.275,
-    "last_sell": 137.514,
+    "last_success_at": "2026-11-25T16:11:46.780653+00:00",
+    "last_buy": 134.9492,
+    "last_sell": 138.1958,
     "last_failure_reason": null
   },
   "SONALI": {
-    "last_checked_at": "2026-11-25T05:05:01.184677+00:00",
+    "last_checked_at": "2026-11-25T16:12:00.558524+00:00",
     "last_status": "failed",
     "last_success_at": "2026-11-22T02:42:16.049050+00:00",
     "last_buy": 135.63,
     "last_sell": 138.1059,
-    "last_failure_reason": "Collector returned no data"
+    "last_failure_reason": "Rejected: sell 380.0 is outside the plausible range [100.0, 200.0]"
   }
 }
