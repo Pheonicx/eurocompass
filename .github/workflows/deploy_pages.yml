@@ -16,7 +16,7 @@ name: Deploy Dashboard to GitHub Pages
 
 on:
   push:
-    branches: [v2-dev]
+    branches: [main]
     paths:
       - "site/**"
   workflow_dispatch:
