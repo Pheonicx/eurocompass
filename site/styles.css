@@ -292,3 +292,296 @@ footer a{text-decoration:underline;}
   .ticker-item{padding:0 16px;font-size:11.5px;}
   .brand-name{font-size:16px;}
 }
+
+/* Student File Calculator Styles */
+.student-intro {
+  padding: 20px;
+  background: var(--gold-light);
+  border-radius: var(--radius-sm);
+  margin-bottom: 16px;
+}
+
+.student-intro h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.student-intro p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.student-bank-selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.student-bank-btn {
+  padding: 10px 18px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.student-bank-btn:hover {
+  border-color: var(--gold);
+  color: var(--ink);
+}
+
+.student-bank-btn.active {
+  border-color: var(--gold);
+  background: var(--gold-light);
+  color: var(--ink);
+}
+
+.student-file-info {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.bank-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+}
+
+.bank-info-section h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.bank-info-section h5 {
+  margin: 12px 0 8px 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.document-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.document-list li {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 8px;
+  padding-left: 0;
+}
+
+.charges-list {
+  font-size: 13px;
+}
+
+.charge-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.charge-item:last-child {
+  border-bottom: none;
+}
+
+.charge-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 12px 0;
+}
+
+.contact-info {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.contact-info p {
+  margin: 4px 0;
+  word-break: break-word;
+}
+
+.contact-info strong {
+  color: var(--ink);
+  font-weight: 600;
+  display: block;
+  margin-top: 8px;
+}
+
+.cost-calc-card {
+  padding: 24px;
+  background: linear-gradient(135deg, var(--gold-light) 0%, rgba(184, 134, 47, 0.05) 100%);
+  border: 1px solid var(--border);
+}
+
+.section-subhead {
+  margin-bottom: 20px;
+}
+
+.section-subhead h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.calc-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.calc-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.calc-input-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.calc-input-group input,
+.calc-input-group select {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--white);
+}
+
+.calc-input-group input:focus,
+.calc-input-group select:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-light);
+}
+
+.calc-breakdown {
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+}
+
+.cost-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.cost-row:last-of-type {
+  border-bottom: none;
+}
+
+.cost-row.cost-fee {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.cost-row.cost-total {
+  margin-top: 12px;
+  padding-top: 20px;
+  border-top: 2px solid var(--border);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--gold-deep);
+}
+
+.cost-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.cost-row.cost-total .cost-label {
+  color: var(--ink);
+}
+
+.cost-value {
+  font-family: var(--font-mono);
+  color: var(--ink);
+  font-weight: 600;
+  text-align: right;
+}
+
+.cost-row.cost-total .cost-value {
+  font-size: 18px;
+  color: var(--gold-deep);
+}
+
+.cost-row-divider {
+  height: 2px;
+  background: var(--border);
+  margin: 16px 0;
+}
+
+.calc-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--gold);
+}
+
+.cost-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 1024px) {
+  .bank-info-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .calc-inputs {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .bank-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .student-bank-selector {
+    flex-direction: column;
+  }
+
+  .student-bank-btn {
+    width: 100%;
+  }
+}

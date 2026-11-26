@@ -33,6 +33,7 @@
         <a class="nav-link active" href="#">Overview</a>
         <a class="nav-link" href="#calc-section">Transfer</a>
         <a class="nav-link" href="#student-section">Student rates</a>
+        <a class="nav-link" href="student-file-dashboard.html">📚 Student File</a>
         <a class="nav-link" href="#forecast-section">Forecast</a>
         <a class="nav-link" href="#hist-section">History</a>
       </div>
@@ -191,9 +192,83 @@
       </div>
     </div>
 
-    <div class="section" id="student-section" style="display:none;">
-      <div class="section-head"><h2 class="section-title">Student file rates</h2><span class="section-caption">Preferential rates some banks publish specifically for education-related transfers, where available</span></div>
+    <div class="section" id="student-section">
+      <div class="section-head"><h2 class="section-title">Student file rates & costs</h2><span class="section-caption">Preferential rates for education transfers — including all fees and charges</span></div>
+
       <div class="card rank-card">
+        <div class="student-intro">
+          <h3>Student File Overview</h3>
+          <p>Many Bangladeshi banks offer special "student file" rates for education-related transfers. These include preferential exchange rates plus additional services, but require opening a dedicated file with specific documentation.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-subhead"><h3>Compare Banks & Costs</h3></div>
+        <div class="student-bank-selector">
+          <button class="student-bank-btn active" data-bank="EBL">EBL Bank</button>
+          <button class="student-bank-btn" data-bank="PRIME">PRIME Bank</button>
+          <button class="student-bank-btn" data-bank="BRAC">BRAC Bank</button>
+          <button class="student-bank-btn" data-bank="CITY">CITY Bank</button>
+        </div>
+
+        <div id="studentFileInfo" class="student-file-info">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <div class="card cost-calc-card">
+        <div class="section-subhead"><h3>Total Cost Calculator</h3></div>
+        <div class="calc-inputs">
+          <div class="calc-input-group">
+            <label>Amount in EUR:</label>
+            <input type="number" id="studentCalcEUR" placeholder="1000" value="1000" min="0">
+          </div>
+          <div class="calc-input-group">
+            <label>Select Bank:</label>
+            <select id="studentCalcBank">
+              <option value="EBL">EBL Bank</option>
+              <option value="PRIME">PRIME Bank</option>
+              <option value="BRAC">BRAC Bank</option>
+              <option value="CITY">CITY Bank</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="calc-breakdown">
+          <div class="cost-row">
+            <span class="cost-label">EUR Amount</span>
+            <span class="cost-value" id="calcEUR">€0.00</span>
+          </div>
+          <div class="cost-row">
+            <span class="cost-label">Exchange Rate (Student File)</span>
+            <span class="cost-value" id="calcRate">0.00 BDT/EUR</span>
+          </div>
+          <div class="cost-row">
+            <span class="cost-label">Amount in BDT</span>
+            <span class="cost-value" id="calcBDT">৳0</span>
+          </div>
+          <div class="cost-row cost-fee">
+            <span class="cost-label">File Opening Charge (one-time)</span>
+            <span class="cost-value" id="calcFileCharge">৳0</span>
+          </div>
+          <div class="cost-row cost-fee">
+            <span class="cost-label">Intermediary Bank Charge</span>
+            <span class="cost-value" id="calcIntermediaryCharge">€0 (≈ ৳0)</span>
+          </div>
+          <div class="cost-row-divider"></div>
+          <div class="cost-row cost-total">
+            <span class="cost-label">Total Cost (including all fees)</span>
+            <span class="cost-value" id="calcTotal">৳0</span>
+          </div>
+        </div>
+
+        <div class="calc-note">
+          <strong>Note:</strong> This is an estimate. Actual costs may vary based on bank processing, VAT rates, and correspondent bank charges. SWIFT/FTT charges not included. Always verify with your bank before transfer.
+        </div>
+      </div>
+
+      <div class="card rank-card">
+        <div class="section-subhead"><h3>Rate Comparison</h3></div>
         <table class="rank-table"><thead id="studentHead"></thead><tbody id="studentBody"></tbody></table>
         <div class="cost-note" id="studentNote">Only banks that publish a distinct student-file rate appear here — this isn't estimated for the others.</div>
       </div>
